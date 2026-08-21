@@ -562,9 +562,9 @@
         // ============================================================
         // Google Sheet course details loader
         // ============================================================
-        const SHEET_ID = '1XM3NTovZf0O9XspzOzhnshA8fDXgpkyg7tWDUuaTTP8';
-        const SHEET_TABS = ['SSC','HSC','BBA','MBA','BBS','BBA Professional'];
-        const SHEET_URL = tab => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
+        const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
+        const COURSE_NAME_TAB = 'Course Name';
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_NAME_TAB)}`;
         const bnDigits='০১২৩৪৫৬৭৮৯', enDigits='0123456789';
         const clean=v=>String(v??'').trim();
         const escapeHtml=v=>clean(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -576,22 +576,18 @@
         const formatPrice=v=>{const x=clean(v);if(!x)return '';return /[৳$€£]/.test(x)?toBn(x):`৳${toBn(x)}`};
         function parseGviz(text){const a=text.indexOf('{'),b=text.lastIndexOf('}');if(a<0||b<0)throw Error('Invalid Google Sheets response');return JSON.parse(text.slice(a,b+1));}
         function getCourseSlug(){return new URLSearchParams(window.location.search).get('course');}
-        async function fetchTab(tab){
-            const response=await fetch(SHEET_URL(tab),{cache:'no-store'});
-            if(!response.ok)throw Error(`${tab}: HTTP ${response.status}`);
+        async function getAllCourses(){
+            const response=await fetch(SHEET_URL,{cache:'no-store'});
+            if(!response.ok)throw Error(`${COURSE_NAME_TAB}: HTTP ${response.status}`);
             const json=parseGviz(await response.text());
+            const used=new Set();
             return (json.table?.rows||[]).map(row=>{
                 const c=row.c||[];
-                const v=Array.from({length:9},(_,i)=>clean(c[i]?.v??c[i]?.f??''));
-                const [name,tag,image,shortDescription,longDescription,price,oldPrice,priceNote,featureText]=v;
-                if(!name)return null;
-                return {name,tag,image:normalizeImageUrl(image),shortDescription,longDescription,price:formatPrice(price),oldPrice:formatPrice(oldPrice),priceNote,features:parseFeatures(featureText),category:tab,slug:slugify(name)};
-            }).filter(Boolean);
-        }
-        async function getAllCourses(){
-            const used=new Set();
-            const results=await Promise.all(SHEET_TABS.map(fetchTab));
-            return results.flat().map(c=>({...c,slug:uniqueSlug(c.name,c.category,used)}));
+                const v=Array.from({length:10},(_,i)=>clean(c[i]?.v??c[i]?.f??''));
+                const [level,name,tag,image,shortDescription,longDescription,price,oldPrice,priceNote,featureText]=v;
+                if(!level||!name||name==='কোর্সের নাম')return null;
+                return {name,tag,image:normalizeImageUrl(image),shortDescription,longDescription,price:formatPrice(price),oldPrice:formatPrice(oldPrice),priceNote,features:parseFeatures(featureText),category:level,slug:''};
+            }).filter(Boolean).map(c=>({...c,slug:uniqueSlug(c.name,c.category,used)}));
         }
 
         function renderCourse(course){
