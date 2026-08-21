@@ -389,6 +389,12 @@ header.nav{
   box-shadow:0 8px 20px rgba(232,163,61,.4);
 }
 .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 26px rgba(232,163,61,.5); }
+.course-enrolled-trigger{
+  background:#e9f8ef;
+  color:#1f8a4c;
+  box-shadow:none;
+}
+.course-enrolled-trigger:hover{ background:#dcf3e5; transform:translateY(-2px); box-shadow:0 8px 18px rgba(31,138,76,.25); }
 .btn-outline{
   background:transparent;
   color:var(--ink);
@@ -1721,9 +1727,22 @@ function vaShowToast(message){
   function features(v){return clean(v).split(/[,،]/).map(clean).filter(Boolean)}
   function price(v){const x=clean(v);if(!x)return '';return /[৳$€£]/.test(x)?toBn(x):`৳${toBn(x)}`}
   function parseGviz(t){const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<0)throw Error('Invalid Google Sheets response');return JSON.parse(t.slice(a,b+1))}
+  // localStorage-এ ক্যাশ করা student data (student-login.html থেকে লগইন করলে সেট হয়) থেকে
+  // enrolled কোর্সের নামগুলো বের করা হয় — কেউ লগইন না করে থাকলে খালি Set রিটার্ন হবে,
+  // তখন কোর্স কার্ড আগের মতোই স্বাভাবিক দেখাবে।
+  function getEnrolledCourseNames(){
+    try{
+      const raw = localStorage.getItem('va_user');
+      if(!raw) return new Set();
+      const user = JSON.parse(raw);
+      const courses = Array.isArray(user?.courses) ? user.courses : [];
+      return new Set(courses.map(c=>clean(c?.name).toLowerCase()).filter(Boolean));
+    }catch(e){ return new Set(); }
+  }
+  const enrolledCourseNames = getEnrolledCourseNames();
   async function fetchAllCourseRows(){const r=await fetch(SHEET_URL,{cache:'no-store'});if(!r.ok)throw Error(`${COURSE_NAME_TAB}: HTTP ${r.status}`);const j=parseGviz(await r.text());return (j.table?.rows||[]).map(row=>{const c=row.c||[],v=Array.from({length:10},(_,i)=>clean(c[i]?.v??c[i]?.f??''));const [level,name,tag,image,shortDescription,longDescription,p,oldPrice,priceNote,featureText]=v;if(!level||!name||name==='কোর্সের নাম')return null;return{name,tag,image:imageUrl(image),shortDescription,longDescription,price:price(p),oldPrice:price(oldPrice),priceNote,features:features(featureText),category:level,slug:''}}).filter(Boolean)}
   function categoryHtml(cat,count){const m=CATEGORY_META[cat]||{color:'#5B8FBF',bg:'#EEF4F8',icon:'<circle cx="12" cy="12" r="8"/>'};return `<a href="#courses" class="cat-card" data-cat="${esc(cat)}" style="--cat-color:${m.color}"><span class="cat-icon" style="background:${m.bg}"><svg viewBox="0 0 24 24" fill="none" stroke="${m.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.icon}</svg></span><span class="cat-text"><b>${esc(cat)}</b><span>${toBn(count)}টি কোর্স</span></span></a>`}
-  function cardHtml(c){const m=CATEGORY_META[c.category]||{color:'#5B8FBF'};return `<article class="course-card" data-category="${esc(c.category)}" data-course-slug="${esc(c.slug)}"><img class="course-image" src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy"><div class="course-top"><span class="eyebrow" style="color:${m.color}">${esc(c.category)}</span>${c.tag?`<span class="course-tag">${esc(c.tag)}</span>`:''}</div><div class="course-body"><h3>${esc(c.name)}</h3><p>${esc(c.shortDescription)}</p><div class="course-foot"><div class="price"><div class="price-row">${c.price?`<span class="price-now">${esc(c.price)}</span>`:''}${c.oldPrice?`<span class="price-old">${esc(c.oldPrice)}</span>`:''}</div>${c.priceNote?`<small>${esc(c.priceNote)}</small>`:''}</div><a href="course-details.html?course=${encodeURIComponent(c.slug)}" data-course-name="${esc(c.name)}" class="btn btn-primary course-details-trigger">বিস্তারিত</a></div></div></article>`}
+  function cardHtml(c){const m=CATEGORY_META[c.category]||{color:'#5B8FBF'};const isEnrolled=enrolledCourseNames.has(clean(c.name).toLowerCase());const actionHtml=isEnrolled?`<a href="student-login.html" class="btn btn-primary course-enrolled-trigger">ভর্তি হয়েছেন ✓</a>`:`<a href="course-details.html?course=${encodeURIComponent(c.slug)}" data-course-name="${esc(c.name)}" class="btn btn-primary course-details-trigger">বিস্তারিত</a>`;return `<article class="course-card" data-category="${esc(c.category)}" data-course-slug="${esc(c.slug)}"><img class="course-image" src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy"><div class="course-top"><span class="eyebrow" style="color:${m.color}">${esc(c.category)}</span>${c.tag?`<span class="course-tag">${esc(c.tag)}</span>`:''}</div><div class="course-body"><h3>${esc(c.name)}</h3><p>${esc(c.shortDescription)}</p><div class="course-foot"><div class="price"><div class="price-row">${c.price?`<span class="price-now">${esc(c.price)}</span>`:''}${c.oldPrice?`<span class="price-old">${esc(c.oldPrice)}</span>`:''}</div>${c.priceNote?`<small>${esc(c.priceNote)}</small>`:''}</div>${actionHtml}</div></div></article>`}
   function renderCategories(){const counts={};allCourses.forEach(c=>counts[c.category]=(counts[c.category]||0)+1);catGrid.innerHTML=SHEET_TABS.map(t=>categoryHtml(t,counts[t]||0)).join('')}
   function renderCourses(cat=null){activeCategory=cat;const list=cat?allCourses.filter(c=>c.category===cat):allCourses;courseGrid.innerHTML=list.length?list.map(cardHtml).join(''):'<div class="course-empty"><strong>এই বিভাগে এখন কোনো কোর্স নেই।</strong><br>নতুন কোর্স যোগ করা হলে এখানে automatically দেখা যাবে।</div>';catGrid.querySelectorAll('.cat-card').forEach(x=>x.classList.toggle('active',x.dataset.cat===cat));toolbar.hidden=!allCourses.length;const n=list.length;resultCount.textContent=cat?`${cat}: ${toBn(n)}টি কোর্স`:`মোট ${toBn(n)}টি কোর্স`}
   async function loadCourses(){errorBox.hidden=true;courseGrid.innerHTML='<div class="course-data-loading"><span class="course-loader"></span><span>কোর্সের তথ্য লোড হচ্ছে...</span></div>';catGrid.innerHTML='<div class="course-data-loading category-loading">ক্যাটাগরি লোড হচ্ছে...</div>';try{const used=new Set();allCourses=await fetchAllCourseRows();allCourses.forEach(c=>c.slug=uniqueSlug(c.name,c.category,used));renderCategories();renderCourses(null)}catch(e){console.error(e);catGrid.innerHTML='<div class="course-empty">ক্যাটাগরি লোড করা যায়নি।</div>';courseGrid.innerHTML='';toolbar.hidden=true;errorBox.hidden=false}}
