@@ -1655,7 +1655,7 @@ document.querySelectorAll('#navLinks a').forEach(link => {
 (function(){
   const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
   const TEACHERS_TAB = 'Teachers';
-  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(TEACHERS_TAB)}`;
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(TEACHERS_TAB)}`;
   const teacherGrid = document.getElementById('teacherGrid');
   if(!teacherGrid) return;
 
@@ -1684,7 +1684,7 @@ document.querySelectorAll('#navLinks a').forEach(link => {
         const c=row.c||[];
         const v=Array.from({length:4},(_,i)=>clean(c[i]?.v??c[i]?.f??''));
         const [name,photo,subject,designation]=v;
-        if(!name || name.toLowerCase()==='teacher name') return null;
+        if(!name || ['name','teacher name'].includes(name.toLowerCase())) return null;
         return {name,photo:imageUrl(photo),subject,designation};
       }).filter(Boolean);
 
@@ -1779,7 +1779,7 @@ function vaShowToast(message){
 (function(){
   const CLASS_SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
   const COURSE_DATA_TAB = 'Course Data';
-  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
+  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
   const clean = v => String(v ?? '').trim();
   const availabilityCache = new Map();
   let courseDataRowsPromise = null;
@@ -1881,7 +1881,7 @@ function vaShowToast(message){
 (function(){
   const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
   const VIDEO_TAB = 'Free Class';
-  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(VIDEO_TAB)}`;
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(VIDEO_TAB)}`;
   const pillRow = document.getElementById('videoPillRow');
   const videoGrid = document.getElementById('videoGrid');
   let videos = [];
@@ -1998,12 +1998,12 @@ function vaShowToast(message){
   loadFreeClasses();
 })();
 
-// "আমাদের মেসেজ পাঠান" ফর্ম সাবমিট — এখন ফর্মের ডেটা প্রথমে আমাদের নিজের Cloudflare Worker
-// (late-forest-4748.dreamsicreation.workers.dev) এ যায়, সেখান থেকে সার্ভার-টু-সার্ভার
-// Google Sheet এ ফরওয়ার্ড হয়। এতে আসল Google Apps Script লিংকটা ব্রাউজারে/Inspect করে
-// কখনো দেখা যায় না।
+// "আমাদের মেসেজ পাঠান" ফর্ম সাবমিট — Cloudflare Worker ইন্টিগ্রেশন সরিয়ে দেওয়া হয়েছে।
+// ফর্মের ডিজাইন/UI আগের মতোই আছে, শুধু ব্যাকএন্ড কানেকশন এখনো বসানো হয়নি।
+// পরে এখানে FORM_ENDPOINT এ নতুন এন্ডপয়েন্ট (Apps Script / Worker / অন্য কিছু) বসিয়ে
+// নিচের fetch() কলটা আবার চালু করে দেওয়া যাবে।
 (function(){
-  const FORM_ENDPOINT = "https://late-forest-4748.dreamsicreation.workers.dev";
+  const FORM_ENDPOINT = ""; // TODO: এখানে নতুন এন্ডপয়েন্ট URL বসান
 
   const form = document.getElementById('msgForm');
   const btn = document.getElementById('msgSubmitBtn');
@@ -2012,8 +2012,8 @@ function vaShowToast(message){
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    if(!FORM_ENDPOINT || FORM_ENDPOINT === "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"){
-      status.textContent = "⚠️ ফর্মটি এখনো সেটআপ হয়নি — script ট্যাগের ভেতরের FORM_ENDPOINT এ Google Apps Script URL বসাতে হবে।";
+    if(!FORM_ENDPOINT){
+      status.textContent = "⚠️ ফর্মটি এখনো সেটআপ হয়নি — শীঘ্রই চালু হবে। এখন সরাসরি WhatsApp এ যোগাযোগ করুন।";
       status.className = "form-status show err";
       return;
     }
@@ -2024,8 +2024,6 @@ function vaShowToast(message){
 
     const data = new FormData(form);
 
-    // no-cors mode ব্যবহার করা হয়েছে কারণ Google Apps Script সাধারণত CORS হেডার পাঠায় না;
-    // এতে রেসপন্স পড়া যায় না, কিন্তু ডেটা ঠিকই শিটে গিয়ে জমা হয়।
     fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body: data })
       .then(() => {
         status.textContent = "✅ মেসেজ পাঠানো হয়েছে,আমাদের টিম খুব দ্রুত আপনার সাথে যোগাযোগ করবে,ধন্যবাদ!";
