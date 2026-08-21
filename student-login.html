@@ -769,7 +769,7 @@ footer a:hover{ color:#fff; }
   // Tab-এর ঝুঁকি বা marker কলামের দরকার আর নেই।
   const CLASS_SHEET_ID = "1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8";
   const COURSE_DATA_TAB = "Course Data";
-  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
+  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
   const classDataCache = new Map();
   let courseDataRowsPromise = null;
   const enrollParam = new URLSearchParams(window.location.search).get('enroll');
