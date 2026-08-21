@@ -756,30 +756,22 @@ footer a:hover{ color:#fff; }
 
 <script>
 (function(){
-  // ⚠️ নতুন consolidated Apps Script ("Student Login" + "Student Enrolled" tab নিয়ে
-  // কাজ করে) Web App হিসেবে deploy করার পর এখানে সেই নতুন /exec URL বসাতে হবে।
+  // একটাই "VISION DATA" consolidated Apps Script — Student Login/Enrolled,
+  // Shop, এবং Teachers/Course Name/Course Data/Free Class পড়ার সব কাজ এখন
+  // এই একই Web App endpoint দিয়ে হয় (index.html/course-details.html/
+  // shop.html-এও এই একই URL বসানো)। নতুন version deploy করলেও URL একই থাকে।
   const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzX0y0FDBcFVxkUoIY2VqFG4XZ3BcoYJfoVvMNYKF28UQLqWPKeMax30MYqDXlM_t3cXQ/exec";
   const LS_USER_KEY = "va_user";
   const LS_REGISTERED_KEY = "va_registered";
-  // ক্লাস ডেটা এখন সরাসরি নতুন consolidated "VISION DATA" Google Sheet-এর
-  // একটাই "Course Data" Tab থেকে gviz/tq পাবলিক API দিয়ে লোড হয় (কোনো
-  // Apps Script/সার্ভার লাগে না)। আগে প্রতিটা কোর্সের জন্য আলাদা Tab ছিল আর
-  // Tab-এর নাম কোর্সের নামের সাথে মিলাতে হতো — এখন সব কোর্সের class data একই
-  // Tab-এ থাকে, "Course Name" কলাম দিয়ে ফিল্টার করে বের করা হয়, তাই ভুল/fallback
-  // Tab-এর ঝুঁকি বা marker কলামের দরকার আর নেই।
-  const CLASS_SHEET_ID = "1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8";
-  const COURSE_DATA_TAB = "Course Data";
-  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
+  // ক্লাস ডেটা এখন এই একই Apps Script-এর "get_course_data" action দিয়ে লোড হয়
+  // (আগে সরাসরি gviz/tq দিয়ে পড়া হতো — এখন সেই gviz link পুরোপুরি বাদ)। সব
+  // কোর্সের class data একই "Course Data" Tab-এ থাকে, "Course Name" কলাম দিয়ে
+  // ফিল্টার করে বের করা হয়।
   const classDataCache = new Map();
   let courseDataRowsPromise = null;
   const enrollParam = new URLSearchParams(window.location.search).get('enroll');
   const clean = value => String(value ?? '').trim();
   const escapeHtml = value => clean(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function parseGvizClass(text){
-    const a = text.indexOf('{'), b = text.lastIndexOf('}');
-    if(a < 0 || b < 0) throw Error('Invalid Google Sheets response');
-    return JSON.parse(text.slice(a, b + 1));
-  }
 
   const authPageHead = document.getElementById('authPageHead');
   const tabRegisterBtn = document.getElementById('tabRegisterBtn');
@@ -874,28 +866,18 @@ footer a:hover{ color:#fff; }
   // থাকে (enroll-time চেক আর dashboard-এ class load — দুই জায়গাতেই ব্যবহার হয়)।
   function loadCourseDataRows(){
     if(!courseDataRowsPromise){
-      courseDataRowsPromise = (async ()=>{
-        const controller = new AbortController();
-        const timeout = setTimeout(()=>controller.abort(), 20000);
-        try{
-          const response = await fetch(CLASS_SHEET_URL, {cache:'no-store', signal:controller.signal});
-          if(!response.ok) throw new Error(`${COURSE_DATA_TAB}: HTTP ${response.status}`);
-          const json = parseGvizClass(await response.text());
-          if(json.status === 'error') throw new Error('Course Data sheet returned an error.');
-          return (json.table?.rows || []).map(row=>{
-            const c = row.c || [];
-            return {
-              courseName: clean(c[1]?.v ?? c[1]?.f ?? ''),
-              subject: clean(c[2]?.v ?? c[2]?.f ?? ''),
-              chapter: clean(c[3]?.v ?? c[3]?.f ?? ''),
-              className: clean(c[4]?.v ?? c[4]?.f ?? ''),
-              url: clean(c[5]?.v ?? c[5]?.f ?? '')
-            };
-          });
-        } finally {
-          clearTimeout(timeout);
-        }
-      })().catch(err=>{ courseDataRowsPromise = null; throw err; });
+      courseDataRowsPromise = callApi({ action: 'get_course_data' })
+        .then(result=>{
+          if(result.status !== 'ok') throw new Error(result.message || 'Course Data load failed.');
+          return (result.data || []).map(row => ({
+            courseName: clean(row.courseName),
+            subject: clean(row.subject),
+            chapter: clean(row.chapter),
+            className: clean(row.className),
+            url: clean(row.url)
+          }));
+        })
+        .catch(err=>{ courseDataRowsPromise = null; throw err; });
     }
     return courseDataRowsPromise;
   }
@@ -1095,9 +1077,8 @@ footer a:hover{ color:#fff; }
     const user=JSON.parse(localStorage.getItem(LS_USER_KEY) || 'null');
     if(!user || !user.mobile) return false;
 
-    // Enroll করার আগেই Course Link Sheet-এ (gviz + marker check দিয়ে reliably)
-    // কোর্সের নামে Tab আছে কিনা এবং তাতে অন্তত একটা class row আছে কিনা চেক করা হয়।
-    // না থাকলে enroll-ই হতে দেওয়া হয় না।
+    // Enroll করার আগেই "Course Data" Tab-এ (এই একই Apps Script দিয়ে) চেক করা হয়
+    // এই কোর্সের নামে অন্তত একটা class row আছে কিনা। না থাকলে enroll-ই হতে দেওয়া হয় না।
     showLoading('কোর্সের class materials যাচাই করা হচ্ছে...');
     const classCheck = await fetchClassData(courseName);
     const hasMaterials = classCheck.status === 'ok' && Array.isArray(classCheck.data) && classCheck.data.length > 0;
