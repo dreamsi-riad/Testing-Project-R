@@ -334,9 +334,13 @@
         })();
 
         // ============================================================
-        // শপ Google Sheet-এর Apps Script endpoint
+        // একটাই "VISION DATA" consolidated Apps Script — Student, Shop,
+        // Teachers/Course Name/Course Data/Free Class সবকিছুর জন্য একই
+        // endpoint (index.html/course-details.html/student-login.html-এও
+        // এই একই URL বসানো)। আগে শপের জন্য আলাদা script/deployment ছিল,
+        // এখন আর দরকার নেই।
         // ============================================================
-        const SHOP_FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbycXYAIzueQWFa00RlqfOGiMYbBTOOHgQ5Nsbh4tS2sCrt454K5qq8_yKzY0wtfvE0j6g/exec";
+        const SHOP_FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzX0y0FDBcFVxkUoIY2VqFG4XZ3BcoYJfoVvMNYKF28UQLqWPKeMax30MYqDXlM_t3cXQ/exec";
 
         function callShopApi(payload){
             const controller = new AbortController();
