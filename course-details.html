@@ -562,9 +562,22 @@
         // ============================================================
         // Google Sheet course details loader
         // ============================================================
-        const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
-        const COURSE_NAME_TAB = 'Course Name';
-        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_NAME_TAB)}`;
+        // একটাই VISION DATA Apps Script — student-login.html/shop.html/index.html-এও
+        // এই একই URL ব্যবহার হয়।
+        const VISION_API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzX0y0FDBcFVxkUoIY2VqFG4XZ3BcoYJfoVvMNYKF28UQLqWPKeMax30MYqDXlM_t3cXQ/exec";
+        function callVisionApi(payload, timeoutMs){
+            const controller = new AbortController();
+            const timeout = setTimeout(()=>controller.abort(), timeoutMs || 20000);
+            return fetch(VISION_API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload),
+                signal: controller.signal
+            })
+                .then(res => { if(!res.ok) throw new Error('সার্ভার থেকে তথ্য পাওয়া যায়নি।'); return res.json(); })
+                .catch(err => { if(err.name === 'AbortError') throw new Error('সার্ভারে সাড়া পেতে বেশি সময় লাগছে।'); throw err; })
+                .finally(() => clearTimeout(timeout));
+        }
         const bnDigits='০১২৩৪৫৬৭৮৯', enDigits='0123456789';
         const clean=v=>String(v??'').trim();
         const escapeHtml=v=>clean(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -574,19 +587,15 @@
         function uniqueSlug(name,cat,used){const base=slugify(name),cp=slugify(cat);let slug=base;if(used.has(slug))slug=`${cp}-${base}`;let n=2;while(used.has(slug))slug=`${cp}-${base}-${n++}`;used.add(slug);return slug}
         const parseFeatures=v=>clean(v).split(/[,،]/).map(clean).filter(Boolean);
         const formatPrice=v=>{const x=clean(v);if(!x)return '';return /[৳$€£]/.test(x)?toBn(x):`৳${toBn(x)}`};
-        function parseGviz(text){const a=text.indexOf('{'),b=text.lastIndexOf('}');if(a<0||b<0)throw Error('Invalid Google Sheets response');return JSON.parse(text.slice(a,b+1));}
         function getCourseSlug(){return new URLSearchParams(window.location.search).get('course');}
         async function getAllCourses(){
-            const response=await fetch(SHEET_URL,{cache:'no-store'});
-            if(!response.ok)throw Error(`${COURSE_NAME_TAB}: HTTP ${response.status}`);
-            const json=parseGviz(await response.text());
+            const result=await callVisionApi({ action: 'get_courses' });
+            if(result.status !== 'ok') throw new Error(result.message || 'Course Name load failed.');
             const used=new Set();
-            return (json.table?.rows||[]).map(row=>{
-                const c=row.c||[];
-                const v=Array.from({length:10},(_,i)=>clean(c[i]?.v??c[i]?.f??''));
-                const [level,name,tag,image,shortDescription,longDescription,price,oldPrice,priceNote,featureText]=v;
-                if(!level||!name||name==='কোর্সের নাম')return null;
-                return {name,tag,image:normalizeImageUrl(image),shortDescription,longDescription,price:formatPrice(price),oldPrice:formatPrice(oldPrice),priceNote,features:parseFeatures(featureText),category:level,slug:''};
+            return (result.data||[]).map(row=>{
+                const level=clean(row.level), name=clean(row.name);
+                if(!level||!name)return null;
+                return {name, tag:clean(row.tag), image:normalizeImageUrl(row.image), shortDescription:clean(row.shortDescription), longDescription:clean(row.longDescription), price:formatPrice(row.price), oldPrice:formatPrice(row.oldPrice), priceNote:clean(row.priceNote), features:parseFeatures(row.featureText), category:level, slug:''};
             }).filter(Boolean).map(c=>({...c,slug:uniqueSlug(c.name,c.category,used)}));
         }
 
