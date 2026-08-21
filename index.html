@@ -1429,7 +1429,7 @@ footer{
         <p>নিচে থেকে বিভাগ বেছে নিয়ে দেখে নিন সেই বিভাগের ফ্রি ভিডিও লেকচারগুলো।</p>
       </div>
 
-      <!-- ভিডিও বিভাগ ট্যাব — Google Sheet-এর "Free Classes" tab থেকে automatically তৈরি হবে -->
+      <!-- ভিডিও বিভাগ ট্যাব — Google Sheet-এর "Free Class" tab থেকে automatically তৈরি হবে -->
       <div class="pill-row" id="videoPillRow">
         <div class="video-data-loading">ভিডিও বিভাগ লোড হচ্ছে...</div>
       </div>
@@ -1653,7 +1653,7 @@ document.querySelectorAll('#navLinks a').forEach(link => {
 // Teachers tab columns: A Name, B Photo URL, C Subject, D Designation
 // ============================================================
 (function(){
-  const SHEET_ID = '1XM3NTovZf0O9XspzOzhnshA8fDXgpkyg7tWDUuaTTP8';
+  const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
   const TEACHERS_TAB = 'Teachers';
   const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(TEACHERS_TAB)}`;
   const teacherGrid = document.getElementById('teacherGrid');
@@ -1733,9 +1733,13 @@ function vaShowToast(message){
 // Google Sheet → Dynamic Courses
 // ============================================================
 (function(){
-  const SHEET_ID = '1XM3NTovZf0O9XspzOzhnshA8fDXgpkyg7tWDUuaTTP8';
+  const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
+  const COURSE_NAME_TAB = 'Course Name';
+  // আগে প্রতিটা লেভেলের (SSC/HSC/BBA...) জন্য আলাদা Tab ছিল। এখন সব লেভেলের কোর্স
+  // একটাই "Course Name" Tab-এ থাকে, প্রথম কলাম (Level) দিয়ে আলাদা করা হয়। SHEET_TABS
+  // তালিকাটা শুধু category card-এর ধারাবাহিক ক্রম আর "কোনো কোর্স নেই" চেকের জন্য রাখা হলো।
   const SHEET_TABS = ['SSC','HSC','BBA','MBA','BBS','BBA Professional'];
-  const SHEET_URL = tab => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(tab)}`;
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(COURSE_NAME_TAB)}`;
   const catGrid=document.getElementById('catGrid'), courseGrid=document.getElementById('courseGrid'), toolbar=document.getElementById('courseDataToolbar'), resultCount=document.getElementById('courseResultCount'), resetBtn=document.getElementById('courseResetBtn'), errorBox=document.getElementById('courseDataError'), retryBtn=document.getElementById('courseRetryBtn');
   const CATEGORY_META={
     'SSC':{color:'#2F6FE4',bg:'#EAF1FE',icon:'<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.5 2.5 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 10v6"/>'},
@@ -1756,28 +1760,29 @@ function vaShowToast(message){
   function features(v){return clean(v).split(/[,،]/).map(clean).filter(Boolean)}
   function price(v){const x=clean(v);if(!x)return '';return /[৳$€£]/.test(x)?toBn(x):`৳${toBn(x)}`}
   function parseGviz(t){const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<0)throw Error('Invalid Google Sheets response');return JSON.parse(t.slice(a,b+1))}
-  async function fetchTab(tab){const r=await fetch(SHEET_URL(tab),{cache:'no-store'});if(!r.ok)throw Error(`${tab}: HTTP ${r.status}`);const j=parseGviz(await r.text());return (j.table?.rows||[]).map(row=>{const c=row.c||[],v=Array.from({length:9},(_,i)=>clean(c[i]?.v??c[i]?.f??''));const [name,tag,image,shortDescription,longDescription,p,oldPrice,priceNote,featureText]=v;if(!name||name==='কোর্সের নাম')return null;return{name,tag,image:imageUrl(image),shortDescription,longDescription,price:price(p),oldPrice:price(oldPrice),priceNote,features:features(featureText),category:tab,slug:''}}).filter(Boolean)}
+  async function fetchAllCourseRows(){const r=await fetch(SHEET_URL,{cache:'no-store'});if(!r.ok)throw Error(`${COURSE_NAME_TAB}: HTTP ${r.status}`);const j=parseGviz(await r.text());return (j.table?.rows||[]).map(row=>{const c=row.c||[],v=Array.from({length:10},(_,i)=>clean(c[i]?.v??c[i]?.f??''));const [level,name,tag,image,shortDescription,longDescription,p,oldPrice,priceNote,featureText]=v;if(!level||!name||name==='কোর্সের নাম')return null;return{name,tag,image:imageUrl(image),shortDescription,longDescription,price:price(p),oldPrice:price(oldPrice),priceNote,features:features(featureText),category:level,slug:''}}).filter(Boolean)}
   function categoryHtml(cat,count){const m=CATEGORY_META[cat]||{color:'#5B8FBF',bg:'#EEF4F8',icon:'<circle cx="12" cy="12" r="8"/>'};return `<a href="#courses" class="cat-card" data-cat="${esc(cat)}" style="--cat-color:${m.color}"><span class="cat-icon" style="background:${m.bg}"><svg viewBox="0 0 24 24" fill="none" stroke="${m.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.icon}</svg></span><span class="cat-text"><b>${esc(cat)}</b><span>${toBn(count)}টি কোর্স</span></span></a>`}
   function cardHtml(c){const m=CATEGORY_META[c.category]||{color:'#5B8FBF'};return `<article class="course-card" data-category="${esc(c.category)}" data-course-slug="${esc(c.slug)}"><img class="course-image" src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy"><div class="course-top"><span class="eyebrow" style="color:${m.color}">${esc(c.category)}</span>${c.tag?`<span class="course-tag">${esc(c.tag)}</span>`:''}</div><div class="course-body"><h3>${esc(c.name)}</h3><p>${esc(c.shortDescription)}</p><div class="course-foot"><div class="price"><div class="price-row">${c.price?`<span class="price-now">${esc(c.price)}</span>`:''}${c.oldPrice?`<span class="price-old">${esc(c.oldPrice)}</span>`:''}</div>${c.priceNote?`<small>${esc(c.priceNote)}</small>`:''}</div><a href="course-details.html?course=${encodeURIComponent(c.slug)}" data-course-name="${esc(c.name)}" class="btn btn-primary course-details-trigger">বিস্তারিত</a></div></div></article>`}
   function renderCategories(){const counts={};allCourses.forEach(c=>counts[c.category]=(counts[c.category]||0)+1);catGrid.innerHTML=SHEET_TABS.map(t=>categoryHtml(t,counts[t]||0)).join('')}
   function renderCourses(cat=null){activeCategory=cat;const list=cat?allCourses.filter(c=>c.category===cat):allCourses;courseGrid.innerHTML=list.length?list.map(cardHtml).join(''):'<div class="course-empty"><strong>এই বিভাগে এখন কোনো কোর্স নেই।</strong><br>নতুন কোর্স যোগ করা হলে এখানে automatically দেখা যাবে।</div>';catGrid.querySelectorAll('.cat-card').forEach(x=>x.classList.toggle('active',x.dataset.cat===cat));toolbar.hidden=!allCourses.length;const n=list.length;resultCount.textContent=cat?`${cat}: ${toBn(n)}টি কোর্স`:`মোট ${toBn(n)}টি কোর্স`}
-  async function loadCourses(){errorBox.hidden=true;courseGrid.innerHTML='<div class="course-data-loading"><span class="course-loader"></span><span>কোর্সের তথ্য লোড হচ্ছে...</span></div>';catGrid.innerHTML='<div class="course-data-loading category-loading">ক্যাটাগরি লোড হচ্ছে...</div>';try{const used=new Set();allCourses=(await Promise.all(SHEET_TABS.map(t=>fetchTab(t)))).flat();allCourses.forEach(c=>c.slug=uniqueSlug(c.name,c.category,used));renderCategories();renderCourses(null)}catch(e){console.error(e);catGrid.innerHTML='<div class="course-empty">ক্যাটাগরি লোড করা যায়নি।</div>';courseGrid.innerHTML='';toolbar.hidden=true;errorBox.hidden=false}}
+  async function loadCourses(){errorBox.hidden=true;courseGrid.innerHTML='<div class="course-data-loading"><span class="course-loader"></span><span>কোর্সের তথ্য লোড হচ্ছে...</span></div>';catGrid.innerHTML='<div class="course-data-loading category-loading">ক্যাটাগরি লোড হচ্ছে...</div>';try{const used=new Set();allCourses=await fetchAllCourseRows();allCourses.forEach(c=>c.slug=uniqueSlug(c.name,c.category,used));renderCategories();renderCourses(null)}catch(e){console.error(e);catGrid.innerHTML='<div class="course-empty">ক্যাটাগরি লোড করা যায়নি।</div>';courseGrid.innerHTML='';toolbar.hidden=true;errorBox.hidden=false}}
   catGrid.addEventListener('click',e=>{const b=e.target.closest('.cat-card');if(!b)return;e.preventDefault();const cat=b.dataset.cat,hasCourses=allCourses.some(c=>c.category===cat);if(!hasCourses){vaShowToast('🔜 '+cat+' — শীঘ্রই আসছে, Coming Soon...');return}renderCourses(activeCategory===cat?null:cat);courseGrid.scrollIntoView({behavior:'smooth',block:'start'})});
   resetBtn.addEventListener('click',()=>renderCourses(null));retryBtn.addEventListener('click',loadCourses);loadCourses();
 })();
 
 // ============================================================
 // "বিস্তারিত" বাটনে ক্লিক করলে সরাসরি course-details.html-এ না পাঠিয়ে
-// আগে Course Link Sheet-এ (gviz দিয়ে) চেক করে ঐ কোর্সের নামে কোনো Tab/
-// class data আছে কিনা (student-login.html-এর মতোই কলাম E marker মিলিয়ে —
-// gviz-এর silent-wrong-tab quirk এড়াতে)। data না থাকলে course-details.html-এ
+// আগে Course Data Tab-এ (gviz দিয়ে, একবারই fetch করে cache করা হয়) চেক করে
+// ঐ কোর্সের নামে কোনো class data row আছে কিনা। data না থাকলে course-details.html-এ
 // না গিয়ে সাথে সাথে একটা toast মেসেজ দেখায় যে কোর্সটি এখনো available না।
 // ============================================================
 (function(){
-  const CLASS_SHEET_ID = '1ubgMyTh8rJl48Bm2PAeucVlW6gFZ88GVBKbbj-OdTVY';
-  const CLASS_SHEET_URL = tab => `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}`;
+  const CLASS_SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
+  const COURSE_DATA_TAB = 'Course Data';
+  const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
   const clean = v => String(v ?? '').trim();
   const availabilityCache = new Map();
+  let courseDataRowsPromise = null;
 
   function parseGvizClass(text){
     const a = text.indexOf('{'), b = text.lastIndexOf('}');
@@ -1785,27 +1790,38 @@ function vaShowToast(message){
     return JSON.parse(text.slice(a, b + 1));
   }
 
+  // পুরো "Course Data" Tab একবারই fetch করে cache রাখা হয় (প্রতিটা কোর্সের জন্য
+  // আলাদা করে fetch করার দরকার নেই, কারণ এখন সব কোর্সের class data একই Tab-এ)।
+  function loadCourseDataRows(){
+    if(!courseDataRowsPromise){
+      courseDataRowsPromise = (async ()=>{
+        const controller = new AbortController();
+        const timeout = setTimeout(()=>controller.abort(), 15000);
+        try{
+          const r = await fetch(CLASS_SHEET_URL, {cache:'no-store', signal:controller.signal});
+          if(!r.ok) throw Error(`${COURSE_DATA_TAB}: HTTP ${r.status}`);
+          const json = parseGvizClass(await r.text());
+          if(json.status === 'error') throw Error('Course Data sheet returned an error.');
+          return (json.table?.rows || []).map(row=>{
+            const c = row.c || [];
+            return { courseName: clean(c[1]?.v ?? c[1]?.f ?? '') };
+          });
+        } finally {
+          clearTimeout(timeout);
+        }
+      })().catch(err=>{ courseDataRowsPromise = null; throw err; });
+    }
+    return courseDataRowsPromise;
+  }
+
   async function courseHasClassData(courseName){
     if(availabilityCache.has(courseName)) return availabilityCache.get(courseName);
-    const controller = new AbortController();
-    const timeout = setTimeout(()=>controller.abort(), 15000);
     let available = false;
     try{
-      const r = await fetch(CLASS_SHEET_URL(courseName), {cache:'no-store', signal:controller.signal});
-      if(r.ok){
-        const json = parseGvizClass(await r.text());
-        if(json.status !== 'error'){
-          available = (json.table?.rows || []).some(row=>{
-            const c = row.c || [];
-            const marker = clean(c[4]?.v ?? c[4]?.f ?? '');
-            return marker === courseName;
-          });
-        }
-      }
+      const rows = await loadCourseDataRows();
+      available = rows.some(r => r.courseName === courseName);
     }catch(e){
       console.error('Class availability check failed:', e);
-    }finally{
-      clearTimeout(timeout);
     }
     availabilityCache.set(courseName, available);
     return available;
@@ -1859,12 +1875,12 @@ function vaShowToast(message){
 
 // ============================================================
 // Google Sheet → Dynamic Free Classes
-// Free Classes tab columns: A Category, B Video Title, C YouTube URL
+// Free Class tab columns: A Level, B Video Title, C YouTube URL
 // যত data row → তত video card
 // ============================================================
 (function(){
-  const SHEET_ID = '1XM3NTovZf0O9XspzOzhnshA8fDXgpkyg7tWDUuaTTP8';
-  const VIDEO_TAB = 'Free Classes';
+  const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
+  const VIDEO_TAB = 'Free Class';
   const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(VIDEO_TAB)}`;
   const pillRow = document.getElementById('videoPillRow');
   const videoGrid = document.getElementById('videoGrid');
@@ -1900,7 +1916,7 @@ function vaShowToast(message){
 
   async function fetchVideos(){
     const r = await fetch(SHEET_URL, {cache:'no-store'});
-    if(!r.ok) throw Error(`Free Classes: HTTP ${r.status}`);
+    if(!r.ok) throw Error(`Free Class: HTTP ${r.status}`);
     const j = parseGviz(await r.text());
     return (j.table?.rows || []).map(row => {
       const c = row.c || [];
