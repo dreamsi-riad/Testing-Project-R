@@ -564,7 +564,7 @@
         // ============================================================
         const SHEET_ID = '1wKIU5O8l0fg4LXjDtz92HtheUIXXZEfhR-u_zeOyVf8';
         const COURSE_NAME_TAB = 'Course Name';
-        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(COURSE_NAME_TAB)}`;
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(COURSE_NAME_TAB)}`;
         const bnDigits='০১২৩৪৫৬৭৮৯', enDigits='0123456789';
         const clean=v=>String(v??'').trim();
         const escapeHtml=v=>clean(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
