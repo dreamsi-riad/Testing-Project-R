@@ -531,6 +531,47 @@ header.nav{
   0%{ background-position:100% 50%; }
   100%{ background-position:0 50%; }
 }
+.enrolled-course-skel{ display:grid; gap:10px; margin-bottom:14px; }
+.enrolled-course-skel .skel-card{
+  width:100%;
+  height:46px;
+  border-radius:10px;
+  background:linear-gradient(90deg, var(--paper) 25%, #eef1f7 37%, var(--paper) 63%);
+  background-size:400% 100%;
+  animation:skel-shimmer 1.4s ease infinite;
+}
+
+/* কোর্স রিফ্রেশ ব্যর্থ হলে (নেট সমস্যা/সার্ভার সাড়া না দিলে) দেখানো toast —
+   index.html-এর va-toast-এর সাথেই মিল রেখে (নিচে মাঝখানে ভেসে ওঠে, কয়েক
+   সেকেন্ড পর মিলিয়ে যায়) */
+.va-toast{
+  position:fixed;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--ink);
+  color:#fff;
+  padding:14px 24px;
+  border-radius:999px;
+  font-family:'Baloo Da 2', sans-serif;
+  font-weight:600;
+  font-size:14.5px;
+  box-shadow:0 14px 30px rgba(30,42,71,.3);
+  z-index:9998;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease;
+  max-width:min(90vw, 420px);
+  text-align:center;
+}
+.va-toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+@media (max-width:600px){
+  .va-toast{ font-size:13px; padding:12px 18px; bottom:80px; }
+}
 @media(max-width:640px){
   .learning-area{ margin-top:5px; padding-top:5px; }
   .learning-head h3{ font-size:19px; }
@@ -1160,8 +1201,12 @@ footer a:hover{ color:#fff; }
     selectCourse(courses[0].name);
   }
 
-  function renderDashboard(data){
-    // Dashboard is ready: close the loading overlay before showing it.
+  // প্রোফাইল অংশ (নাম, লেভেল, ইনস্টিটিউট ইত্যাদি) কম ঝুঁকিপূর্ণ আর কালেভদ্রে বদলায়,
+  // তাই এটা cache থেকে সাথে সাথেই (instant) দেখানো নিরাপদ। কোর্স/সাবজেক্টের status
+  // (active/expired/device-blocked) আলাদাভাবে renderEnrolledCourses() দিয়ে বসানো হয় —
+  // যাতে "আগে stale কোর্স দেখানো, তারপর কয়েক সেকেন্ড পর ঠিকটা দেখানো" এই flash/jump
+  // কখনো না হয়।
+  function renderProfileInfo(data){
     hideLoading();
     document.getElementById('dashName').textContent = data.name || '—';
     document.getElementById('dashLevel').textContent = data.level || '—';
@@ -1169,7 +1214,61 @@ footer a:hover{ color:#fff; }
     document.getElementById('dashDepartment').textContent = data.department || '—';
     document.getElementById('dashInstitute').textContent = data.institute || '—';
     document.getElementById('dashMobile').textContent = data.mobile || '—';
+    authPageHead.style.display = 'none';
+    authWrapSection.style.display = 'none';
+    dashboardSection.style.display = 'block';
+  }
 
+  // কোর্স লিস্ট অংশে সার্ভার থেকে confirmed data না আসা পর্যন্ত একটা shimmer
+  // placeholder দেখায় (পুরনো cached কোর্স/status দেখানো হয় না), যাতে fresh data
+  // এসে সাথে সাথেই সঠিক অবস্থা (active/expired/locked/নতুন subject) একবারেই বসে —
+  // মাঝখানে "পুরনোটা দেখানোর পর নতুনটায় জাম্প" করার মতো কিছু চোখে না পড়ে।
+  function showCourseListSkeleton(){
+    const deviceBlockedBanner = document.getElementById('deviceBlockedBanner');
+    if(deviceBlockedBanner) deviceBlockedBanner.style.display = 'none';
+    learningEmpty.style.display = 'none';
+    classLearningReset();
+    enrolledCourseList.innerHTML = '<div class="enrolled-course-skel"><span class="skel-card"></span><span class="skel-card"></span></div>';
+  }
+
+  // সার্ভার থেকে কোর্সের fresh status আনতে ব্যর্থ হলে (নেট সমস্যা/timeout) —
+  // পুরনো cached কোর্স দেখানো হয় না, বরং একটা toast দিয়ে জানানো হয় আর কোর্স
+  // অংশে একটা retry অপশন দেখানো হয়।
+  let vaToastTimer = null;
+  function vaShowToast(message){
+    let toast = document.getElementById('vaToast');
+    if(!toast){
+      toast = document.createElement('div');
+      toast.id = 'vaToast';
+      toast.className = 'va-toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(vaToastTimer);
+    vaToastTimer = setTimeout(()=>toast.classList.remove('show'), 3200);
+  }
+
+  function showCourseListError(mobile){
+    const deviceBlockedBanner = document.getElementById('deviceBlockedBanner');
+    if(deviceBlockedBanner) deviceBlockedBanner.style.display = 'none';
+    learningEmpty.style.display = 'none';
+    classLearningReset();
+    enrolledCourseList.innerHTML = `<div class="renew-notice">
+      <strong>📶 কোর্সের তথ্য লোড করা যায়নি</strong>
+      <p>ইন্টারনেট সংযোগ চেক করে আবার চেষ্টা করুন।</p>
+      <button type="button" class="btn btn-outline" id="courseRetryBtn" style="margin-top:10px;">🔄 আবার চেষ্টা করুন</button>
+    </div>`;
+    const retryBtn = document.getElementById('courseRetryBtn');
+    if(retryBtn) retryBtn.addEventListener('click', ()=>{
+      showCourseListSkeleton();
+      refreshStudentData(mobile);
+    });
+  }
+
+  function renderDashboard(data){
+    // Dashboard is ready: close the loading overlay before showing it.
+    renderProfileInfo(data);
     renderEnrolledCourses(data);
     const enrollmentDates=document.getElementById('enrollmentDates');
     const enrolledCourses=getEnrolledCourses(data);
@@ -1177,9 +1276,6 @@ footer a:hover{ color:#fff; }
       const latest=enrolledCourses[enrolledCourses.length-1];
       enrollmentDates.innerHTML=`Joined: <strong>${escapeHtml(formatDate(latest.enrolledAt))}</strong>`;
     } else if(enrollmentDates){ enrollmentDates.textContent='—'; }
-    authPageHead.style.display = 'none';
-    authWrapSection.style.display = 'none';
-    dashboardSection.style.display = 'block';
   }
 
   function showAuthUI(){
@@ -1206,7 +1302,13 @@ footer a:hover{ color:#fff; }
             alert('❌ ' + (err.message || 'Course enrollment failed.'));
           });
       } else {
-        renderDashboard(cachedData);
+        // প্রোফাইল ইনফো (নাম, লেভেল ইত্যাদি) instant দেখানো হয় cache থেকে — এটা
+        // কম ঝুঁকিপূর্ণ। কিন্তু কোর্স/সাবজেক্ট অংশ পুরনো cache থেকে সাথে সাথে না
+        // দেখিয়ে একটা skeleton দেখানো হয়, আর সার্ভার থেকে fresh/confirmed
+        // status (active/expired/device-blocked/নতুন subject) আসার পরই একবারে
+        // বসানো হয় — তাই "আগে পুরনোটা, কয়েক সেকেন্ড পর নতুনটা" এই flash হয় না।
+        renderProfileInfo(cachedData);
+        showCourseListSkeleton();
         refreshStudentData(cachedData.mobile);
       }
     }catch(e){
@@ -1238,25 +1340,38 @@ footer a:hover{ color:#fff; }
   // account দিয়ে login করলে সেটাও যেন overwrite না হয়)।
   async function refreshStudentData(mobile){
     if(!mobile) return;
+    // এখনো logged-in আছে কি না, আর একই account কি না — সেটা result আসার পরে আর
+    // error state দেখানোর আগে, দুই জায়গাতেই চেক করার জন্য একটা helper।
+    const isStillCurrentUser = ()=>{
+      const stillLoggedInRaw = localStorage.getItem(LS_USER_KEY);
+      if(!stillLoggedInRaw) return false; // ইতিমধ্যে logout হয়ে গেছে
+      let stillLoggedInMobile = '';
+      try{ stillLoggedInMobile = JSON.parse(stillLoggedInRaw)?.mobile || ''; }catch(e){}
+      return normalizeMobileForMatch(stillLoggedInMobile) === normalizeMobileForMatch(mobile);
+    };
     try{
       const result = await callApi({
         action:'get_student',
         mobile: normalizeMobileForMatch(mobile),
         deviceToken: getDeviceToken()
       });
+      if(!isStillCurrentUser()) return; // মাঝে logout করেছে বা অন্য account-এ ঢুকেছে
       if(result.status === 'ok' && result.data){
-        const stillLoggedInRaw = localStorage.getItem(LS_USER_KEY);
-        if(!stillLoggedInRaw) return; // ইতিমধ্যে logout হয়ে গেছে — কিছু করার দরকার নেই
-        let stillLoggedInMobile = '';
-        try{ stillLoggedInMobile = JSON.parse(stillLoggedInRaw)?.mobile || ''; }catch(e){}
-        if(normalizeMobileForMatch(stillLoggedInMobile) !== normalizeMobileForMatch(mobile)) return; // মাঝে account বদলে গেছে
-
         result.data.mobile = String(mobile).trim();
         localStorage.setItem(LS_USER_KEY, JSON.stringify(result.data));
         renderDashboard(result.data);
+      } else {
+        // সার্ভার fresh data দিতে পারেনি — পুরনো cached কোর্স দেখানো হয় না়,
+        // বরং toast + retry option দেখানো হয়।
+        vaShowToast('📶 নেটওয়ার্ক সমস্যা হচ্ছে, একটু পর আবার চেষ্টা করুন।');
+        showCourseListError(mobile);
       }
     }catch(err){
       console.error('Background student data refresh failed:', err);
+      if(isStillCurrentUser()){
+        vaShowToast('📶 নেটওয়ার্ক সমস্যা হচ্ছে, একটু পর আবার চেষ্টা করুন।');
+        showCourseListError(mobile);
+      }
     }
   }
 
