@@ -446,6 +446,7 @@ header.nav{
 .class-search-input:focus{ border-color:var(--accent); }
 .class-search-input::placeholder{ color:var(--ink-soft); }
 .class-player-wrap{
+  position:relative;
   margin:6px 0 18px;
   background:#111827;
   border-radius:12px;
@@ -453,7 +454,25 @@ header.nav{
   aspect-ratio:16/9;
   box-shadow:var(--shadow);
 }
-.class-player-wrap iframe{ width:100%; height:100%; border:0; display:block; }
+.class-player-wrap iframe{ width:100%; height:100%; border:0; display:block; pointer-events:none; }
+.yt-mount{ position:absolute; inset:0; }
+.yt-click-catcher{
+  position:absolute; left:0; right:0; top:0; bottom:44px;
+  z-index:2; cursor:pointer; background:transparent;
+}
+.custom-controls{
+  position:absolute; left:0; right:0; bottom:0; z-index:3;
+  display:flex; align-items:center; gap:10px;
+  padding:8px 12px;
+  background:linear-gradient(transparent, rgba(0,0,0,.8));
+}
+.cc-btn{
+  background:none; border:none; color:#fff; font-size:17px;
+  cursor:pointer; padding:2px 6px; line-height:1;
+}
+.cc-btn:hover{ opacity:.8; }
+.cc-time{ color:#fff; font-size:11px; min-width:80px; text-align:center; white-space:nowrap; }
+.cc-seek{ flex:1; accent-color:var(--accent, #ff5a1f); cursor:pointer; }
 .class-list{ display:grid; gap:6px; }
 .class-item{
   display:flex;
@@ -879,7 +898,17 @@ footer a:hover{ color:#fff; }
             <div class="class-search-wrap" id="classSearchWrap" style="display:none;">
               <input type="text" id="classSearchInput" class="class-search-input" placeholder="🔍 ক্লাস/চ্যাপ্টার খুঁজুন...">
             </div>
-            <div class="class-player-wrap" id="classPlayer" style="display:none;"></div>
+            <div class="class-player-wrap" id="classPlayer" style="display:none;">
+              <div class="yt-mount" id="ytMount"></div>
+              <div class="yt-click-catcher" id="ytClickCatcher" title="প্লে/পজ করতে ক্লিক করুন"></div>
+              <div class="custom-controls" id="customControls">
+                <button type="button" class="cc-btn" id="ccPlayPause" aria-label="Play/Pause">▶</button>
+                <span class="cc-time" id="ccTime">0:00 / 0:00</span>
+                <input type="range" class="cc-seek" id="ccSeek" min="0" max="1000" value="0" aria-label="Seek">
+                <button type="button" class="cc-btn" id="ccMute" aria-label="Mute">🔊</button>
+                <button type="button" class="cc-btn" id="ccFullscreen" aria-label="Fullscreen">⛶</button>
+              </div>
+            </div>
             <div class="class-list" id="classList"></div>
           </div>
           <div class="learning-empty" id="learningEmpty">এখনো কোনো course enrolled নেই।</div>
@@ -989,6 +1018,13 @@ footer a:hover{ color:#fff; }
   const classSearchInput = document.getElementById('classSearchInput');
   const classPlayer = document.getElementById('classPlayer');
   const classList = document.getElementById('classList');
+  const ytMount = document.getElementById('ytMount');
+  const ytClickCatcher = document.getElementById('ytClickCatcher');
+  const ccPlayPause = document.getElementById('ccPlayPause');
+  const ccSeek = document.getElementById('ccSeek');
+  const ccTime = document.getElementById('ccTime');
+  const ccMute = document.getElementById('ccMute');
+  const ccFullscreen = document.getElementById('ccFullscreen');
   const loadingOverlay = document.getElementById('loadingOverlay');
   const loadingText = document.getElementById('loadingText');
 
@@ -1049,6 +1085,143 @@ footer a:hover{ color:#fff; }
     const m=value.match(/[?&]v=([^&]+)/i);
     return m ? m[1] : '';
   }
+
+  // ---------- Custom (branding-free) class video player ----------
+  // ছাত্র যেন YouTube-এর নিজস্ব লোগো/টাইটেল/"Watch on YouTube" লিংকে ক্লিক করে
+  // সাইট থেকে বের হয়ে যেতে না পারে, তাই controls=0 দিয়ে YouTube-এর native UI
+  // পুরোপুরি বন্ধ রেখে, নিজস্ব play/pause/seek/mute/fullscreen বাটন বসানো হলো।
+  let ytPlayer = null;
+  let ytApiReady = false;
+  let pendingVideoId = null;
+  let ytProgressTimer = null;
+  let ytSeeking = false;
+
+  function loadYouTubeApiOnce(){
+    if(window.YT && window.YT.Player){ ytApiReady = true; return; }
+    if(document.getElementById('ytIframeApiScript')) return;
+    const tag = document.createElement('script');
+    tag.id = 'ytIframeApiScript';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
+
+  window.onYouTubeIframeAPIReady = function(){
+    ytApiReady = true;
+    if(pendingVideoId){ const id = pendingVideoId; pendingVideoId = null; playClassVideo(id); }
+  };
+
+  function formatSeconds(sec){
+    sec = Math.max(0, Math.floor(sec || 0));
+    const m = Math.floor(sec/60), s = sec % 60;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function updatePlayerTimeUI(){
+    if(!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+    const cur = ytPlayer.getCurrentTime() || 0;
+    const dur = ytPlayer.getDuration() || 0;
+    if(!ytSeeking && dur) ccSeek.value = String(Math.floor((cur/dur) * 1000));
+    ccTime.textContent = `${formatSeconds(cur)} / ${formatSeconds(dur)}`;
+  }
+
+  function startProgressLoop(){
+    stopProgressLoop();
+    ytProgressTimer = setInterval(updatePlayerTimeUI, 500);
+  }
+  function stopProgressLoop(){
+    if(ytProgressTimer){ clearInterval(ytProgressTimer); ytProgressTimer = null; }
+  }
+
+  function onYtPlayerStateChange(e){
+    if(e.data === YT.PlayerState.PLAYING){
+      ccPlayPause.textContent = '⏸';
+      startProgressLoop();
+    } else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){
+      ccPlayPause.textContent = '▶';
+      if(e.data === YT.PlayerState.ENDED) stopProgressLoop();
+    }
+  }
+
+  function createYtPlayer(id){
+    ytPlayer = new YT.Player(ytMount, {
+      videoId: id,
+      playerVars: {
+        autoplay: 1, controls: 0, disablekb: 1, rel: 0,
+        modestbranding: 1, iv_load_policy: 3, playsinline: 1, fs: 0,
+        origin: window.location.origin
+      },
+      events: {
+        onReady: (e)=>{ e.target.playVideo(); updatePlayerTimeUI(); },
+        onStateChange: onYtPlayerStateChange
+      }
+    });
+  }
+
+  function playClassVideo(id){
+    if(!id) return;
+    classPlayer.style.display = 'block';
+    classPlayer.scrollIntoView({behavior:'smooth', block:'nearest'});
+    if(!(window.YT && window.YT.Player)){
+      pendingVideoId = id;
+      loadYouTubeApiOnce();
+      return;
+    }
+    if(!ytPlayer){
+      createYtPlayer(id);
+    } else {
+      ytPlayer.loadVideoById(id);
+    }
+  }
+
+  function stopClassPlayer(){
+    stopProgressLoop();
+    if(ytPlayer && typeof ytPlayer.stopVideo === 'function'){
+      try{ ytPlayer.stopVideo(); }catch(e){}
+    }
+    classPlayer.style.display = 'none';
+  }
+
+  if(ytClickCatcher){
+    ytClickCatcher.addEventListener('click', ()=>{
+      if(!ytPlayer) return;
+      if(ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+      else ytPlayer.playVideo();
+    });
+  }
+  if(ccPlayPause){
+    ccPlayPause.addEventListener('click', ()=>{
+      if(!ytPlayer) return;
+      if(ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+      else ytPlayer.playVideo();
+    });
+  }
+  if(ccSeek){
+    ccSeek.addEventListener('input', ()=>{ ytSeeking = true; });
+    ccSeek.addEventListener('change', ()=>{
+      if(!ytPlayer) return;
+      const dur = ytPlayer.getDuration() || 0;
+      const pct = Number(ccSeek.value) / 1000;
+      ytPlayer.seekTo(dur * pct, true);
+      ytSeeking = false;
+    });
+  }
+  let ytMuted = false;
+  if(ccMute){
+    ccMute.addEventListener('click', ()=>{
+      if(!ytPlayer) return;
+      ytMuted = !ytMuted;
+      if(ytMuted){ ytPlayer.mute(); ccMute.textContent = '🔇'; }
+      else { ytPlayer.unMute(); ccMute.textContent = '🔊'; }
+    });
+  }
+  if(ccFullscreen){
+    ccFullscreen.addEventListener('click', ()=>{
+      if(classPlayer.requestFullscreen) classPlayer.requestFullscreen();
+      else if(classPlayer.webkitRequestFullscreen) classPlayer.webkitRequestFullscreen();
+    });
+  }
+  // ছাত্র যেন right-click করে "Copy video URL" বের করতে না পারে, সেই deterrent
+  classPlayer.addEventListener('contextmenu', (e)=> e.preventDefault());
 
   // নতুন consolidated Sheet-এর একটাই "Course Data" Tab পুরোটা একবার fetch করে
   // cache রাখা হয় (Level, Course Name, Subject, Chapter, Topic, Link কলাম নিয়ে),
@@ -1112,8 +1285,7 @@ footer a:hover{ color:#fff; }
       : '<div class="learning-empty">কোনো ক্লাস খুঁজে পাওয়া যায়নি।</div>';
     classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
       const id=youtubeId(item.dataset.video); if(!id) return;
-      classPlayer.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&playsinline=1&rel=0" title="Class video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-      classPlayer.style.display='block'; classPlayer.scrollIntoView({behavior:'smooth',block:'nearest'});
+      playClassVideo(id);
     }));
   }
 
@@ -1157,7 +1329,7 @@ footer a:hover{ color:#fff; }
     subjectRow.innerHTML=subjects.map((subject,i)=>`<button type="button" class="subject-btn${i===0?' active':''}" data-subject="${escapeHtml(subject)}">${escapeHtml(subject)}</button>`).join('');
     const showSubject=(subject)=>{
       subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.subject)===normalizeForMatch(subject)));
-      classPlayer.style.display='none'; classPlayer.innerHTML='';
+      stopClassPlayer();
       const filtered=rows.filter(x=>normalizeForMatch(x.subject)===normalizeForMatch(subject));
       activeSubjectRows = filtered;
       if(classSearchInput) classSearchInput.value='';
@@ -1170,7 +1342,7 @@ footer a:hover{ color:#fff; }
 
   function classLearningReset(){
     if(!courseLearningPanel) return;
-    courseLearningPanel.style.display='none'; subjectRow.innerHTML=''; classPlayer.innerHTML=''; classPlayer.style.display='none'; classList.innerHTML='';
+    courseLearningPanel.style.display='none'; subjectRow.innerHTML=''; stopClassPlayer(); classList.innerHTML='';
     activeSubjectRows = [];
     if(classSearchInput) classSearchInput.value='';
     if(classSearchWrap) classSearchWrap.style.display='none';
@@ -1180,7 +1352,7 @@ footer a:hover{ color:#fff; }
     classLearningReset();
     courseLearningPanel.style.display='block';
     subjectRow.innerHTML='';
-    classPlayer.style.display='none'; classPlayer.innerHTML='';
+    stopClassPlayer();
     const expiresText = course.expiresAt ? escapeHtml(formatDate(course.expiresAt)) : '';
     classList.innerHTML=`<div class="renew-notice">
       <strong>⏳ এই কোর্সের মেয়াদ শেষ হয়ে গেছে</strong>
@@ -1192,7 +1364,7 @@ footer a:hover{ color:#fff; }
     classLearningReset();
     courseLearningPanel.style.display='block';
     subjectRow.innerHTML='';
-    classPlayer.style.display='none'; classPlayer.innerHTML='';
+    stopClassPlayer();
     classList.innerHTML=`<div class="renew-notice">
       <strong>🔒 একাধিক ডিভাইসে লগইন সনাক্ত হয়েছে</strong>
       <p>নিরাপত্তার কারণে এই কোর্সটি লক করা হয়েছে। আনলক করতে আমাদের সাথে যোগাযোগ করুন।</p>
