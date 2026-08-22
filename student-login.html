@@ -454,12 +454,8 @@ header.nav{
   aspect-ratio:16/9;
   box-shadow:var(--shadow);
 }
-.class-player-wrap iframe{ width:100%; height:100%; border:0; display:block; pointer-events:none; }
+.class-player-wrap iframe{ width:100%; height:100%; border:0; display:block; }
 .yt-mount{ position:absolute; inset:0; }
-.yt-click-catcher{
-  position:absolute; left:0; right:0; top:0; bottom:44px;
-  z-index:2; cursor:pointer; background:transparent;
-}
 .custom-controls{
   position:absolute; left:0; right:0; bottom:0; z-index:3;
   display:flex; align-items:center; gap:10px;
@@ -473,6 +469,24 @@ header.nav{
 .cc-btn:hover{ opacity:.8; }
 .cc-time{ color:#fff; font-size:11px; min-width:80px; text-align:center; white-space:nowrap; }
 .cc-seek{ flex:1; accent-color:var(--accent, #ff5a1f); cursor:pointer; }
+.cc-settings-panel{
+  position:absolute; right:8px; bottom:48px; z-index:4;
+  min-width:190px; background:rgba(20,20,20,.96); color:#fff;
+  border-radius:10px; overflow:hidden; font-size:13px;
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
+}
+.cc-settings-row, .cc-settings-back, .cc-settings-sub button.cc-option{
+  display:flex; align-items:center; justify-content:space-between;
+  width:100%; background:none; border:none; color:#fff;
+  padding:10px 14px; font-size:13px; cursor:pointer; text-align:left;
+}
+.cc-settings-row:hover, .cc-settings-back:hover, .cc-settings-sub button.cc-option:hover{
+  background:rgba(255,255,255,.1);
+}
+.cc-settings-right{ display:flex; align-items:center; gap:6px; color:#bbb; }
+.cc-settings-value{ color:#bbb; }
+.cc-settings-back{ font-weight:600; border-bottom:1px solid rgba(255,255,255,.12); }
+.cc-settings-sub button.cc-option.active{ color:var(--accent, #ff5a1f); font-weight:600; }
 .class-list{ display:grid; gap:6px; }
 .class-item{
   display:flex;
@@ -900,13 +914,33 @@ footer a:hover{ color:#fff; }
             </div>
             <div class="class-player-wrap" id="classPlayer" style="display:none;">
               <div class="yt-mount" id="ytMount"></div>
-              <div class="yt-click-catcher" id="ytClickCatcher" title="প্লে/পজ করতে ক্লিক করুন"></div>
               <div class="custom-controls" id="customControls">
                 <button type="button" class="cc-btn" id="ccPlayPause" aria-label="Play/Pause">▶</button>
                 <span class="cc-time" id="ccTime">0:00 / 0:00</span>
                 <input type="range" class="cc-seek" id="ccSeek" min="0" max="1000" value="0" aria-label="Seek">
                 <button type="button" class="cc-btn" id="ccMute" aria-label="Mute">🔊</button>
+                <button type="button" class="cc-btn" id="ccSettings" aria-label="Settings">⚙</button>
                 <button type="button" class="cc-btn" id="ccFullscreen" aria-label="Fullscreen">⛶</button>
+              </div>
+              <div class="cc-settings-panel" id="ccSettingsPanel" style="display:none;">
+                <div class="cc-settings-main" id="ccSettingsMain">
+                  <button type="button" class="cc-settings-row" data-menu="quality">
+                    <span>মান</span>
+                    <span class="cc-settings-right"><span class="cc-settings-value" id="ccQualityValue">Auto</span> ›</span>
+                  </button>
+                  <button type="button" class="cc-settings-row" data-menu="speed">
+                    <span>গতি</span>
+                    <span class="cc-settings-right"><span class="cc-settings-value" id="ccSpeedValue">Normal</span> ›</span>
+                  </button>
+                </div>
+                <div class="cc-settings-sub" id="ccQualityMenu" style="display:none;">
+                  <button type="button" class="cc-settings-back" data-back="quality">‹ মান</button>
+                  <div id="ccQualityOptions"></div>
+                </div>
+                <div class="cc-settings-sub" id="ccSpeedMenu" style="display:none;">
+                  <button type="button" class="cc-settings-back" data-back="speed">‹ গতি</button>
+                  <div id="ccSpeedOptions"></div>
+                </div>
               </div>
             </div>
             <div class="class-list" id="classList"></div>
@@ -1019,12 +1053,20 @@ footer a:hover{ color:#fff; }
   const classPlayer = document.getElementById('classPlayer');
   const classList = document.getElementById('classList');
   const ytMount = document.getElementById('ytMount');
-  const ytClickCatcher = document.getElementById('ytClickCatcher');
   const ccPlayPause = document.getElementById('ccPlayPause');
   const ccSeek = document.getElementById('ccSeek');
   const ccTime = document.getElementById('ccTime');
   const ccMute = document.getElementById('ccMute');
   const ccFullscreen = document.getElementById('ccFullscreen');
+  const ccSettings = document.getElementById('ccSettings');
+  const ccSettingsPanel = document.getElementById('ccSettingsPanel');
+  const ccSettingsMain = document.getElementById('ccSettingsMain');
+  const ccQualityMenu = document.getElementById('ccQualityMenu');
+  const ccSpeedMenu = document.getElementById('ccSpeedMenu');
+  const ccQualityOptions = document.getElementById('ccQualityOptions');
+  const ccSpeedOptions = document.getElementById('ccSpeedOptions');
+  const ccQualityValue = document.getElementById('ccQualityValue');
+  const ccSpeedValue = document.getElementById('ccSpeedValue');
   const loadingOverlay = document.getElementById('loadingOverlay');
   const loadingText = document.getElementById('loadingText');
 
@@ -1151,7 +1193,12 @@ footer a:hover{ color:#fff; }
         origin: window.location.origin
       },
       events: {
-        onReady: (e)=>{ e.target.playVideo(); updatePlayerTimeUI(); },
+        onReady: (e)=>{
+          e.target.playVideo();
+          updatePlayerTimeUI();
+          populateQualityOptions();
+          populateSpeedOptions();
+        },
         onStateChange: onYtPlayerStateChange
       }
     });
@@ -1178,16 +1225,10 @@ footer a:hover{ color:#fff; }
     if(ytPlayer && typeof ytPlayer.stopVideo === 'function'){
       try{ ytPlayer.stopVideo(); }catch(e){}
     }
+    closeSettingsPanel();
     classPlayer.style.display = 'none';
   }
 
-  if(ytClickCatcher){
-    ytClickCatcher.addEventListener('click', ()=>{
-      if(!ytPlayer) return;
-      if(ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
-      else ytPlayer.playVideo();
-    });
-  }
   if(ccPlayPause){
     ccPlayPause.addEventListener('click', ()=>{
       if(!ytPlayer) return;
@@ -1222,6 +1263,99 @@ footer a:hover{ color:#fff; }
   }
   // ছাত্র যেন right-click করে "Copy video URL" বের করতে না পারে, সেই deterrent
   classPlayer.addEventListener('contextmenu', (e)=> e.preventDefault());
+
+  // ---------- Quality ও Speed সেটিংস মেনু ----------
+  const QUALITY_LABELS = {
+    highres:'অতি উচ্চমান', hd2160:'2160p', hd1440:'1440p', hd1080:'1080p',
+    hd720:'720p', large:'480p', medium:'360p', small:'240p', tiny:'144p', auto:'অটো'
+  };
+  const SPEED_LABELS = {
+    0.25:'0.25x', 0.5:'0.5x', 0.75:'0.75x', 1:'স্বাভাবিক',
+    1.25:'1.25x', 1.5:'1.5x', 1.75:'1.75x', 2:'2x'
+  };
+
+  function closeSettingsPanel(){
+    ccSettingsPanel.style.display = 'none';
+    ccSettingsMain.style.display = 'block';
+    ccQualityMenu.style.display = 'none';
+    ccSpeedMenu.style.display = 'none';
+  }
+
+  function populateQualityOptions(){
+    if(!ytPlayer || typeof ytPlayer.getAvailableQualityLevels !== 'function') return;
+    let levels = ytPlayer.getAvailableQualityLevels();
+    if(!levels || !levels.length) levels = ['auto'];
+    if(!levels.includes('auto')) levels = [...levels, 'auto'];
+    const current = (typeof ytPlayer.getPlaybackQuality === 'function' && ytPlayer.getPlaybackQuality()) || 'auto';
+    ccQualityOptions.innerHTML = levels.map(lv=>{
+      const label = QUALITY_LABELS[lv] || lv;
+      const active = lv === current ? ' active' : '';
+      return `<button type="button" class="cc-option${active}" data-quality="${lv}">${label}${lv===current ? ' ✓' : ''}</button>`;
+    }).join('');
+    ccQualityValue.textContent = QUALITY_LABELS[current] || current;
+    ccQualityOptions.querySelectorAll('[data-quality]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const q = btn.dataset.quality;
+        if(q !== 'auto' && typeof ytPlayer.setPlaybackQuality === 'function') ytPlayer.setPlaybackQuality(q);
+        ccQualityValue.textContent = QUALITY_LABELS[q] || q;
+        closeSettingsPanel();
+      });
+    });
+  }
+
+  function populateSpeedOptions(){
+    if(!ytPlayer || typeof ytPlayer.getAvailablePlaybackRates !== 'function') return;
+    let rates = ytPlayer.getAvailablePlaybackRates();
+    if(!rates || !rates.length) rates = [0.25,0.5,0.75,1,1.25,1.5,1.75,2];
+    const current = (typeof ytPlayer.getPlaybackRate === 'function' && ytPlayer.getPlaybackRate()) || 1;
+    ccSpeedOptions.innerHTML = rates.map(r=>{
+      const label = SPEED_LABELS[r] || `${r}x`;
+      const active = r === current ? ' active' : '';
+      return `<button type="button" class="cc-option${active}" data-rate="${r}">${label}${r===current ? ' ✓' : ''}</button>`;
+    }).join('');
+    ccSpeedValue.textContent = SPEED_LABELS[current] || `${current}x`;
+    ccSpeedOptions.querySelectorAll('[data-rate]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const r = Number(btn.dataset.rate);
+        if(typeof ytPlayer.setPlaybackRate === 'function') ytPlayer.setPlaybackRate(r);
+        ccSpeedValue.textContent = SPEED_LABELS[r] || `${r}x`;
+        closeSettingsPanel();
+      });
+    });
+  }
+
+  if(ccSettings){
+    ccSettings.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const isOpen = ccSettingsPanel.style.display === 'block';
+      if(isOpen){ closeSettingsPanel(); return; }
+      populateQualityOptions();
+      populateSpeedOptions();
+      ccSettingsPanel.style.display = 'block';
+    });
+  }
+  if(ccSettingsMain){
+    ccSettingsMain.querySelectorAll('[data-menu]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const menu = btn.dataset.menu;
+        ccSettingsMain.style.display = 'none';
+        if(menu === 'quality') ccQualityMenu.style.display = 'block';
+        if(menu === 'speed') ccSpeedMenu.style.display = 'block';
+      });
+    });
+  }
+  document.querySelectorAll('.cc-settings-back').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      ccQualityMenu.style.display = 'none';
+      ccSpeedMenu.style.display = 'none';
+      ccSettingsMain.style.display = 'block';
+    });
+  });
+  document.addEventListener('click', (e)=>{
+    if(ccSettingsPanel.style.display === 'block' && !ccSettingsPanel.contains(e.target) && e.target !== ccSettings){
+      closeSettingsPanel();
+    }
+  });
 
   // নতুন consolidated Sheet-এর একটাই "Course Data" Tab পুরোটা একবার fetch করে
   // cache রাখা হয় (Level, Course Name, Subject, Chapter, Topic, Link কলাম নিয়ে),
