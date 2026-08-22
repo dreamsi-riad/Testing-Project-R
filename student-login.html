@@ -533,12 +533,39 @@ header.nav{
 }
 .enrolled-course-skel{ display:grid; gap:10px; margin-bottom:14px; }
 .enrolled-course-skel .skel-card{
-  width:100%;
-  height:46px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  min-height:46px;
+  border:1px solid var(--paper-line);
   border-radius:10px;
-  background:linear-gradient(90deg, var(--paper) 25%, #eef1f7 37%, var(--paper) 63%);
-  background-size:400% 100%;
-  animation:skel-shimmer 1.4s ease infinite;
+  background:var(--paper);
+  overflow:hidden;
+}
+.enrolled-course-skel .skel-icon{
+  width:32px; height:32px;
+  border-radius:50%;
+  background:#ece4cf;
+  flex-shrink:0;
+}
+.enrolled-course-skel .skel-lines{ flex:1; display:flex; flex-direction:column; gap:7px; }
+.enrolled-course-skel .skel-line{ height:11px; border-radius:6px; background:#ece4cf; }
+.enrolled-course-skel .skel-line-title{ width:62%; }
+.enrolled-course-skel .skel-line-sub{ width:36%; height:9px; }
+.enrolled-course-skel .skel-card::after{
+  content:'';
+  position:absolute;
+  top:0; left:-60%;
+  width:60%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.75), transparent);
+  animation:skel-sweep 1.6s ease-in-out infinite;
+}
+.enrolled-course-skel .skel-card:nth-child(2)::after{ animation-delay:.22s; }
+@keyframes skel-sweep{
+  0%{ left:-60%; }
+  100%{ left:120%; }
 }
 
 /* কোর্স রিফ্রেশ ব্যর্থ হলে (নেট সমস্যা/সার্ভার সাড়া না দিলে) দেখানো toast —
@@ -1228,7 +1255,10 @@ footer a:hover{ color:#fff; }
     if(deviceBlockedBanner) deviceBlockedBanner.style.display = 'none';
     learningEmpty.style.display = 'none';
     classLearningReset();
-    enrolledCourseList.innerHTML = '<div class="enrolled-course-skel"><span class="skel-card"></span><span class="skel-card"></span></div>';
+    enrolledCourseList.innerHTML = `<div class="enrolled-course-skel">
+      <div class="skel-card"><span class="skel-icon"></span><span class="skel-lines"><span class="skel-line skel-line-title"></span><span class="skel-line skel-line-sub"></span></span></div>
+      <div class="skel-card"><span class="skel-icon"></span><span class="skel-lines"><span class="skel-line skel-line-title"></span><span class="skel-line skel-line-sub"></span></span></div>
+    </div>`;
   }
 
   // সার্ভার থেকে কোর্সের fresh status আনতে ব্যর্থ হলে (নেট সমস্যা/timeout) —
