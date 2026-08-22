@@ -405,6 +405,21 @@ header.nav{
   transition:.15s ease;
 }
 .subject-btn:hover,.subject-btn.active{ background:var(--accent); color:var(--ink); border-color:var(--accent); box-shadow:0 6px 16px rgba(232,163,61,.25); }
+.class-search-wrap{ margin:2px 0 12px; }
+.class-search-input{
+  width:100%;
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:14.5px;
+  padding:11px 14px;
+  border-radius:10px;
+  border:1.5px solid var(--paper-line);
+  background:var(--paper);
+  color:var(--ink);
+  outline:none;
+  transition:border-color .15s ease;
+}
+.class-search-input:focus{ border-color:var(--accent); }
+.class-search-input::placeholder{ color:var(--ink-soft); }
 .class-player-wrap{
   margin:6px 0 18px;
   background:#111827;
@@ -761,6 +776,9 @@ footer a:hover{ color:#fff; }
           <div class="enrolled-course-list" id="enrolledCourseList"></div>
           <div id="courseLearningPanel" style="display:none;">
             <div class="subject-row" id="subjectRow"></div>
+            <div class="class-search-wrap" id="classSearchWrap" style="display:none;">
+              <input type="text" id="classSearchInput" class="class-search-input" placeholder="🔍 ক্লাস/চ্যাপ্টার খুঁজুন...">
+            </div>
             <div class="class-player-wrap" id="classPlayer" style="display:none;"></div>
             <div class="class-list" id="classList"></div>
           </div>
@@ -815,6 +833,7 @@ footer a:hover{ color:#fff; }
   const CLASS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CLASS_SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(COURSE_DATA_TAB)}`;
   const classDataCache = new Map();
   let courseDataRowsPromise = null;
+  let activeSubjectRows = [];
   const enrollParam = new URLSearchParams(window.location.search).get('enroll');
   // Sheet থেকে আসা টেক্সট তুলনা/মিলানোর (matching) জন্য normalize করার হেল্পার।
   // শিটে ভুলবশত extra space বা capital/small letter ভিন্ন হলেও যেন মিল খুঁজে পায়,
@@ -851,6 +870,8 @@ footer a:hover{ color:#fff; }
   const courseLearningPanel = document.getElementById('courseLearningPanel');
   const learningEmpty = document.getElementById('learningEmpty');
   const subjectRow = document.getElementById('subjectRow');
+  const classSearchWrap = document.getElementById('classSearchWrap');
+  const classSearchInput = document.getElementById('classSearchInput');
   const classPlayer = document.getElementById('classPlayer');
   const classList = document.getElementById('classList');
   const loadingOverlay = document.getElementById('loadingOverlay');
@@ -968,6 +989,33 @@ footer a:hover{ color:#fff; }
   }
 
 
+  // একটা rows array থেকে class list render করে (subject select করলে বা search করলে —
+  // দুই জায়গাতেই এই একই ফাংশন ব্যবহার হয়, যাতে কোড ডুপ্লিকেট না হয়)।
+  function renderClassItems(rows){
+    classList.innerHTML = rows.length
+      ? rows.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play">▶</span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('')
+      : '<div class="learning-empty">কোনো ক্লাস খুঁজে পাওয়া যায়নি।</div>';
+    classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
+      const id=youtubeId(item.dataset.video); if(!id) return;
+      classPlayer.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&playsinline=1&rel=0" title="Class video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      classPlayer.style.display='block'; classPlayer.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }));
+  }
+
+  // Subject-এর ভিতরে class/chapter নাম দিয়ে সার্চ করার জন্য — space/case নিয়ে সমস্যা
+  // যেন না হয় তাই normalizeForMatch দিয়ে দুইপাশই normalize করে substring মিলানো হয়।
+  if(classSearchInput){
+    classSearchInput.addEventListener('input', ()=>{
+      const q = normalizeForMatch(classSearchInput.value);
+      if(!q){ renderClassItems(activeSubjectRows); return; }
+      const filtered = activeSubjectRows.filter(item=>{
+        const haystack = normalizeForMatch(`${item.className || ''} ${item.chapter || ''}`);
+        return haystack.includes(q);
+      });
+      renderClassItems(filtered);
+    });
+  }
+
   async function loadCourseClasses(courseName){
     classLearningReset();
     if(!courseName) return;
@@ -996,12 +1044,10 @@ footer a:hover{ color:#fff; }
       subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.subject)===normalizeForMatch(subject)));
       classPlayer.style.display='none'; classPlayer.innerHTML='';
       const filtered=rows.filter(x=>normalizeForMatch(x.subject)===normalizeForMatch(subject));
-      classList.innerHTML=filtered.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play">▶</span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('');
-      classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
-        const id=youtubeId(item.dataset.video); if(!id) return;
-        classPlayer.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&playsinline=1&rel=0" title="Class video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        classPlayer.style.display='block'; classPlayer.scrollIntoView({behavior:'smooth',block:'nearest'});
-      }));
+      activeSubjectRows = filtered;
+      if(classSearchInput) classSearchInput.value='';
+      if(classSearchWrap) classSearchWrap.style.display = filtered.length ? 'block' : 'none';
+      renderClassItems(filtered);
     };
     subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.addEventListener('click',()=>showSubject(btn.dataset.subject)));
     showSubject(subjects[0]);
@@ -1010,6 +1056,9 @@ footer a:hover{ color:#fff; }
   function classLearningReset(){
     if(!courseLearningPanel) return;
     courseLearningPanel.style.display='none'; subjectRow.innerHTML=''; classPlayer.innerHTML=''; classPlayer.style.display='none'; classList.innerHTML='';
+    activeSubjectRows = [];
+    if(classSearchInput) classSearchInput.value='';
+    if(classSearchWrap) classSearchWrap.style.display='none';
   }
 
   function showExpiredNotice(course){
