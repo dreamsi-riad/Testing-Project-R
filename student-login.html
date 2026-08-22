@@ -430,6 +430,17 @@ header.nav{
   transition:.15s ease;
 }
 .subject-btn:hover,.subject-btn.active{ background:radial-gradient(circle at 32% 28%, #ffd98a, var(--accent) 65%); color:var(--ink); border-color:var(--accent); box-shadow:0 6px 16px rgba(232,163,61,.25), inset 0 1px 1px rgba(255,255,255,.5); }
+.subject-btn{ display:inline-flex; align-items:center; gap:8px; }
+.subject-icon{
+  flex:none;
+  width:26px; height:26px;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px;
+  line-height:1;
+  background:linear-gradient(145deg, var(--sky), var(--ink));
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.35);
+}
 .class-search-wrap{ margin:2px 0 12px; }
 .class-search-input{
   width:100%;
@@ -1474,7 +1485,7 @@ footer a:hover{ color:#fff; }
     });
     const subjects = [...seenSubjects.values()];
     courseLearningPanel.style.display='block';
-    subjectRow.innerHTML=subjects.map((subject,i)=>`<button type="button" class="subject-btn${i===0?' active':''}" data-subject="${escapeHtml(subject)}">${escapeHtml(subject)}</button>`).join('');
+    subjectRow.innerHTML=subjects.map((subject,i)=>`<button type="button" class="subject-btn${i===0?' active':''}" data-subject="${escapeHtml(subject)}"><span class="subject-icon">${getSubjectIcon(subject)}</span>${escapeHtml(subject)}</button>`).join('');
     const showSubject=(subject)=>{
       subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.subject)===normalizeForMatch(subject)));
       stopClassPlayer();
@@ -1669,6 +1680,35 @@ footer a:hover{ color:#fff; }
   } else {
     showAuthUI();
     localStorage.getItem(LS_REGISTERED_KEY) ? showLogin() : showRegister();
+  }
+
+  // সাবজেক্টের নাম দেখে একটা relevant ইমোজি আইকন বেছে দেয় (নতুন সাবজেক্ট যোগ হলেও
+  // কোনো কোড না বদলে, keyword মিলে গেলে আইকন বসে যায়; না মিললে ডিফল্ট 📘)।
+  function getSubjectIcon(subject){
+    const s = String(subject || '').toLowerCase();
+    const rules = [
+      [['বাংলা'], '📕'],
+      [['english','ইংরেজি'], '🔤'],
+      [['accounting','হিসাব'], '🧮'],
+      [['finance','ফিন্যান্স'], '💰'],
+      [['management','ম্যানেজমেন্ট'], '📊'],
+      [['marketing','মার্কেটিং'], '📢'],
+      [['economics','অর্থনীতি'], '📈'],
+      [['math','গণিত'], '➗'],
+      [['physics','পদার্থ'], '⚛️'],
+      [['chemistry','রসায়ন'], '🧪'],
+      [['biology','জীববিজ্ঞান'], '🧬'],
+      [['ict','computer','কম্পিউটার'], '💻'],
+      [['islam','ধর্ম'], '🕌'],
+      [['history','ইতিহাস'], '📜'],
+      [['geography','ভূগোল'], '🌍'],
+      [['statistics','পরিসংখ্যান'], '📉'],
+      [['law','আইন'], '⚖️'],
+    ];
+    for(const [keys, icon] of rules){
+      if(keys.some(k => s.includes(k))) return icon;
+    }
+    return '📘';
   }
 
   function normalizeMobileForMatch(mobile){
