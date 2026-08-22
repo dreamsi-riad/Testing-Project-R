@@ -1229,6 +1229,13 @@ footer a:hover{ color:#fff; }
   // থাকে (login না করেই), তাই এই ফাংশন ব্যাকগ্রাউন্ডে চুপচাপ সার্ভার থেকে ফ্রেশ
   // ডেটা এনে dashboard + localStorage cache আপডেট করে দেয়। ব্যর্থ হলে (নেট না
   // থাকলে) cached ডেটা-ই দেখতে থাকবে, কোনো error দেখানো হয় না।
+  //
+  // ⚠️ বাগ ফিক্স: এই কল সার্ভারে শেষ হতে ১-২ সেকেন্ড লাগতে পারে। এর মধ্যেই কেউ
+  // Logout চাপলে, আগে থেকে চলতে থাকা এই request পরে শেষ হয়ে আবার localStorage-এ
+  // user বসিয়ে দিত আর dashboard দেখিয়ে দিত — মানে logout করার কয়েক সেকেন্ড পর
+  // "ভুতুড়েভাবে" আবার login হয়ে যেত। তাই result প্রয়োগ করার আগে চেক করা হয় যে
+  // ইউজার এখনো আসলেই logged-in আছে কিনা (আর একই account কিনা — মাঝে অন্য
+  // account দিয়ে login করলে সেটাও যেন overwrite না হয়)।
   async function refreshStudentData(mobile){
     if(!mobile) return;
     try{
@@ -1238,6 +1245,12 @@ footer a:hover{ color:#fff; }
         deviceToken: getDeviceToken()
       });
       if(result.status === 'ok' && result.data){
+        const stillLoggedInRaw = localStorage.getItem(LS_USER_KEY);
+        if(!stillLoggedInRaw) return; // ইতিমধ্যে logout হয়ে গেছে — কিছু করার দরকার নেই
+        let stillLoggedInMobile = '';
+        try{ stillLoggedInMobile = JSON.parse(stillLoggedInRaw)?.mobile || ''; }catch(e){}
+        if(normalizeMobileForMatch(stillLoggedInMobile) !== normalizeMobileForMatch(mobile)) return; // মাঝে account বদলে গেছে
+
         result.data.mobile = String(mobile).trim();
         localStorage.setItem(LS_USER_KEY, JSON.stringify(result.data));
         renderDashboard(result.data);
