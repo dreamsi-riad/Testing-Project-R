@@ -369,7 +369,7 @@ header.nav{
   border-radius:11px;
   display:flex; align-items:center; justify-content:center;
   font-size:19px;
-  background:linear-gradient(145deg, #7bb3e8, var(--sky));
+  background:linear-gradient(145deg, #fff2dc, #ffe1ab);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.6);
   transition:.18s ease;
 }
@@ -394,7 +394,7 @@ header.nav{
   background:linear-gradient(180deg, #fffaf0, #fff);
   box-shadow:0 10px 24px rgba(232,163,61,.22), inset 0 0 0 1px rgba(232,163,61,.15);
 }
-.enrolled-course-btn.active .ecb-icon{ background:linear-gradient(145deg, var(--sky), #2f5f8f); box-shadow:0 4px 10px rgba(91,143,191,.4), inset 0 1px 1px rgba(255,255,255,.4); }
+.enrolled-course-btn.active .ecb-icon{ background:linear-gradient(145deg, var(--accent), var(--accent-dark)); box-shadow:0 4px 10px rgba(232,163,61,.4), inset 0 1px 1px rgba(255,255,255,.4); }
 .enrolled-course-btn.is-expired{ opacity:.75; }
 .expired-badge{
   display:inline-block;
@@ -1185,61 +1185,6 @@ footer a:hover{ color:#fff; }
   let ytProgressTimer = null;
   let ytSeeking = false;
 
-  // ---------- ওয়াচ-টাইম ট্র্যাকিং (মিনিট হিসেবে কে কতক্ষণ ক্লাস দেখেছে) ----------
-  // লজিক: ভিডিও প্লে হওয়া অবস্থায় প্রতি টিকে (progress loop, 500ms) real wall-clock
-  // সময়ের ডেল্টা যোগ হয় watchAccumSec-এ। Pause/Ended/ভিডিও বদল/ট্যাব hidden/page
-  // close — যেকোনো একটায় accumulated সেকেন্ড সার্ভারে পাঠিয়ে (flush) কাউন্টার
-  // রিসেট হয়। এছাড়া প্রতি ২৫ সেকেন্ডে একটা heartbeat flush হয়, যাতে ব্রাউজার/ট্যাব
-  // হঠাৎ ক্র্যাশ করলেও বেশিরভাগ ডেটা হারিয়ে না যায়।
-  let currentCourseName = null;
-  let currentSubjectName = null;
-  let currentVideoMeta = null;
-  let watchAccumSec = 0;
-  let watchLastTs = null;
-  let watchHeartbeatTimer = null;
-
-  function getLoggedInMobile(){
-    try{ return JSON.parse(localStorage.getItem(LS_USER_KEY) || 'null')?.mobile || ''; }catch(e){ return ''; }
-  }
-
-  function flushWatchTime(useBeacon){
-    const seconds = Math.round(watchAccumSec);
-    watchAccumSec = 0;
-    if(seconds < 1 || !currentVideoMeta) return;
-    const mobile = getLoggedInMobile();
-    if(!mobile) return;
-    const payload = {
-      action: 'track_watch',
-      mobile: normalizeMobileForMatch(mobile),
-      course: currentCourseName || '',
-      subject: currentSubjectName || '',
-      classTitle: currentVideoMeta.className || '',
-      chapter: currentVideoMeta.chapter || '',
-      videoId: currentVideoMeta.videoId || '',
-      seconds: seconds
-    };
-    try{
-      if(useBeacon && navigator.sendBeacon){
-        navigator.sendBeacon(FORM_ENDPOINT, new Blob([JSON.stringify(payload)], {type:'text/plain;charset=utf-8'}));
-      } else {
-        fetch(FORM_ENDPOINT, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload), keepalive:true}).catch(()=>{});
-      }
-    }catch(e){ /* ট্র্যাকিং ফেইল করলেও ছাত্রের ক্লাস দেখায় কোনো প্রভাব পড়বে না */ }
-  }
-
-  function startWatchHeartbeat(){
-    stopWatchHeartbeat();
-    watchHeartbeatTimer = setInterval(()=> flushWatchTime(false), 25000);
-  }
-  function stopWatchHeartbeat(){
-    if(watchHeartbeatTimer){ clearInterval(watchHeartbeatTimer); watchHeartbeatTimer = null; }
-  }
-
-  document.addEventListener('visibilitychange', ()=>{
-    if(document.visibilityState === 'hidden') flushWatchTime(true);
-  });
-  window.addEventListener('pagehide', ()=> flushWatchTime(true));
-
   function loadYouTubeApiOnce(){
     if(window.YT && window.YT.Player){ ytApiReady = true; return; }
     if(document.getElementById('ytIframeApiScript')) return;
@@ -1273,14 +1218,6 @@ footer a:hover{ color:#fff; }
     const dur = ytPlayer.getDuration() || 0;
     if(!ytSeeking && dur) ccSeek.value = String(Math.floor((cur/dur) * 1000));
     ccTime.textContent = `${formatSeconds(cur)} / ${formatSeconds(dur)}`;
-    // watch-time accumulation: real (wall-clock) সময়ের ডেল্টা ধরা হয়, ভিডিও speed
-    // যাই হোক না কেন — কারণ "কতক্ষণ ক্লাস করেছে" মানে বাস্তব সময়, ভিডিও সেকেন্ড না।
-    if(watchLastTs){
-      const now = Date.now();
-      const deltaSec = (now - watchLastTs) / 1000;
-      if(deltaSec > 0 && deltaSec < 3) watchAccumSec += deltaSec; // >=3s gap হলে ধরে নেওয়া হয় ট্যাব থ্রটল হয়েছিল, যোগ করা হয় না
-      watchLastTs = now;
-    }
   }
 
   function startProgressLoop(){
@@ -1295,13 +1232,8 @@ footer a:hover{ color:#fff; }
     if(e.data === YT.PlayerState.PLAYING){
       ccPlayPause.innerHTML = CC_ICONS.pause;
       startProgressLoop();
-      watchLastTs = Date.now();
-      startWatchHeartbeat();
     } else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){
       ccPlayPause.innerHTML = CC_ICONS.play;
-      watchLastTs = null;
-      stopWatchHeartbeat();
-      flushWatchTime(false);
       if(e.data === YT.PlayerState.ENDED) stopProgressLoop();
     }
   }
@@ -1326,10 +1258,8 @@ footer a:hover{ color:#fff; }
     });
   }
 
-  function playClassVideo(id, meta){
+  function playClassVideo(id){
     if(!id) return;
-    flushWatchTime(false); // আগের ভিডিওর যেটুকু সময় জমা ছিল, ভিডিও বদলানোর আগে পাঠিয়ে দাও
-    currentVideoMeta = Object.assign({videoId:id}, meta || {});
     classPlayer.style.display = 'block';
     classPlayer.scrollIntoView({behavior:'smooth', block:'nearest'});
     if(!(window.YT && window.YT.Player)){
@@ -1346,10 +1276,6 @@ footer a:hover{ color:#fff; }
 
   function stopClassPlayer(){
     stopProgressLoop();
-    stopWatchHeartbeat();
-    watchLastTs = null;
-    flushWatchTime(false);
-    currentVideoMeta = null;
     if(ytPlayer && typeof ytPlayer.stopVideo === 'function'){
       try{ ytPlayer.stopVideo(); }catch(e){}
     }
@@ -1546,10 +1472,9 @@ footer a:hover{ color:#fff; }
     classList.innerHTML = rows.length
       ? rows.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('')
       : '<div class="learning-empty">কোনো ক্লাস খুঁজে পাওয়া যায়নি।</div>';
-    classList.querySelectorAll('.class-item').forEach((item, idx)=>item.addEventListener('click',()=>{
+    classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
       const id=youtubeId(item.dataset.video); if(!id) return;
-      const meta = rows[idx] || {};
-      playClassVideo(id, {className: meta.className, chapter: meta.chapter});
+      playClassVideo(id);
     }));
   }
 
@@ -1570,7 +1495,6 @@ footer a:hover{ color:#fff; }
   async function loadCourseClasses(courseName){
     classLearningReset();
     if(!courseName) return;
-    currentCourseName = courseName;
     courseLearningPanel.style.display='block';
     subjectRow.innerHTML='<div class="subject-row-loading"><span class="skel-pill"></span><span class="skel-pill"></span><span class="skel-pill"></span></div>';
     classList.innerHTML='<div class="class-loading"><span class="spinner"></span>ক্লাস লোড হচ্ছে...</div>';
@@ -1595,7 +1519,6 @@ footer a:hover{ color:#fff; }
     const showSubject=(subject)=>{
       subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.subject)===normalizeForMatch(subject)));
       stopClassPlayer();
-      currentSubjectName = subject;
       const filtered=rows.filter(x=>normalizeForMatch(x.subject)===normalizeForMatch(subject));
       activeSubjectRows = filtered;
       if(classSearchInput) classSearchInput.value='';
