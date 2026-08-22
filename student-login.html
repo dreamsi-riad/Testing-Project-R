@@ -375,20 +375,23 @@ header.nav{
 }
 .ecb-body{ display:flex; flex-direction:column; gap:3px; min-width:0; }
 .ecb-watchtime{
-  font-size:11.5px;
+  font-size:12.5px;
   font-weight:700;
   color:var(--accent-dark, #b9791f);
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
+  order:3;
 }
-.ecb-name{ color:var(--ink); }
-.ecb-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
+.ecb-watchtime .ecb-icon-emoji{ font-size:13px; line-height:1; }
+.ecb-name{ color:var(--ink); order:1; }
+.ecb-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; order:2; }
 .ecb-date{
   font-size:12.5px;
   font-weight:600;
   color:var(--ink-soft);
 }
+.ecb-date .ecb-icon-emoji{ font-size:13px; line-height:1; }
 .enrolled-course-btn small{
   font-size:13px;
   font-weight:600;
@@ -1672,9 +1675,9 @@ footer a:hover{ color:#fff; }
       return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${lockedClass}" data-course="${escapeHtml(course.name)}">
         <span class="ecb-icon">🎓</span>
         <span class="ecb-body">
-          <span class="ecb-watchtime">⏱ ${escapeHtml(formatWatchTime(course.watchTime))}</span>
           <span class="ecb-name">${escapeHtml(course.name)}</span>
-          <span class="ecb-meta"><span class="ecb-date">📅 Enrolled: ${escapeHtml(formatDate(course.enrolledAt))}</span>${badge}</span>
+          <span class="ecb-meta"><span class="ecb-date"><span class="ecb-icon-emoji">📅</span> Enrolled: ${escapeHtml(formatDate(course.enrolledAt))}</span>${badge}</span>
+          <span class="ecb-watchtime"><span class="ecb-icon-emoji">⏱️</span> ${escapeHtml(formatWatchTime(course.watchTime))}</span>
         </span>
       </button>`;
     }).join('');
