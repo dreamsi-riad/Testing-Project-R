@@ -348,16 +348,38 @@ header.nav{
 .learning-head p{ margin-top:1px; color:var(--ink-soft); font-size:13px; }
 .enrolled-course-list{ display:grid; gap:10px; margin-bottom:14px; }
 .enrolled-course-btn{
+  display:flex;
+  align-items:center;
+  gap:12px;
   width:100%;
   text-align:left;
-  border:1px solid var(--paper-line);
-  background:var(--paper);
+  border:1.5px solid var(--paper-line);
+  background:#fff;
   color:var(--ink);
-  border-radius:10px;
-  padding:12px 14px;
-  font:700 15px/1.4 'Anek Bangla',sans-serif;
+  border-radius:14px;
+  padding:14px 16px;
+  font:700 15.5px/1.4 'Anek Bangla',sans-serif;
   cursor:pointer;
-  transition:.15s ease;
+  transition:.18s ease;
+  box-shadow:0 2px 8px rgba(30,42,71,0.05);
+}
+.ecb-icon{
+  flex:none;
+  width:40px; height:40px;
+  border-radius:11px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:19px;
+  background:linear-gradient(145deg, #fff2dc, #ffe1ab);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.6);
+  transition:.18s ease;
+}
+.ecb-body{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+.ecb-name{ color:var(--ink); }
+.ecb-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
+.ecb-date{
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--ink-soft);
 }
 .enrolled-course-btn small{
   font-size:13px;
@@ -366,16 +388,30 @@ header.nav{
   margin-left:4px;
 }
 
-.enrolled-course-btn:hover,
-.enrolled-course-btn.active{ border-color:var(--accent); box-shadow:0 6px 16px rgba(232,163,61,.16); }
+.enrolled-course-btn:hover{ transform:translateY(-2px); border-color:var(--accent); box-shadow:0 10px 22px rgba(232,163,61,.18); }
+.enrolled-course-btn.active{
+  border-color:var(--accent);
+  background:linear-gradient(180deg, #fffaf0, #fff);
+  box-shadow:0 10px 24px rgba(232,163,61,.22), inset 0 0 0 1px rgba(232,163,61,.15);
+}
+.enrolled-course-btn.active .ecb-icon{ background:linear-gradient(145deg, var(--accent), var(--accent-dark)); box-shadow:0 4px 10px rgba(232,163,61,.4), inset 0 1px 1px rgba(255,255,255,.4); }
 .enrolled-course-btn.is-expired{ opacity:.75; }
 .expired-badge{
   display:inline-block;
-  margin-left:8px;
   padding:2px 8px;
   border-radius:999px;
   background:#fdecea;
   color:#c0392b;
+  font-size:11.5px;
+  font-weight:700;
+  vertical-align:middle;
+}
+.active-badge{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#e9f5ef;
+  color:var(--green);
   font-size:11.5px;
   font-weight:700;
   vertical-align:middle;
@@ -401,7 +437,6 @@ header.nav{
 .enrolled-course-btn.is-locked{ opacity:.75; }
 .locked-badge{
   display:inline-block;
-  margin-left:8px;
   padding:2px 8px;
   border-radius:999px;
   background:#fdecea;
@@ -1535,9 +1570,15 @@ footer a:hover{ color:#fff; }
     learningEmpty.style.display='none';
     enrolledCourseList.innerHTML=courses.map((course,i)=>{
       const isExpired = String(course.status||'').trim().toLowerCase()==='expired';
-      const badge = isDeviceBlocked ? '<span class="locked-badge">🔒 লকড</span>' : (isExpired ? '<span class="expired-badge">মেয়াদ শেষ</span>' : '');
+      const badge = isDeviceBlocked ? '<span class="locked-badge">🔒 লকড</span>' : (isExpired ? '<span class="expired-badge">মেয়াদ শেষ</span>' : '<span class="active-badge">✓ সক্রিয়</span>');
       const lockedClass = isDeviceBlocked ? ' is-locked' : (isExpired ? ' is-expired' : '');
-      return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${lockedClass}" data-course="${escapeHtml(course.name)}">${escapeHtml(course.name)}${badge} <small>(Enr: ${escapeHtml(formatDate(course.enrolledAt))})</small></button>`;
+      return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${lockedClass}" data-course="${escapeHtml(course.name)}">
+        <span class="ecb-icon">🎓</span>
+        <span class="ecb-body">
+          <span class="ecb-name">${escapeHtml(course.name)}</span>
+          <span class="ecb-meta"><span class="ecb-date">📅 Enrolled: ${escapeHtml(formatDate(course.enrolledAt))}</span>${badge}</span>
+        </span>
+      </button>`;
     }).join('');
     const selectCourse=name=>{
       enrolledCourseList.querySelectorAll('.enrolled-course-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.course)===normalizeForMatch(name)));
