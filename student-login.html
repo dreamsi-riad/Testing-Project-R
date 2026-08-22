@@ -810,6 +810,10 @@ footer a:hover{ color:#fff; }
   const classDataCache = new Map();
   let courseDataRowsPromise = null;
   const enrollParam = new URLSearchParams(window.location.search).get('enroll');
+  // Sheet থেকে আসা টেক্সট তুলনা/মিলানোর (matching) জন্য normalize করার হেল্পার।
+  // শিটে ভুলবশত extra space বা capital/small letter ভিন্ন হলেও যেন মিল খুঁজে পায়,
+  // সেজন্য শুধু তুলনার সময় এটা ব্যবহার হয় — আসল টেক্সট/casing যেমন শিটে আছে তেমনই display হয়, বদলায় না।
+  const normalizeForMatch = v => String(v ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
   const clean = value => String(value ?? '').trim();
   const escapeHtml = value => clean(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function parseGvizClass(text){
@@ -944,7 +948,7 @@ footer a:hover{ color:#fff; }
     try{
       const allRows = await loadCourseDataRows();
       const rows = allRows
-        .filter(r => r.courseName === courseName && r.subject && r.url)
+        .filter(r => normalizeForMatch(r.courseName) === normalizeForMatch(courseName) && r.subject && r.url)
         .map(r => ({subject:r.subject, chapter:r.chapter, className:r.className, url:r.url}));
       result = rows.length ? {status:'ok', data:rows} : notFound;
     }catch(error){
@@ -972,13 +976,20 @@ footer a:hover{ color:#fff; }
       classList.innerHTML=`<div class="learning-empty">${escapeHtml(result.message || 'এই course-এর কোনো class এখনো পাওয়া যায়নি।')}</div>`;
       return;
     }
-    const subjects=[...new Set(rows.map(x=>x.subject))];
+    // একই subject sheet-এ ভিন্ন space/case দিয়ে একাধিকবার থাকলেও যেন duplicate ট্যাব না হয়,
+    // তাই normalize করে unique subject বের করা হয় (প্রথমবার যেভাবে পাওয়া গেছে সেই বানানটাই দেখানো হয়)।
+    const seenSubjects = new Map();
+    rows.forEach(x => {
+      const key = normalizeForMatch(x.subject);
+      if(key && !seenSubjects.has(key)) seenSubjects.set(key, x.subject);
+    });
+    const subjects = [...seenSubjects.values()];
     courseLearningPanel.style.display='block';
     subjectRow.innerHTML=subjects.map((subject,i)=>`<button type="button" class="subject-btn${i===0?' active':''}" data-subject="${escapeHtml(subject)}">${escapeHtml(subject)}</button>`).join('');
     const showSubject=(subject)=>{
-      subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.subject===subject));
+      subjectRow.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.subject)===normalizeForMatch(subject)));
       classPlayer.style.display='none'; classPlayer.innerHTML='';
-      const filtered=rows.filter(x=>x.subject===subject);
+      const filtered=rows.filter(x=>normalizeForMatch(x.subject)===normalizeForMatch(subject));
       classList.innerHTML=filtered.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play">▶</span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('');
       classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
         const id=youtubeId(item.dataset.video); if(!id) return;
@@ -1018,8 +1029,8 @@ footer a:hover{ color:#fff; }
       return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${isExpired?' is-expired':''}" data-course="${escapeHtml(course.name)}">${escapeHtml(course.name)}${badge} <small>(Enrolled: ${escapeHtml(formatDate(course.enrolledAt))})</small></button>`;
     }).join('');
     const selectCourse=name=>{
-      enrolledCourseList.querySelectorAll('.enrolled-course-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.course===name));
-      const course = courses.find(c=>c.name===name);
+      enrolledCourseList.querySelectorAll('.enrolled-course-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.course)===normalizeForMatch(name)));
+      const course = courses.find(c=>normalizeForMatch(c.name)===normalizeForMatch(name));
       if(course && String(course.status||'').trim().toLowerCase()==='expired'){
         showExpiredNotice(course);
       } else {
