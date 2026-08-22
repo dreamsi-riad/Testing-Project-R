@@ -450,10 +450,14 @@ header.nav{
   width:36px; height:36px;
   border-radius:50%;
   display:flex; align-items:center; justify-content:center;
-  background:var(--accent);
+  background:radial-gradient(circle at 32% 28%, #ffd98a, var(--accent) 65%);
   color:var(--ink);
   font-weight:800;
+  box-shadow:0 2px 6px rgba(232,163,61,.45), inset 0 1px 1px rgba(255,255,255,.5);
+  transition:transform .15s ease, box-shadow .15s ease;
 }
+.class-item:hover .class-play{ transform:scale(1.06); box-shadow:0 4px 10px rgba(232,163,61,.55), inset 0 1px 1px rgba(255,255,255,.5); }
+.class-play svg{ width:60%; height:60%; margin-left:2px; filter:drop-shadow(0 1px 1px rgba(0,0,0,.12)); }
 .class-meta{ min-width:0; }
 .class-title{ font-weight:700; font-size:14px; line-height:1.3; }
 .class-chapter{ display:block; margin-top:1px; color:var(--ink-soft); font-size:12px; line-height:1.3; }
@@ -993,7 +997,7 @@ footer a:hover{ color:#fff; }
   // দুই জায়গাতেই এই একই ফাংশন ব্যবহার হয়, যাতে কোড ডুপ্লিকেট না হয়)।
   function renderClassItems(rows){
     classList.innerHTML = rows.length
-      ? rows.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play">▶</span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('')
+      ? rows.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('')
       : '<div class="learning-empty">কোনো ক্লাস খুঁজে পাওয়া যায়নি।</div>';
     classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
       const id=youtubeId(item.dataset.video); if(!id) return;
@@ -1081,7 +1085,7 @@ footer a:hover{ color:#fff; }
     enrolledCourseList.innerHTML=courses.map((course,i)=>{
       const isExpired = String(course.status||'').trim().toLowerCase()==='expired';
       const badge = isExpired ? '<span class="expired-badge">মেয়াদ শেষ</span>' : '';
-      return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${isExpired?' is-expired':''}" data-course="${escapeHtml(course.name)}">${escapeHtml(course.name)}${badge} <small>(Enrolled: ${escapeHtml(formatDate(course.enrolledAt))})</small></button>`;
+      return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${isExpired?' is-expired':''}" data-course="${escapeHtml(course.name)}">${escapeHtml(course.name)}${badge} <small>(Enr: ${escapeHtml(formatDate(course.enrolledAt))})</small></button>`;
     }).join('');
     const selectCourse=name=>{
       enrolledCourseList.querySelectorAll('.enrolled-course-btn').forEach(btn=>btn.classList.toggle('active',normalizeForMatch(btn.dataset.course)===normalizeForMatch(name)));
