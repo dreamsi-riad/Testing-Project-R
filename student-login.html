@@ -450,6 +450,43 @@ header.nav{
   text-align:center;
   background:var(--paper);
 }
+.class-loading{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:34px 16px;
+  border:1px solid var(--paper-line);
+  border-radius:10px;
+  background:var(--paper);
+  color:var(--ink-soft);
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:14px;
+}
+.class-loading .spinner{
+  width:28px; height:28px;
+  border:3px solid rgba(232,163,61,.25);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:class-spin .8s linear infinite;
+}
+@keyframes class-spin{ to{ transform:rotate(360deg); } }
+.subject-row-loading{
+  display:flex;
+  gap:8px;
+}
+.subject-row-loading .skel-pill{
+  width:88px; height:34px;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--paper) 25%, #eef1f7 37%, var(--paper) 63%);
+  background-size:400% 100%;
+  animation:skel-shimmer 1.4s ease infinite;
+}
+@keyframes skel-shimmer{
+  0%{ background-position:100% 50%; }
+  100%{ background-position:0 50%; }
+}
 @media(max-width:640px){
   .learning-area{ margin-top:22px; padding-top:22px; }
   .learning-head h3{ font-size:19px; }
@@ -924,6 +961,9 @@ footer a:hover{ color:#fff; }
   async function loadCourseClasses(courseName){
     classLearningReset();
     if(!courseName) return;
+    courseLearningPanel.style.display='block';
+    subjectRow.innerHTML='<div class="subject-row-loading"><span class="skel-pill"></span><span class="skel-pill"></span><span class="skel-pill"></span></div>';
+    classList.innerHTML='<div class="class-loading"><span class="spinner"></span>ক্লাস লোড হচ্ছে...</div>';
     const result = await fetchClassData(courseName);
     const rows = (result.status === 'ok' && Array.isArray(result.data)) ? result.data : [];
     if(!rows.length){
