@@ -374,6 +374,14 @@ header.nav{
   transition:.18s ease;
 }
 .ecb-body{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+.ecb-watchtime{
+  font-size:11.5px;
+  font-weight:700;
+  color:var(--accent-dark, #b9791f);
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
 .ecb-name{ color:var(--ink); }
 .ecb-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
 .ecb-date{
@@ -1157,6 +1165,16 @@ footer a:hover{ color:#fff; }
     return Array.isArray(data?.courses) ? data.courses : [];
   }
 
+  // Sheet থেকে আসা watchTime (মিনিটে, decimal) কে "X ঘণ্টা Y মিনিট" বা
+  // "Y মিনিট" আকারে দেখানোর জন্য — ড্যাশবোর্ডে কোর্স কার্ডে দেখানো হয়।
+  function formatWatchTime(minutes){
+    const total = Math.round(Number(minutes) || 0);
+    if(total <= 0) return 'এখনো ক্লাস দেখা হয়নি';
+    const h = Math.floor(total / 60), m = total % 60;
+    if(h > 0) return `${h} ঘণ্টা ${m} মিনিট দেখা হয়েছে`;
+    return `${m} মিনিট দেখা হয়েছে`;
+  }
+
   function youtubeId(url){
     const value=String(url || '').trim();
     if(!value) return '';
@@ -1184,6 +1202,76 @@ footer a:hover{ color:#fff; }
   let pendingVideoId = null;
   let ytProgressTimer = null;
   let ytSeeking = false;
+
+  // ---------- Watch-time tracking (নতুন) ----------
+  // ছাত্র যে কোর্সের ক্লাস লিস্ট এখন খোলা আছে, শুধু সেটাই এখানে বসে —
+  // এক্সপায়ার্ড/লকড অবস্থায় বা কোনো কোর্স select করা না থাকলে খালি থাকে,
+  // তখন কোনো watch time ট্র্যাক/পাঠানো হয় না।
+  let currentWatchCourse = '';
+  let watchPendingSeconds = 0;
+  let watchTrackTimer = null;
+  const WATCH_FLUSH_THRESHOLD_SEC = 20; // এতো সেকেন্ড জমলেই সার্ভারে পাঠানো হয়
+
+  function getCurrentUserMobile(){
+    try{
+      const user = JSON.parse(localStorage.getItem(LS_USER_KEY) || 'null');
+      return user && user.mobile ? String(user.mobile).trim() : '';
+    }catch(e){ return ''; }
+  }
+
+  // প্রতি সেকেন্ডে ১ সেকেন্ড করে জমা হয় — শুধু startWatchTracking() চলা অবস্থায়
+  // (মানে ভিডিও আসলেই PLAYING থাকা অবস্থায়) এই টাইমার চলে, তাই pause/seek/tab-hidden
+  // অবস্থায় এমনিতেই কিছু জমে না।
+  function startWatchTracking(){
+    stopWatchTracking();
+    watchTrackTimer = setInterval(()=>{
+      watchPendingSeconds += 1;
+      if(watchPendingSeconds >= WATCH_FLUSH_THRESHOLD_SEC) flushWatchTime();
+    }, 1000);
+  }
+
+  function stopWatchTracking(){
+    if(watchTrackTimer){ clearInterval(watchTrackTimer); watchTrackTimer = null; }
+  }
+
+  // জমে থাকা সেকেন্ড ব্যাকগ্রাউন্ডে সার্ভারে পাঠিয়ে দেয় (Mobile + Course মিলিয়ে
+  // "Student Enrolled" ট্যাবের WatchTime কলামে যোগ হয়)। ট্যাব বন্ধ/hidden হওয়ার
+  // মুহূর্তে sendBeacon ব্যবহার করা হয়, যেটা পেজ বন্ধ হয়ে গেলেও রিলায়েবলি ডেটা
+  // পাঠায় — সাধারণ fetch তখন মাঝপথে বাতিল হয়ে যেতে পারে।
+  function flushWatchTime(useBeacon){
+    if(watchPendingSeconds <= 0 || !currentWatchCourse) return;
+    const mobile = getCurrentUserMobile();
+    if(!mobile){ watchPendingSeconds = 0; return; }
+    const seconds = Math.round(watchPendingSeconds);
+    watchPendingSeconds = 0;
+    const payload = JSON.stringify({
+      action: 'track_watch',
+      mobile: normalizeMobileForMatch(mobile),
+      course: currentWatchCourse,
+      seconds: seconds
+    });
+    if(useBeacon && navigator.sendBeacon){
+      try{
+        const sent = navigator.sendBeacon(FORM_ENDPOINT, new Blob([payload], {type:'text/plain;charset=UTF-8'}));
+        if(sent) return;
+      }catch(e){}
+    }
+    fetch(FORM_ENDPOINT, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: payload, keepalive:true}).catch(()=>{});
+  }
+
+  // ট্যাব minimize/অন্য ট্যাবে গেলে ট্র্যাকিং থামিয়ে যা জমেছে পাঠিয়ে দেওয়া হয়,
+  // ফিরে এলে ভিডিও এখনো PLAYING থাকলে আবার শুরু হয় — background-এ চালিয়ে
+  // রেখে ভুয়া সময় জমার সুযোগ থাকে না।
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'hidden'){
+      stopWatchTracking();
+      flushWatchTime(true);
+    } else if(ytPlayer && typeof ytPlayer.getPlayerState === 'function' && window.YT && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING){
+      startWatchTracking();
+    }
+  });
+
+  window.addEventListener('pagehide', ()=>flushWatchTime(true));
 
   function loadYouTubeApiOnce(){
     if(window.YT && window.YT.Player){ ytApiReady = true; return; }
@@ -1232,9 +1320,12 @@ footer a:hover{ color:#fff; }
     if(e.data === YT.PlayerState.PLAYING){
       ccPlayPause.innerHTML = CC_ICONS.pause;
       startProgressLoop();
+      startWatchTracking();
     } else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){
       ccPlayPause.innerHTML = CC_ICONS.play;
       if(e.data === YT.PlayerState.ENDED) stopProgressLoop();
+      stopWatchTracking();
+      flushWatchTime();
     }
   }
 
@@ -1276,6 +1367,8 @@ footer a:hover{ color:#fff; }
 
   function stopClassPlayer(){
     stopProgressLoop();
+    stopWatchTracking();
+    flushWatchTime();
     if(ytPlayer && typeof ytPlayer.stopVideo === 'function'){
       try{ ytPlayer.stopVideo(); }catch(e){}
     }
@@ -1506,6 +1599,9 @@ footer a:hover{ color:#fff; }
       classList.innerHTML=`<div class="learning-empty">${escapeHtml(result.message || 'এই course-এর কোনো class এখনো পাওয়া যায়নি।')}</div>`;
       return;
     }
+    // এই course-টার ক্লাস সফলভাবে লোড হলো — এখন থেকে এই course-এর নামেই
+    // watch time জমা/পাঠানো হবে (Mobile + Course মিলিয়ে)।
+    currentWatchCourse = courseName;
     // একই subject sheet-এ ভিন্ন space/case দিয়ে একাধিকবার থাকলেও যেন duplicate ট্যাব না হয়,
     // তাই normalize করে unique subject বের করা হয় (প্রথমবার যেভাবে পাওয়া গেছে সেই বানানটাই দেখানো হয়)।
     const seenSubjects = new Map();
@@ -1533,6 +1629,7 @@ footer a:hover{ color:#fff; }
     if(!courseLearningPanel) return;
     courseLearningPanel.style.display='none'; subjectRow.innerHTML=''; stopClassPlayer(); classList.innerHTML='';
     activeSubjectRows = [];
+    currentWatchCourse = '';
     if(classSearchInput) classSearchInput.value='';
     if(classSearchWrap) classSearchWrap.style.display='none';
   }
@@ -1575,6 +1672,7 @@ footer a:hover{ color:#fff; }
       return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${lockedClass}" data-course="${escapeHtml(course.name)}">
         <span class="ecb-icon">🎓</span>
         <span class="ecb-body">
+          <span class="ecb-watchtime">⏱ ${escapeHtml(formatWatchTime(course.watchTime))}</span>
           <span class="ecb-name">${escapeHtml(course.name)}</span>
           <span class="ecb-meta"><span class="ecb-date">📅 Enrolled: ${escapeHtml(formatDate(course.enrolledAt))}</span>${badge}</span>
         </span>
