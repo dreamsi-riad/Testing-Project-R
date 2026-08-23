@@ -564,11 +564,17 @@ header.nav{
 .cc-settings-back{ font-weight:600; border-bottom:1px solid rgba(255,255,255,.12); }
 .cc-settings-sub button.cc-option.active{ color:var(--accent, #ff5a1f); font-weight:600; }
 .class-list{ display:grid; gap:6px; }
+.class-item-row{
+  display:flex;
+  align-items:stretch;
+  gap:6px;
+}
 .class-item{
   display:flex;
   align-items:center;
   gap:10px;
-  width:100%;
+  flex:1;
+  min-width:0;
   border:1px solid var(--paper-line);
   background:#fff;
   border-radius:10px;
@@ -579,6 +585,20 @@ header.nav{
   transition:.15s ease;
 }
 .class-item:hover{ border-color:var(--accent); transform:translateY(-1px); box-shadow:0 6px 16px rgba(30,42,71,.08); }
+.class-pdf-btn{
+  flex:none;
+  width:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--paper-line);
+  background:#fff;
+  border-radius:10px;
+  color:var(--accent-dark, #b9791f);
+  transition:.15s ease;
+}
+.class-pdf-btn:hover{ border-color:var(--accent); background:rgba(232,163,61,.1); transform:translateY(-1px); }
+.class-pdf-btn svg{ width:18px; height:18px; }
 .class-play{
   flex:none;
   width:36px; height:36px;
@@ -1196,6 +1216,13 @@ footer a:hover{ color:#fff; }
     return `${m} Minutes`;
   }
 
+  function driveDirectLink(url){
+    const value = String(url || '').trim();
+    if(!value) return '';
+    const m = value.match(/\/d\/([a-zA-Z0-9_-]+)/) || value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    return m ? `https://drive.google.com/uc?export=download&id=${m[1]}` : value;
+  }
+
   function youtubeId(url){
     const value=String(url || '').trim();
     if(!value) return '';
@@ -1548,7 +1575,8 @@ footer a:hover{ color:#fff; }
               subject: clean(c[2]?.v ?? c[2]?.f ?? ''),
               chapter: clean(c[3]?.v ?? c[3]?.f ?? ''),
               className: clean(c[4]?.v ?? c[4]?.f ?? ''),
-              url: clean(c[5]?.v ?? c[5]?.f ?? '')
+              url: clean(c[5]?.v ?? c[5]?.f ?? ''),
+              pdfUrl: clean(c[6]?.v ?? c[6]?.f ?? '')
             };
           });
         } finally {
@@ -1567,7 +1595,7 @@ footer a:hover{ color:#fff; }
       const allRows = await loadCourseDataRows();
       const rows = allRows
         .filter(r => normalizeForMatch(r.courseName) === normalizeForMatch(courseName) && r.subject && r.url)
-        .map(r => ({subject:r.subject, chapter:r.chapter, className:r.className, url:r.url}));
+        .map(r => ({subject:r.subject, chapter:r.chapter, className:r.className, url:r.url, pdfUrl:r.pdfUrl}));
       result = rows.length ? {status:'ok', data:rows} : notFound;
     }catch(error){
       console.error('Class data fetch failed:', error);
@@ -1584,7 +1612,7 @@ footer a:hover{ color:#fff; }
   // দুই জায়গাতেই এই একই ফাংশন ব্যবহার হয়, যাতে কোড ডুপ্লিকেট না হয়)।
   function renderClassItems(rows){
     classList.innerHTML = rows.length
-      ? rows.map((item,index)=>`<button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>`).join('')
+      ? rows.map((item,index)=>`<div class="class-item-row"><button type="button" class="class-item" data-video="${escapeHtml(item.url)}"><span class="class-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="class-meta"><span class="class-title">${escapeHtml(item.className || `Class ${index+1}`)}</span><span class="class-chapter">${escapeHtml(item.chapter || '')}</span></span></button>${item.pdfUrl ? `<a class="class-pdf-btn" href="${escapeHtml(driveDirectLink(item.pdfUrl))}" target="_blank" rel="noopener" title="Download PDF" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></a>` : ''}</div>`).join('')
       : '<div class="learning-empty">কোনো ক্লাস খুঁজে পাওয়া যায়নি।</div>';
     classList.querySelectorAll('.class-item').forEach(item=>item.addEventListener('click',()=>{
       const id=youtubeId(item.dataset.video); if(!id) return;
