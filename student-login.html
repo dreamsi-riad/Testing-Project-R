@@ -390,12 +390,16 @@ header.nav{
 .ecb-body{ display:flex; flex-direction:column; gap:3px; min-width:0; }
 .ecb-watchtime{
   font-size:12.5px;
-  font-weight:700;
-  color:var(--accent-dark, #b9791f);
+  font-weight:600;
+  color:var(--ink-soft);
   display:flex;
   align-items:center;
   gap:5px;
   order:3;
+}
+.ecb-wt-value{
+  font-weight:700;
+  color:var(--accent-dark, #b9791f);
 }
 .ecb-watchtime .ecb-icon-emoji{ font-size:13px; line-height:1; }
 .ecb-name{ color:var(--ink); order:1; }
@@ -1184,12 +1188,12 @@ footer a:hover{ color:#fff; }
 
   // Sheet থেকে আসা watchTime (মিনিটে, decimal) কে "X ঘণ্টা Y মিনিট" বা
   // "Y মিনিট" আকারে দেখানোর জন্য — ড্যাশবোর্ডে কোর্স কার্ডে দেখানো হয়।
-  function formatWatchTime(minutes){
+  function formatWatchTimeValue(minutes){
     const total = Math.round(Number(minutes) || 0);
-    if(total <= 0) return 'Watch Time: 0 Minutes';
+    if(total <= 0) return '0 Minutes';
     const h = Math.floor(total / 60), m = total % 60;
-    if(h > 0) return `Watch Time: ${h}h ${m}m`;
-    return `Watch Time: ${m} Minutes`;
+    if(h > 0) return `${h}h ${m}m`;
+    return `${m} Minutes`;
   }
 
   function youtubeId(url){
@@ -1692,7 +1696,7 @@ footer a:hover{ color:#fff; }
         <span class="ecb-body">
           <span class="ecb-name">${escapeHtml(course.name)}</span>
           <span class="ecb-meta"><span class="ecb-date"><span class="ecb-icon-emoji">📅</span> Enrolled: ${escapeHtml(formatDate(course.enrolledAt))}</span>${badge}</span>
-          <span class="ecb-watchtime"><span class="ecb-icon-emoji">⏱️</span> ${escapeHtml(formatWatchTime(course.watchTime))}</span>
+          <span class="ecb-watchtime"><span class="ecb-icon-emoji">⏱️</span> <span class="ecb-wt-label">Watch Time:</span> <span class="ecb-wt-value">${escapeHtml(formatWatchTimeValue(course.watchTime))}</span></span>
         </span>
       </button>`;
     }).join('');
