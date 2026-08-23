@@ -61,9 +61,12 @@
         }
         .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
         .nav-cta {
-            background: var(--ink); color: #fff !important; padding: 10px 20px; border-radius: 999px;
+            display: inline-flex; align-items: center; gap: 7px;
+            background: linear-gradient(135deg, #263a63, var(--ink) 60%); color: #fff !important; padding: 10px 20px; border-radius: 999px;
             font-weight: 700; font-size: 14.5px; white-space: nowrap; text-decoration: none;
+            box-shadow: 0 3px 10px rgba(30,42,71,.25), inset 0 1px 1px rgba(255,255,255,.12);
         }
+        .nav-cta svg{ flex:none; width:16px; height:16px; }
         .burger { display: none; background: none; border: none; font-size: 26px; color: var(--ink); cursor: pointer; }
         @media(max-width: 860px) {
             .nav-links {
@@ -329,7 +332,8 @@
             if (!loginBtn) return;
             try {
                 const loggedIn = !!localStorage.getItem('va_user');
-                loginBtn.textContent = loggedIn ? 'প্রোফাইল' : 'লগইন';
+                const icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
+                loginBtn.innerHTML = icon + '<span>' + (loggedIn ? 'প্রোফাইল' : 'লগইন') + '</span>';
             } catch(e) {}
         })();
 
