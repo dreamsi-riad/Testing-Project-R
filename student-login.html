@@ -1220,7 +1220,8 @@ footer a:hover{ color:#fff; }
     const value = String(url || '').trim();
     if(!value) return '';
     const m = value.match(/\/d\/([a-zA-Z0-9_-]+)/) || value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    return m ? `https://drive.google.com/uc?export=download&id=${m[1]}` : value;
+    if(!m) return value;
+    return `https://drive.usercontent.google.com/download?id=${m[1]}&export=download&authuser=0`;
   }
 
   function youtubeId(url){
