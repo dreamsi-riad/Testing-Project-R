@@ -1186,10 +1186,10 @@ footer a:hover{ color:#fff; }
   // "Y মিনিট" আকারে দেখানোর জন্য — ড্যাশবোর্ডে কোর্স কার্ডে দেখানো হয়।
   function formatWatchTime(minutes){
     const total = Math.round(Number(minutes) || 0);
-    if(total <= 0) return 'এখনো ক্লাস দেখা হয়নি';
+    if(total <= 0) return 'Watch Time: 0 Minutes';
     const h = Math.floor(total / 60), m = total % 60;
-    if(h > 0) return `${h} ঘণ্টা ${m} মিনিট দেখা হয়েছে`;
-    return `${m} মিনিট দেখা হয়েছে`;
+    if(h > 0) return `Watch Time: ${h}h ${m}m`;
+    return `Watch Time: ${m} Minutes`;
   }
 
   function youtubeId(url){
