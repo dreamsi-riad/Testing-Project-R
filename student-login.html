@@ -348,6 +348,7 @@ header.nav{
 .learning-head p{ margin-top:1px; color:var(--ink-soft); font-size:13px; }
 .enrolled-course-list{ display:grid; gap:10px; margin-bottom:14px; }
 .enrolled-course-btn{
+  position:relative;
   display:flex;
   align-items:center;
   gap:12px;
@@ -362,6 +363,19 @@ header.nav{
   cursor:pointer;
   transition:.18s ease;
   box-shadow:0 2px 8px rgba(30,42,71,0.05);
+  overflow:hidden;
+}
+.ecb-corner-badge{
+  position:absolute;
+  top:0;
+  right:0;
+  background:#8B2FC9;
+  color:#fff;
+  font-size:11.5px;
+  font-weight:800;
+  padding:5px 14px;
+  border-bottom-left-radius:10px;
+  letter-spacing:.2px;
 }
 .ecb-icon{
   flex:none;
@@ -1673,6 +1687,7 @@ footer a:hover{ color:#fff; }
       const badge = isDeviceBlocked ? '<span class="locked-badge">🔒 লকড</span>' : (isExpired ? '<span class="expired-badge">মেয়াদ শেষ</span>' : '<span class="active-badge">✓ সক্রিয়</span>');
       const lockedClass = isDeviceBlocked ? ' is-locked' : (isExpired ? ' is-expired' : '');
       return `<button type="button" class="enrolled-course-btn${i===0?' active':''}${lockedClass}" data-course="${escapeHtml(course.name)}">
+        <span class="ecb-corner-badge">Course</span>
         <span class="ecb-icon">🎓</span>
         <span class="ecb-body">
           <span class="ecb-name">${escapeHtml(course.name)}</span>
