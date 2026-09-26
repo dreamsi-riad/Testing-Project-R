@@ -1,757 +1,3008 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OneZone Consultancy | Study Abroad &amp; Visa Experts in Bangladesh</title>
-<meta name="description" content="OneZone Consultancy — Bangladesh's trusted partner for study abroad, visit visa and IELTS preparation services.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#122036;
-    --navy-deep:#0b1524;
-    --navy-soft:#1c3252;
-    --gold:#b9893c;
-    --gold-soft:#e3c893;
-    --teal:#2f6f63;
-    --cream:#f6f2ea;
-    --paper:#fbf9f5;
-    --ink:#1c1b19;
-    --ink-soft:#5a5650;
-    --line:#e4ddcf;
-    --white:#ffffff;
-    --radius:2px;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexGlobal Advisory & Consultancy | স্টাডি অ্যাব্রোড, গ্লোবাল ক্যারিয়ার ও বিজনেস সলিউশন</title>
+  <meta name="description" content="উচ্চশিক্ষা ও ভিসা প্রসেসিং, আন্তর্জাতিক চাকরির সিভি ও প্রফেশনাল কনসেপ্ট নোট/প্রজেক্ট প্রপোজাল কনসালট্যান্সি। আপনার বৈশ্বিক সাফল্যের বিশ্বস্ত সহযোগী।">
+  <meta name="keywords" content="Study Abroad Bangladesh, Visa Consultancy, Global Resume Writing, ATS CV, Project Proposal Writing, Concept Note, Business Plan Consultancy">
+  <meta name="author" content="ApexGlobal Advisory">
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    font-family:'Manrope',sans-serif;
-    color:var(--ink);
-    background:var(--paper);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,h4{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    margin:0;
-    color:var(--navy-deep);
-    line-height:1.15;
-  }
-  p{margin:0;}
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
-  .wrap{
-    max-width:1180px;
-    margin:0 auto;
-    padding:0 32px;
-  }
-  ul{margin:0;padding:0;list-style:none;}
-  button{font-family:inherit;cursor:pointer;}
+  <!-- Google Fonts: Plus Jakarta Sans & Hind Siliguri for flawless bilingual typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+  <style>
+    /* ==========================================================================
+       CSS Variables & Design System
+       ========================================================================== */
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.35);
+      --secondary: #06b6d4;
+      --secondary-glow: rgba(6, 182, 212, 0.25);
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.25);
+      --emerald: #10b981;
 
-  /* ---------- Top bar ---------- */
-  .topbar{
-    background:var(--navy-deep);
-    color:#cfd6e2;
-    font-size:13px;
-  }
-  .topbar .wrap{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding-top:9px;
-    padding-bottom:9px;
-    gap:20px;
-    flex-wrap:wrap;
-  }
-  .topbar-left{display:flex;gap:28px;flex-wrap:wrap;}
-  .topbar-left span{display:inline-flex;align-items:center;gap:7px;}
-  .topbar a{color:#cfd6e2;}
-  .topbar-left svg{flex:none;}
+      --bg-dark: #070d18;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-hover: rgba(26, 38, 66, 0.85);
+      --bg-card-border: rgba(255, 255, 255, 0.08);
+      --bg-card-border-hover: rgba(56, 189, 248, 0.4);
 
-  /* ---------- Header ---------- */
-  header{
-    background:var(--navy);
-    position:sticky;
-    top:0;
-    z-index:40;
-    border-bottom:1px solid rgba(255,255,255,0.08);
-  }
-  .header-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:18px 0;
-  }
-  .logo{
-    display:flex;
-    align-items:baseline;
-    gap:9px;
-  }
-  .logo-mark{
-    font-family:'Fraunces',serif;
-    font-size:27px;
-    font-weight:600;
-    color:var(--white);
-    letter-spacing:0.2px;
-  }
-  .logo-mark em{
-    font-style:normal;
-    color:var(--gold-soft);
-  }
-  .logo-sub{
-    font-size:11px;
-    letter-spacing:1.5px;
-    color:#9aa7bd;
-    text-transform:uppercase;
-    border-left:1px solid rgba(255,255,255,0.25);
-    padding-left:9px;
-  }
-  nav.main-nav{display:flex;align-items:center;gap:6px;}
-  nav.main-nav a{
-    color:#dfe4ee;
-    font-size:15px;
-    font-weight:600;
-    padding:10px 16px;
-    border-radius:var(--radius);
-    transition:color .15s ease, background .15s ease;
-  }
-  nav.main-nav a:hover{
-    color:var(--white);
-    background:rgba(255,255,255,0.07);
-  }
-  .header-cta{
-    display:flex;
-    align-items:center;
-    gap:18px;
-  }
-  .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:11px 22px;
-    font-size:14.5px;
-    font-weight:700;
-    border-radius:var(--radius);
-    border:1px solid transparent;
-    transition:transform .15s ease, background .15s ease, border-color .15s ease;
-  }
-  .btn-gold{
-    background:var(--gold);
-    color:var(--navy-deep);
-  }
-  .btn-gold:hover{background:var(--gold-soft);}
-  .btn-outline{
-    border-color:rgba(255,255,255,0.35);
-    color:var(--white);
-  }
-  .btn-outline:hover{border-color:var(--white);}
-  .nav-toggle{
-    display:none;
-    background:none;
-    border:none;
-    padding:8px;
-  }
-  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
-    content:"";
-    display:block;
-    width:24px;
-    height:2px;
-    background:var(--white);
-    position:relative;
-    transition:.2s;
-  }
-  .nav-toggle span::before{position:absolute;top:-8px;}
-  .nav-toggle span::after{position:absolute;top:8px;}
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
 
-  /* ---------- Hero ---------- */
-  .hero{
-    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
-    color:var(--white);
-    position:relative;
-    overflow:hidden;
-  }
-  .hero .wrap{
-    display:grid;
-    grid-template-columns:1.05fr 0.85fr;
-    align-items:center;
-    gap:48px;
-    padding-top:84px;
-    padding-bottom:88px;
-  }
-  .hero-eyebrow{
-    color:var(--gold-soft);
-    font-size:14px;
-    font-weight:700;
-    margin-bottom:18px;
-  }
-  .hero h1{
-    font-size:50px;
-    color:var(--white);
-    max-width:560px;
-  }
-  .hero-bangla{
-    font-family:'Fraunces',serif;
-    font-size:19px;
-    color:#c8d0de;
-    margin-top:20px;
-    max-width:520px;
-  }
-  .hero-desc{
-    color:#b7c0d1;
-    font-size:16px;
-    max-width:490px;
-    margin-top:20px;
-  }
-  .hero-actions{
-    display:flex;
-    gap:16px;
-    margin-top:34px;
-    flex-wrap:wrap;
-  }
-  .hero-stats{
-    display:flex;
-    gap:36px;
-    margin-top:52px;
-    flex-wrap:wrap;
-  }
-  .hero-stats div strong{
-    display:block;
-    font-family:'Fraunces',serif;
-    font-size:30px;
-    color:var(--gold-soft);
-  }
-  .hero-stats div span{
-    font-size:13px;
-    color:#9aa7bd;
-  }
+      --glass-bg: rgba(11, 19, 38, 0.82);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 
-  /* hero graphic: compass / route motif, built from svg — no stock imagery */
-  .hero-art{
-    position:relative;
-    aspect-ratio:1/1;
-    max-width:420px;
-    justify-self:end;
-  }
-  .hero-art svg{width:100%;height:100%;}
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
 
-  /* ---------- Section shell ---------- */
-  section{padding:96px 0;}
-  .section-head{
-    max-width:620px;
-    margin-bottom:52px;
-  }
-  .section-head .kicker{
-    color:var(--teal);
-    font-weight:700;
-    font-size:13.5px;
-    margin-bottom:10px;
-  }
-  .section-head h2{
-    font-size:36px;
-  }
-  .section-head p{
-    color:var(--ink-soft);
-    margin-top:16px;
-    font-size:16px;
-  }
-  .center{text-align:center;margin-left:auto;margin-right:auto;}
-
-  /* ---------- Services ---------- */
-  .services{background:var(--cream);}
-  .service-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:28px;
-  }
-  .service-card{
-    background:var(--white);
-    border:1px solid var(--line);
-    padding:38px 32px;
-    border-radius:var(--radius);
-    transition:border-color .15s ease;
-  }
-  .service-card:hover{border-color:var(--gold);}
-  .service-icon{
-    width:52px;height:52px;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--navy);
-    color:var(--gold-soft);
-    border-radius:var(--radius);
-    margin-bottom:22px;
-  }
-  .service-card h3{
-    font-size:21px;
-    margin-bottom:12px;
-  }
-  .service-card p{
-    color:var(--ink-soft);
-    font-size:15px;
-    margin-bottom:20px;
-  }
-  .service-link{
-    font-size:14px;
-    font-weight:700;
-    color:var(--navy);
-    border-bottom:1.5px solid var(--gold);
-    padding-bottom:2px;
-  }
-
-  /* ---------- Process ---------- */
-  .process-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:0;
-    position:relative;
-  }
-  .process-step{
-    padding:0 24px 0 0;
-    position:relative;
-  }
-  .process-step:not(:last-child)::after{
-    content:"";
-    position:absolute;
-    top:19px;
-    left:calc(100% - 12px);
-    width:calc(100% - 24px);
-    border-top:1.5px dashed var(--line);
-  }
-  .step-num{
-    font-family:'Fraunces',serif;
-    font-size:15px;
-    color:var(--gold);
-    border:1.5px solid var(--gold);
-    width:38px;height:38px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:22px;
-    background:var(--paper);
-    position:relative;
-    z-index:1;
-  }
-  .process-step h4{
-    font-size:18px;
-    margin-bottom:10px;
-  }
-  .process-step p{
-    color:var(--ink-soft);
-    font-size:14.5px;
-  }
-
-  /* ---------- Why us ---------- */
-  .why{
-    background:var(--navy-deep);
-    color:var(--white);
-  }
-  .why .wrap{
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    gap:64px;
-    align-items:center;
-  }
-  .why h2{
-    color:var(--white);
-    font-size:34px;
-  }
-  .why .kicker{color:var(--gold-soft);font-weight:700;font-size:13.5px;margin-bottom:12px;}
-  .why-desc{color:#b7c0d1;margin-top:18px;font-size:15.5px;max-width:460px;}
-  .why-list{margin-top:8px;}
-  .why-list li{
-    display:flex;
-    gap:16px;
-    padding:20px 0;
-    border-top:1px solid rgba(255,255,255,0.1);
-  }
-  .why-list li:last-child{border-bottom:1px solid rgba(255,255,255,0.1);}
-  .why-list .mark{
-    flex:none;
-    width:26px;height:26px;
-    border-radius:50%;
-    background:rgba(185,137,60,0.18);
-    color:var(--gold-soft);
-    display:flex;align-items:center;justify-content:center;
-    font-size:13px;
-    font-weight:800;
-  }
-  .why-list h4{color:var(--white);font-size:16.5px;margin-bottom:5px;}
-  .why-list p{color:#9aa7bd;font-size:14px;}
-
-  /* ---------- CTA band ---------- */
-  .cta-band{
-    background:var(--gold);
-    padding:56px 0;
-  }
-  .cta-band .wrap{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:24px;
-    flex-wrap:wrap;
-  }
-  .cta-band h3{
-    font-size:26px;
-    color:var(--navy-deep);
-    max-width:480px;
-  }
-  .cta-band .btn-gold{
-    background:var(--navy-deep);
-    color:var(--white);
-  }
-  .cta-band .btn-gold:hover{background:var(--navy);}
-
-  /* ---------- Footer ---------- */
-  footer{
-    background:var(--navy-deep);
-    color:#9aa7bd;
-    padding-top:72px;
-  }
-  .footer-grid{
-    display:grid;
-    grid-template-columns:1.4fr 1fr 1fr 1.2fr;
-    gap:40px;
-    padding-bottom:48px;
-    border-bottom:1px solid rgba(255,255,255,0.08);
-  }
-  .footer-grid h4{
-    color:var(--white);
-    font-size:15px;
-    font-weight:700;
-    margin-bottom:20px;
-    font-family:'Manrope',sans-serif;
-  }
-  .footer-grid p{font-size:14px;line-height:1.7;}
-  .footer-grid li{margin-bottom:11px;font-size:14px;}
-  .footer-grid a:hover{color:var(--white);}
-  .footer-logo{
-    font-family:'Fraunces',serif;
-    font-size:23px;
-    color:var(--white);
-    margin-bottom:16px;
-    display:block;
-  }
-  .footer-logo em{font-style:normal;color:var(--gold-soft);}
-  .social-row{display:flex;gap:10px;margin-top:22px;}
-  .social-row a{
-    width:36px;height:36px;
-    border:1px solid rgba(255,255,255,0.18);
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .social-row a:hover{border-color:var(--gold-soft);color:var(--gold-soft);}
-  .footer-bottom{
-    padding:22px 0;
-    font-size:13px;
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width:980px){
-    .hero .wrap{grid-template-columns:1fr;}
-    .hero-art{justify-self:center;margin-top:20px;max-width:320px;}
-    .service-grid{grid-template-columns:1fr 1fr;}
-    .process-grid{grid-template-columns:1fr 1fr;row-gap:40px;}
-    .process-step::after{display:none;}
-    .why .wrap{grid-template-columns:1fr;}
-    .footer-grid{grid-template-columns:1fr 1fr;row-gap:36px;}
-  }
-  @media (max-width:760px){
-    nav.main-nav{
-      position:absolute;
-      top:100%;left:0;right:0;
-      background:var(--navy);
-      flex-direction:column;
-      align-items:stretch;
-      padding:10px 20px 20px;
-      border-top:1px solid rgba(255,255,255,0.08);
-      display:none;
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+      --font-bn: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    nav.main-nav.open{display:flex;}
-    nav.main-nav a{padding:13px 6px;}
-    .nav-toggle{display:block;}
-    .header-cta .btn-outline{display:none;}
-    .hero h1{font-size:36px;}
-    .hero-stats{gap:24px;}
-    .section-head h2{font-size:28px;}
-    .service-grid{grid-template-columns:1fr;}
-    .process-grid{grid-template-columns:1fr;}
-    .cta-band .wrap{flex-direction:column;align-items:flex-start;}
-    .footer-grid{grid-template-columns:1fr;}
-    .topbar-left span:nth-child(3){display:none;}
-  }
-</style>
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 0.98);
+      --bg-card-border: rgba(226, 232, 240, 0.8);
+      --bg-card-border-hover: rgba(37, 99, 235, 0.4);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(226, 232, 240, 0.8);
+      --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-bn);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+    }
+
+    /* Ambient background mesh */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .glow-sphere {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      animation: floatGlow 18s infinite alternate ease-in-out;
+    }
+
+    .glow-1 {
+      top: -10%;
+      left: 20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    }
+
+    .glow-2 {
+      top: 40%;
+      right: -5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+      animation-delay: -5s;
+    }
+
+    .glow-3 {
+      bottom: -10%;
+      left: 10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+      animation-delay: -9s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, 80px) scale(0.95); }
+    }
+
+    /* Layout Container */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography Utilities */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-main);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .gradient-gold {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      backdrop-filter: blur(8px);
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--glass-border);
+      color: var(--text-main);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--accent-glow);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1.1rem;
+      font-size: 0.875rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 78px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.35rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .logo-text h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lang-toggle, .theme-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+
+    .lang-toggle:hover, .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 5.5rem 0 4rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+      margin-bottom: 1.4rem;
+      font-weight: 800;
+      line-height: 1.18;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .trust-avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .trust-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-dark);
+      margin-left: -12px;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .trust-avatar:first-child {
+      margin-left: 0;
+    }
+
+    .trust-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .trust-text strong {
+      color: var(--text-main);
+    }
+
+    /* Hero Visual Card / Interactive Preview */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-main-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
+    .card-status-chip {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    .live-service-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .service-pill-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--bg-card-border);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .service-pill-item:hover, .service-pill-item.active {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateX(6px);
+    }
+
+    .pill-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .pill-icon.blue { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
+    .pill-icon.teal { background: rgba(6, 182, 212, 0.2); color: #22d3ee; }
+    .pill-icon.gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    .pill-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .pill-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Floating Badges on Hero */
+    .floating-badge {
+      position: absolute;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      z-index: 3;
+      animation: floatBadge 6s infinite ease-in-out alternate;
+    }
+
+    .floating-badge.badge-top {
+      top: -24px;
+      right: -20px;
+    }
+
+    .floating-badge.badge-bottom {
+      bottom: -28px;
+      left: -25px;
+      animation-delay: -3s;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-12px); }
+    }
+
+    .badge-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .badge-top .badge-icon-box { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-bottom .badge-icon-box { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    .badge-details h5 {
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .badge-details span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Stats Banner */
+    .stats-section {
+      padding: 3rem 0;
+      position: relative;
+    }
+
+    .stats-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -1rem;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--glass-border);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-en);
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .category-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 0.9rem 1.6rem;
+      border-radius: var(--radius-full);
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .category-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .category-btn.active {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(6, 182, 212, 0.25));
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Service Cards Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      transition: var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--card-accent, var(--primary)), transparent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--bg-card-border-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-top {
+      margin-bottom: 1.5rem;
+    }
+
+    .service-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .card-study { --card-accent: #2563eb; }
+    .card-study .service-icon-box { background: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+
+    .card-career { --card-accent: #06b6d4; }
+    .card-career .service-icon-box { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+
+    .card-writing { --card-accent: #f59e0b; }
+    .card-writing .service-icon-box { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+    .service-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .service-features li svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #10b981;
+    }
+
+    .service-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .service-action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .service-action-link:hover {
+      gap: 0.7rem;
+      color: #ffffff;
+    }
+
+    /* Deep Dive Feature Sections */
+    .category-spotlight {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .spotlight-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      margin-bottom: 3.5rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .spotlight-grid.reverse {
+      direction: rtl;
+    }
+
+    .spotlight-grid.reverse > * {
+      direction: ltr;
+    }
+
+    .spotlight-text h3 {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .spotlight-text p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .country-pills, .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 500;
+    }
+
+    .feature-pill span.icon {
+      font-size: 1.15rem;
+    }
+
+    /* Interactive Calculator & Assessment Wizard */
+    .calculator-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .calculator-wrapper {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(11, 19, 38, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 3rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calculator-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .calc-step-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .calc-step-bar::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--glass-border);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .step-node {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-dark);
+      border: 2px solid var(--glass-border);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .step-node.active {
+      border-color: #38bdf8;
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .step-node.completed {
+      border-color: #10b981;
+      background: #10b981;
+      color: #fff;
+    }
+
+    .calc-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+    }
+
+    .calc-form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text-main);
+    }
+
+    .calc-select, .calc-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .calc-select:focus, .calc-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .calc-select option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .calc-service-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-type-card {
+      padding: 1rem;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+    }
+
+    .calc-type-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .calc-type-card.selected {
+      border-color: #38bdf8;
+      background: rgba(37, 99, 235, 0.18);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .calc-type-card span {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .calc-type-card p {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Result Panel */
+    .calc-summary-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .summary-title {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .summary-line strong {
+      color: var(--text-main);
+    }
+
+    .eligibility-gauge {
+      margin: 1.5rem 0;
+      padding: 1.2rem;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+
+    .gauge-score {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #34d399;
+      margin-bottom: 0.2rem;
+    }
+
+    .gauge-bar-bg {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+
+    .gauge-bar-fill {
+      height: 100%;
+      width: 92%;
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    /* Process Flow Section */
+    .process-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .process-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem 1.8rem;
+      position: relative;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .process-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .process-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 1.4rem;
+      font-family: var(--font-en);
+    }
+
+    .process-card h4 {
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .process-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Testimonials Section */
+    .testimonials-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--bg-card-border-hover);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .stars {
+      color: #f59e0b;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      font-style: italic;
+    }
+
+    .client-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .client-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .client-meta h5 {
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .client-meta span {
+      font-size: 0.8rem;
+      color: #38bdf8;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 5rem 0;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .faq-header {
+      padding: 1.3rem 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .faq-toggle-icon {
+      font-size: 1.25rem;
+      transition: transform 0.3s ease;
+      color: #38bdf8;
+    }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 1.6rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-body {
+      padding-bottom: 1.5rem;
+      max-height: 250px;
+    }
+
+    .faq-item.open .faq-toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Consultation Booking & Contact CTA */
+    .cta-banner-section {
+      padding: 5rem 0;
+    }
+
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(6, 182, 212, 0.25)), var(--bg-card);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .cta-banner p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    .footer {
+      background: #040811;
+      border-top: 1px solid var(--glass-border);
+      padding: 5rem 0 2rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 28px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+      padding-left: 5px;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-contact-item svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: #38bdf8;
+      margin-top: 2px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.85rem;
+    }
+
+    /* Modal dialog */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: #0d1527;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 620px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      transform: scale(0.92);
+      transition: var(--transition);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      color: #fff;
+    }
+
+    .modal-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Floating WhatsApp Action */
+    .floating-contact-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 90;
+      background: #25d366;
+      color: #ffffff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .floating-contact-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
+    }
+
+    .floating-contact-btn svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #10b981;
+      color: #ffffff;
+      padding: 0.9rem 1.8rem;
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+      z-index: 1000;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+      }
+      .services-grid, .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stats-card {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stat-item:nth-child(2)::after {
+        display: none;
+      }
+      .calc-content {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .spotlight-grid, .spotlight-grid.reverse {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .services-grid, .testimonial-grid, .process-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-card {
+        grid-template-columns: 1fr;
+      }
+      .stat-item::after {
+        display: none !important;
+      }
+      .calc-service-type-grid {
+        grid-template-columns: 1fr;
+      }
+      .floating-badge {
+        display: none;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <div class="topbar-left">
-      <span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +৮৮০ ১৭০০-০০০০০০
-      </span>
-      <span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        শনি - বৃহস্পতি, সকাল ৯টা - সন্ধ্যা ৬টা
-      </span>
-      <span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        গুলশান, ঢাকা ১২১২
-      </span>
-    </div>
-    <a href="#contact">info@onezoneconsultancy.com</a>
+  <!-- Ambient Glow Effect -->
+  <div class="ambient-glow" aria-hidden="true">
+    <div class="glow-sphere glow-1"></div>
+    <div class="glow-sphere glow-2"></div>
+    <div class="glow-sphere glow-3"></div>
   </div>
-</div>
 
-<header>
-  <div class="wrap header-row">
-    <a href="#top" class="logo">
-      <span class="logo-mark">One<em>Zone</em></span>
-      <span class="logo-sub">Consultancy</span>
-    </a>
-
-    <nav class="main-nav" id="mainNav">
-      <a href="#top">হোম</a>
-      <a href="#services">সেবাসমূহ</a>
-      <a href="#about">আমাদের সম্পর্কে</a>
-      <a href="#contact">যোগাযোগ</a>
-    </nav>
-
-    <div class="header-cta">
-      <a href="#contact" class="btn btn-outline">লগইন</a>
-      <a href="#contact" class="btn btn-gold">ফ্রি কনসালটেশন</a>
-      <button class="nav-toggle" id="navToggle" aria-label="মেনু খুলুন"><span></span></button>
-    </div>
-  </div>
-</header>
-
-<section class="hero" id="top">
-  <div class="wrap">
-    <div>
-      <div class="hero-eyebrow">বাংলাদেশ থেকে বিদেশে উচ্চশিক্ষা ও ভ্রমণ পরামর্শ</div>
-      <h1>Plan your journey abroad with OneZone</h1>
-      <p class="hero-bangla">আপনার স্বপ্নের দেশে পড়াশোনা ও ভ্রমণের পথ, আমরা গড়ে দিচ্ছি বিশ্বস্ততার সাথে।</p>
-      <p class="hero-desc">Admissions, visa processing and IELTS preparation under one roof — OneZone Consultancy guides students and travellers through every step, from choosing the right country to landing at the airport.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn btn-gold">ফ্রি কনসালটেশন বুক করুন</a>
-        <a href="#services" class="btn btn-outline">সেবাসমূহ দেখুন</a>
-      </div>
-      <div class="hero-stats">
-        <div><strong>18+</strong><span>Partner countries</span></div>
-        <div><strong>3,200+</strong><span>Visas processed</span></div>
-        <div><strong>10 yrs</strong><span>In the field</span></div>
-      </div>
-    </div>
-
-    <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <circle cx="200" cy="200" r="110" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <circle cx="200" cy="200" r="70" fill="none" stroke="rgba(227,200,147,0.35)" stroke-width="1"/>
-        <g stroke="#e3c893" stroke-width="1.6" stroke-dasharray="2 7" fill="none" stroke-linecap="round">
-          <path d="M200 90 Q 280 150 340 130"/>
-          <path d="M200 90 Q 110 160 70 250"/>
-          <path d="M200 90 Q 260 260 310 320"/>
-        </g>
-        <g fill="#e3c893">
-          <circle cx="200" cy="90" r="5"/>
-          <circle cx="340" cy="130" r="4"/>
-          <circle cx="70" cy="250" r="4"/>
-          <circle cx="310" cy="320" r="4"/>
-        </g>
-        <g fill="none" stroke="#f5ecd8" stroke-width="2">
-          <circle cx="200" cy="200" r="26"/>
-        </g>
-        <path d="M200 178 L207 195 L224 200 L207 205 L200 222 L193 205 L176 200 L193 195 Z" fill="#f5ecd8"/>
-        <text x="200" y="360" text-anchor="middle" fill="#9aa7bd" font-family="Manrope, sans-serif" font-size="12" letter-spacing="2">YOUR ROUTE, MAPPED</text>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<section class="services" id="services">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">আমাদের সেবা</div>
-      <h2>How OneZone can help you</h2>
-      <p>Whichever door you're walking through — a university offer, a visit visa or an IELTS band score — our advisors handle the paperwork so you can focus on the decision.</p>
-    </div>
-
-    <div class="service-grid">
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>
+  <!-- Header / Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" aria-label="ApexGlobal Advisory Homepage">
+        <div class="logo-icon">A</div>
+        <div class="logo-text">
+          <h2>ApexGlobal <span class="gradient-text">Advisory</span></h2>
+          <p>Global Education &amp; Business Strategy</p>
         </div>
-        <h3>Study Abroad</h3>
-        <p>University shortlisting, applications, scholarship guidance and pre-departure briefing for Canada, the UK, Australia, USA and 14 more countries.</p>
-        <a href="#" class="service-link">বিস্তারিত জানুন</a>
-      </div>
+      </a>
 
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9h18"/><path d="M8 3v3M16 3v3"/></svg>
-        </div>
-        <h3>Visit Visa</h3>
-        <p>Tourist, family and business visit visa support with document checklists, embassy appointment handling and travel insurance guidance.</p>
-        <a href="#" class="service-link">বিস্তারিত জানুন</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h13v14H6a2 2 0 0 0-2 2Z"/><path d="M8 8h9M8 12h6"/></svg>
-        </div>
-        <h3>IELTS Preparation</h3>
-        <p>Small-batch and one-to-one classes led by trained instructors, with weekly mock tests to track your band score before the real exam.</p>
-        <a href="#" class="service-link">বিস্তারিত জানুন</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="process">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">প্রক্রিয়া</div>
-      <h2>Four steps to your visa</h2>
-      <p>A clear, predictable path from your first meeting with us to the day you board your flight.</p>
-    </div>
-
-    <div class="process-grid">
-      <div class="process-step">
-        <div class="step-num">1</div>
-        <h4>Initial consultation</h4>
-        <p>We understand your goals, budget and eligibility, then recommend a realistic country and route.</p>
-      </div>
-      <div class="process-step">
-        <div class="step-num">2</div>
-        <h4>Documentation</h4>
-        <p>Our advisors prepare and verify every document against the destination country's checklist.</p>
-      </div>
-      <div class="process-step">
-        <div class="step-num">3</div>
-        <h4>Application &amp; interview</h4>
-        <p>We submit your application, arrange mock interviews and track the file until a decision arrives.</p>
-      </div>
-      <div class="process-step">
-        <div class="step-num">4</div>
-        <h4>Visa &amp; departure</h4>
-        <p>Once your visa is approved, we help with air tickets, travel insurance and a pre-departure briefing.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="why" id="about">
-  <div class="wrap">
-    <div>
-      <div class="kicker">আমাদের সম্পর্কে</div>
-      <h2>Advice built on real casework, not templates</h2>
-      <p class="why-desc">OneZone Consultancy was started by advisors who had themselves gone through the visa process abroad. Every file we take on gets a named advisor and a direct line — no call centre, no hand-offs.</p>
-    </div>
-
-    <ul class="why-list">
-      <li>
-        <span class="mark">✓</span>
-        <div>
-          <h4>Licensed &amp; transparent</h4>
-          <p>Every fee is disclosed upfront in a written agreement before we begin your file.</p>
-        </div>
-      </li>
-      <li>
-        <span class="mark">✓</span>
-        <div>
-          <h4>One advisor, start to finish</h4>
-          <p>The person you meet on day one is the person who sees your visa through to approval.</p>
-        </div>
-      </li>
-      <li>
-        <span class="mark">✓</span>
-        <div>
-          <h4>Partner network across 18 countries</h4>
-          <p>Direct relationships with universities and recognised agents at your destination.</p>
-        </div>
-      </li>
-      <li>
-        <span class="mark">✓</span>
-        <div>
-          <h4>Support after you land</h4>
-          <p>Airport pickup guidance, accommodation pointers and a check-in call in your first week.</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<div class="cta-band" id="contact">
-  <div class="wrap">
-    <h3>আপনার যাত্রা শুরু হোক আজই — বুক করুন একটি ফ্রি কনসালটেশন।</h3>
-    <a href="#" class="btn btn-gold">অ্যাপয়েন্টমেন্ট বুক করুন</a>
-  </div>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <span class="footer-logo">One<em>Zone</em></span>
-        <p>OneZone Consultancy is Bangladesh's growing name in study abroad, visit visa and IELTS advisory, helping students and travellers reach their destination with confidence.</p>
-        <div class="social-row">
-          <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/></svg></a>
-          <a href="#" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></a>
-          <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5Z" fill="currentColor" stroke="none"/></svg></a>
-        </div>
-      </div>
-
-      <div>
-        <h4>সেবাসমূহ</h4>
-        <ul>
-          <li><a href="#services">Study Abroad</a></li>
-          <li><a href="#services">Visit Visa</a></li>
-          <li><a href="#services">IELTS Preparation</a></li>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#services" class="nav-link" data-bn="সার্ভিসসমূহ" data-en="Services">সার্ভিসসমূহ</a></li>
+          <li><a href="#study-abroad" class="nav-link" data-bn="উচ্চশিক্ষা ও ভিসা" data-en="Study Abroad">উচ্চশিক্ষা ও ভিসা</a></li>
+          <li><a href="#global-career" class="nav-link" data-bn="গ্লোবাল ক্যারিয়ার ও সিভি" data-en="Career &amp; CV">গ্লোবাল ক্যারিয়ার ও সিভি</a></li>
+          <li><a href="#business-writing" class="nav-link" data-bn="প্রজেক্ট ও বিজনেস রাইটিং" data-en="Business Writing">প্রজেক্ট ও বিজনেস রাইটিং</a></li>
+          <li><a href="#calculator" class="nav-link" data-bn="ক্যালকুলেটর" data-en="Assessment">মূল্যায়ন ক্যালকুলেটর</a></li>
+          <li><a href="#process" class="nav-link" data-bn="কার্যপ্রণালী" data-en="Process">কার্যপ্রণালী</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div>
-        <h4>তথ্য</h4>
-        <ul>
-          <li><a href="#top">হোম</a></li>
-          <li><a href="#about">আমাদের সম্পর্কে</a></li>
-          <li><a href="#process">কার্যপ্রক্রিয়া</a></li>
-          <li><a href="#contact">যোগাযোগ</a></li>
-        </ul>
-      </div>
+      <div class="nav-actions">
+        <!-- Language Switcher Button -->
+        <button id="langToggleBtn" class="lang-toggle" title="Switch Language (বাংলা / English)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span id="langLabel">English</span>
+        </button>
 
-      <div>
-        <h4>যোগাযোগ</h4>
-        <p>ফোন: +৮৮০ ১৭০০-০০০০০০<br>
-        ইমেইল: info@onezoneconsultancy.com<br>
-        ঠিকানা: গুলশান, ঢাকা ১২১২, বাংলাদেশ</p>
+        <!-- Direct Consultation CTA Button -->
+        <button class="btn btn-primary btn-sm open-modal-btn" data-bn="অ্যাপয়েন্টমেন্ট নিন" data-en="Book Consultation">
+          অ্যাপয়েন্টমেন্ট নিন
+        </button>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">☰</button>
       </div>
     </div>
+  </header>
 
-    <div class="wrap footer-bottom">
-      <span>© 2026 OneZone Consultancy. All rights reserved.</span>
-      <span>Designed for a trusted first impression.</span>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="badge">
+            <span class="badge-dot"></span>
+            <span data-bn="বিশ্বমানের কর্পোরেট ও এডুকেশন কনসালট্যান্সি" data-en="Premier Global Advisory &amp; Corporate Solutions">বিশ্বমানের কর্পোরেট ও এডুকেশন কনসালট্যান্সি</span>
+          </div>
+
+          <h1 data-bn="আপনার উচ্চশিক্ষা, আন্তর্জাতিক ক্যারিয়ার ও ব্যবসায়ের <span class='gradient-text'>বিশ্বস্ত গ্লোবাল পার্টনার</span>" 
+              data-en="Empowering Your Higher Education, Global Career &amp; <span class='gradient-text'>Corporate Growth</span>">
+            আপনার উচ্চশিক্ষা, আন্তর্জাতিক ক্যারিয়ার ও ব্যবসায়ের <span class="gradient-text">বিশ্বস্ত গ্লোবাল পার্টনার</span>
+          </h1>
+
+          <p data-bn="আমরা প্রদান করি নির্ভুল স্টাডি অ্যাব্রোড ও ভিসা প্রসেসিং, আন্তর্জাতিক মানসম্মত ATS রেজুমে অ্যান্ড লিঙ্কডইন ব্র্যান্ডিং, এবং উচ্চমানের প্রজেক্ট প্রপোজাল, কনসেপ্ট নোট ও বিজনেস কনসালট্যান্সি।"
+             data-en="Comprehensive end-to-end guidance for study abroad visas, high-impact ATS international resumes, executive LinkedIn branding, and world-class project proposals &amp; concept notes.">
+            আমরা প্রদান করি নির্ভুল স্টাডি অ্যাব্রোড ও ভিসা প্রসেসিং, আন্তর্জাতিক মানসম্মত ATS রেজুমে অ্যান্ড লিঙ্কডইন ব্র্যান্ডিং, এবং উচ্চমানের প্রজেক্ট প্রপোজাল, কনসেপ্ট নোট ও বিজনেস কনসালট্যান্সি।
+          </p>
+
+          <div class="hero-cta">
+            <a href="#calculator" class="btn btn-primary" data-bn="বিনামূল্যে প্রোফাইল মূল্যায়ন করুন" data-en="Free Profile Assessment">
+              <span>বিনামূল্যে প্রোফাইল মূল্যায়ন করুন</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#services" class="btn btn-secondary" data-bn="সার্ভিসসমূহ এক্সপ্লোর করুন" data-en="Explore All Services">
+              সার্ভিসসমূহ এক্সপ্লোর করুন
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-avatars">
+              <div class="trust-avatar">US</div>
+              <div class="trust-avatar">UK</div>
+              <div class="trust-avatar">CA</div>
+              <div class="trust-avatar">EU</div>
+            </div>
+            <div class="trust-text">
+              <p><strong data-bn="৫,২০০+ সফল ক্লায়েন্ট" data-en="5,200+ Successful Clients">৫,২০০+ সফল ক্লায়েন্ট</strong> ও শিক্ষার্থীরা পৌঁছেছেন আমেরিকা, কানাডা, যুক্তরাজ্য ও ইউরোপের স্বনামধন্য প্রতিষ্ঠানে।</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Interactive Showcase -->
+        <div class="hero-visual">
+          <div class="floating-badge badge-top">
+            <div class="badge-icon-box">✓</div>
+            <div class="badge-details">
+              <h5 data-bn="৯৮.৪% ভিসা সাকসেস" data-en="98.4% Visa Success">৯৮.৪% ভিসা সাকসেস</h5>
+              <span data-bn="সরাসরি অ্যাম্ব্যাসি গাইডেন্স" data-en="Direct Embassy Preparation">সরাসরি অ্যাম্ব্যাসি গাইডেন্স</span>
+            </div>
+          </div>
+
+          <div class="hero-main-card">
+            <div class="card-header-bar">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="card-status-chip" data-bn="লাইভ এক্সপার্ট সাপোর্ট চালু" data-en="Live Advisory Active">● লাইভ এক্সপার্ট সাপোর্ট চালু</span>
+            </div>
+
+            <div class="live-service-preview">
+              <!-- Item 1 -->
+              <div class="service-pill-item active" onclick="location.href='#study-abroad'">
+                <div class="pill-icon blue">🎓</div>
+                <div class="pill-info">
+                  <h4 data-bn="উচ্চশিক্ষা ও ভিসা কনসালট্যান্সি" data-en="Study Abroad &amp; Visa Advisory">উচ্চশিক্ষা ও ভিসা কনসালট্যান্সি</h4>
+                  <p data-bn="USA, UK, Canada, Australia ও ইউরোপীয় স্কলারশিপ" data-en="USA, UK, Canada, Australia &amp; EU Admissions">USA, UK, Canada, Australia ও ইউরোপীয় স্কলারশিপ</p>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="service-pill-item" onclick="location.href='#global-career'">
+                <div class="pill-icon teal">💼</div>
+                <div class="pill-info">
+                  <h4 data-bn="গ্লোবাল ক্যারিয়ার ও ATS রেজুমে" data-en="Global Career &amp; ATS Resume">গ্লোবাল ক্যারিয়ার ও ATS রেজুমে</h4>
+                  <p data-bn="আন্তর্জাতিক স্ট্যান্ডার্ড সিভি, লিঙ্কডইন অপটিমাইজেশন" data-en="Harvard/Europass Formats &amp; Remote Job Hunting">আন্তর্জাতিক স্ট্যান্ডার্ড সিভি, লিঙ্কডইন অপটিমাইজেশন</p>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="service-pill-item" onclick="location.href='#business-writing'">
+                <div class="pill-icon gold">📑</div>
+                <div class="pill-info">
+                  <h4 data-bn="প্রজেক্ট প্রপোজাল ও বিজনেস রাইটিং" data-en="Project Proposals &amp; Business Writing">প্রজেক্ট প্রপোজাল ও বিজনেস রাইটিং</h4>
+                  <p data-bn="কনসেপ্ট নোট, গ্রান্ট প্রপোজাল ও ব্যাংক বিজনেস প্ল্যান" data-en="Donor Concept Notes, Grants &amp; Pitch Decks">কনসেপ্ট নোট, গ্রান্ট প্রপোজাল ও ব্যাংক বিজনেস প্ল্যান</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-bottom">
+            <div class="badge-icon-box">★</div>
+            <div class="badge-details">
+              <h5 data-bn="$১২ মিলিয়ন+ গ্রান্ট ও ফান্ডিং" data-en="$12M+ Secured Grants">$১২ মিলিয়ন+ গ্রান্ট ও ফান্ডিং</h5>
+              <span data-bn="সফল প্রপোজাল ও বিজনেস প্ল্যান" data-en="High-Impact Business Bids">সফল প্রপোজাল ও বিজনেস প্ল্যান</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Statistics Banner -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-card">
+        <div class="stat-item">
+          <div class="stat-number gradient-text">98.4%</div>
+          <div class="stat-label" data-bn="ভিসা অনুমোদনের হার" data-en="Visa Success Rate">ভিসা অনুমোদনের হার</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number gradient-text">2,800+</div>
+          <div class="stat-label" data-bn="আন্তর্জাতিক রেজুমে ও প্লেসমেন্ট" data-en="Global ATS Resumes Built">আন্তর্জাতিক রেজুমে ও প্লেসমেন্ট</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number gradient-gold">350+</div>
+          <div class="stat-label" data-bn="গৃহীত কনসেপ্ট নোট ও প্রপোজাল" data-en="Accepted Concept Notes">গৃহীত কনসেপ্ট নোট ও প্রপোজাল</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number gradient-text">45+</div>
+          <div class="stat-label" data-bn="বিশ্ববিদ্যালয় ও পার্টনার নেটওয়ার্ক" data-en="Destination Countries">বিশ্বের দেশসমূহে বিস্তার</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Services Section -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge" data-bn="আমাদের বিশেষায়িত সেবা" data-en="Our Core Practices">আমাদের বিশেষায়িত সেবা</div>
+        <h2 data-bn="আপনার ক্যারিয়ার ও প্রতিষ্ঠানের জন্য <span class='gradient-text'>পূর্ণাঙ্গ কর্পোরেট সলিউশন</span>"
+            data-en="Comprehensive Solutions for Your <span class='gradient-text'>Global Career &amp; Business</span>">
+          আপনার ক্যারিয়ার ও প্রতিষ্ঠানের জন্য <span class="gradient-text">পূর্ণাঙ্গ কর্পোরেট সলিউশন</span>
+        </h2>
+        <p data-bn="প্রতিটি ক্ষেত্রে আমাদের রয়েছে ইন্ডাস্ট্রি-লিডিং অভিজ্ঞ কনসালট্যান্ট, যারা নিখুঁত ড্রাফটিং ও ব্যক্তিগত কৌশল প্রণয়নে পারদর্শী।"
+           data-en="Industry veterans dedicated to bespoke strategic planning, flawless file preparation, and proven institutional success.">
+          প্রতিটি ক্ষেত্রে আমাদের রয়েছে ইন্ডাস্ট্রি-লিডিং অভিজ্ঞ কনসালট্যান্ট, যারা নিখুঁত ড্রাফটিং ও ব্যক্তিগত কৌশল প্রণয়নে পারদর্শী।
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-nav">
+        <button class="category-btn active" data-filter="all" data-bn="সকল সার্ভিস" data-en="All Services">
+          <span>❖</span> সকল সার্ভিস
+        </button>
+        <button class="category-btn" data-filter="study" data-bn="উচ্চশিক্ষা ও ভিসা" data-en="Study Abroad">
+          <span>🎓</span> উচ্চশিক্ষা ও ভিসা
+        </button>
+        <button class="category-btn" data-filter="career" data-bn="গ্লোবাল ক্যারিয়ার ও সিভি" data-en="Career &amp; CV">
+          <span>💼</span> গ্লোবাল ক্যারিয়ার ও সিভি
+        </button>
+        <button class="category-btn" data-filter="writing" data-bn="বিজনেস ও প্রজেক্ট রাইটিং" data-en="Business Writing">
+          <span>📑</span> বিজনেস ও প্রজেক্ট রাইটিং
+        </button>
+      </div>
+
+      <!-- Services Grid (9 dynamic cards across 3 categories) -->
+      <div class="services-grid" id="servicesGrid">
+        
+        <!-- Service 1: Study Abroad Admissions -->
+        <div class="service-card card-study" data-cat="study">
+          <div class="service-top">
+            <div class="service-icon-box">🏛️</div>
+            <span class="service-tag">Study Abroad &amp; Visa</span>
+            <h3 data-bn="ইউনিভার্সিটি অ্যাডমিশন ও স্কলারশিপ" data-en="University Admission &amp; Scholarships">ইউনিভার্সিটি অ্যাডমিশন ও স্কলারশিপ</h3>
+            <p data-bn="USA, UK, কানাডা, অস্ট্রেলিয়া ও ইউরোপের টপ র‍্যাংকড ইউনিভার্সিটিতে ব্যাচেলরস, মাস্টার্স ও পিএইচডি স্কলারশিপ প্রসেসিং।"
+               data-en="Full application cycle management for Ivy League, Russell Group, and prestigious universities worldwide.">
+              USA, UK, কানাডা, অস্ট্রেলিয়া ও ইউরোপের টপ র‍্যাংকড ইউনিভার্সিটিতে ব্যাচেলরস, মাস্টার্স ও পিএইচডি স্কলারশিপ প্রসেসিং।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> প্রোফাইল ম্যাচিং ও প্রোগ্রাম সিলেকশন</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ১০০% পর্যন্ত টিউশন ওয়েভার ও জিটিএ/জিআরএ কৌশল</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> অ্যাপ্লিকেশন ও পোর্টাল ট্র্যাকিং সাপোর্ট</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="University Admission">
+              <span data-bn="বিস্তারিত জানুন ও আবেদন করুন" data-en="Apply / Inquire Now">আবেদন করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 2: Visa Dossier & Mock Interview -->
+        <div class="service-card card-study" data-cat="study">
+          <div class="service-top">
+            <div class="service-icon-box">🛂</div>
+            <span class="service-tag">Study Abroad &amp; Visa</span>
+            <h3 data-bn="স্টুডেন্ট ভিসা ফাইল ও মক ইন্টারভিউ" data-en="Visa File Dossier &amp; Mock Interview">স্টুডেন্ট ভিসা ফাইল ও মক ইন্টারভিউ</h3>
+            <p data-bn="কঠোর এম্ব্যাসি স্ট্যান্ডার্ড অনুযায়ী ফিন্যান্সিয়াল স্পনসরশিপ ও ডকুমেন্ট অডিট, সাথে বিশেষজ্ঞ দ্বারা নিবিড় মক ইন্টারভিউ সেশন।"
+               data-en="Impeccable visa documentation, financial audit, fund explanation, and 1-on-1 embassy mock interviews.">
+              কঠোর এম্ব্যাসি স্ট্যান্ডার্ড অনুযায়ী ফিন্যান্সিয়াল স্পনসরশিপ ও ডকুমেন্ট অডিট, সাথে বিশেষজ্ঞ দ্বারা নিবিড় মক ইন্টারভিউ সেশন।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ইউএস এফ-১ (F-1) ও কানাডা স্টাডি পারমিট এসওপি</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> রিফিউজাল কেস রি-অ্যাপ্লিকেশন ও জাস্টিফিকেশন</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ভিডিও রেকর্ডেড রিয়েলিস্টিক মক টেস্ট</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="Visa Consultancy">
+              <span data-bn="ভিসা কনসালট্যান্সি নিন" data-en="Book Visa Audit">ভিসা কনসালট্যান্সি নিন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 3: SOP / Personal Statement Writing -->
+        <div class="service-card card-study" data-cat="study">
+          <div class="service-top">
+            <div class="service-icon-box">✍️</div>
+            <span class="service-tag">Study Abroad &amp; Visa</span>
+            <h3 data-bn="প্রফেশনাল SOP, LOR ও মোটিভেশন লেটার" data-en="SOP, LOR &amp; Motivation Letters">প্রফেশনাল SOP, LOR ও মোটিভেশন লেটার</h3>
+            <p data-bn="এডমিশন ও স্কলারশিপ সিলেকশন কমিটির মন জয় করতে কাস্টমাইজড স্টেটমেন্ট অফ পারপাস এবং প্রফেসর রিকমেন্ডেশন ড্রাফটিং।"
+               data-en="Persuasive, non-plagiarized SOPs and Letter of Recommendations crafted by academic writers.">
+              এডমিশন ও স্কলারশিপ সিলেকশন কমিটির মন জয় করতে কাস্টমাইজড স্টেটমেন্ট অফ পারপাস এবং প্রফেসর রিকমেন্ডেশন ড্রাফটিং।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ০% এআই / ১০০% ইউনিক স্টোরিটেলিং ড্রাফট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ইউরোপিয়ান মোটিভেশন লেটার ও রিসার্চ প্রপোজাল</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> একাডেমিক ব্যাকগ্রাউন্ড ও ক্যারিয়ার প্ল্যান সিনার্জি</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="SOP & LOR Writing">
+              <span data-bn="এসওপি ড্রাফট অর্ডার করুন" data-en="Order Custom SOP">এসওপি ড্রাফট অর্ডার করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 4: Global ATS Resume / CV -->
+        <div class="service-card card-career" data-cat="career">
+          <div class="service-top">
+            <div class="service-icon-box">📄</div>
+            <span class="service-tag">Global Career Solutions</span>
+            <h3 data-bn="ইন্টারন্যাশনাল ATS রেজুমে / সিভি মেকিং" data-en="International ATS Resume &amp; CV">ইন্টারন্যাশনাল ATS রেজুমে / সিভি মেকিং</h3>
+            <p data-bn="ফরচুন ৫০০ ও গ্লোবাল রিমোট চাকরির ফিল্টারে ৯৫%+ স্কোর অর্জনকারী হার্ভার্ড এবং ইউরোপাস ফরম্যাট সিভি ডেভেলপমেন্ট।"
+               data-en="Bespoke ATS-engineered resumes aligned with international recruitment algorithms in USA, Canada, UK &amp; Gulf.">
+              ফরচুন ৫০০ ও গ্লোবাল রিমোট চাকরির ফিল্টারে ৯৫%+ স্কোর অর্জনকারী হার্ভার্ড এবং ইউরোপাস ফরম্যাট সিভি ডেভেলপমেন্ট।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> কীওয়ার্ড অপটিমাইজড ইমপ্যাক্ট-ড্রিভেন বুলেট পয়েন্ট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> টেক, ফিন্যান্স, ইঞ্জিনিয়ারিং ও হেলথকেয়ার ফরম্যাট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> এডিটেবল Word &amp; ক্রিস্টাল ক্লিয়ার PDF ফাইল</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="ATS Resume Writing">
+              <span data-bn="সিভি আধুনিকায়ন করুন" data-en="Upgrade Your Resume">সিভি আধুনিকায়ন করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 5: LinkedIn Optimization & Personal Branding -->
+        <div class="service-card card-career" data-cat="career">
+          <div class="service-top">
+            <div class="service-icon-box">🌐</div>
+            <span class="service-tag">Global Career Solutions</span>
+            <h3 data-bn="লিঙ্কডইন অপটিমাইজেশন ও এক্সিকিউটিভ ব্র্যান্ডিং" data-en="LinkedIn Executive Profile Revamp">লিঙ্কডইন অপটিমাইজেশন ও এক্সিকিউটিভ ব্র্যান্ডিং</h3>
+            <p data-bn="গ্লোবাল রিক্রুটারদের সার্চ রেজাল্টে শীর্ষ স্থানে থাকার জন্য প্রোফাইল হেডলাইন, এবাউট সেকশন ও প্রফেশনাল পোর্টফোলিও সেটআপ।"
+               data-en="Transform your LinkedIn profile into a recruiter magnet with high-ranking keywords and executive brand presence.">
+              গ্লোবাল রিক্রুটারদের সার্চ রেজাল্টে শীর্ষ স্থানে থাকার জন্য প্রোফাইল হেডলাইন, এবাউট সেকশন ও প্রফেশনাল পোর্টফোলিও সেটআপ।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> রিক্রুটার সার্চ রেটিং বৃদ্ধিতে কীওয়ার্ড ইনজেকশন</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> কাস্টম ব্যানার ও ভিজ্যুয়াল ব্র্যান্ডিং গাইড</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> সরাসরি কোল্ড ইনমেইল (InMail) মেসেজ টেমপ্লেট</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="LinkedIn Optimization">
+              <span data-bn="প্রোফাইল রিভ্যাম্প শুরু করুন" data-en="Revamp Profile">প্রোফাইল রিভ্যাম্প করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 6: Global Job Application & Coaching -->
+        <div class="service-card card-career" data-cat="career">
+          <div class="service-top">
+            <div class="service-icon-box">🎯</div>
+            <span class="service-tag">Global Career Solutions</span>
+            <h3 data-bn="আন্তর্জাতিক জব অ্যাপ্লিকেশন ও ইন্টারভিউ কোচিং" data-en="Job Application &amp; Interview Coaching">আন্তর্জাতিক জব অ্যাপ্লিকেশন ও ইন্টারভিউ কোচিং</h3>
+            <p data-bn="ইউরোপ ও নর্থ আমেরিকার রিমোট জব ও স্পনসরশিপ ভিসার জন্য টার্গেটেড আবেদন কৌশল এবং ১-অন-১ বিহেভিওরাল ইন্টারভিউ প্রস্তুতি।"
+               data-en="Targeted application execution on LinkedIn, Indeed, Otta, alongside behavioral STAR method interview coaching.">
+              ইউরোপ ও নর্থ আমেরিকার রিমোট জব ও স্পনসরশিপ ভিসার জন্য টার্গেটেড আবেদন কৌশল এবং ১-অন-১ বিহেভিওরাল ইন্টারভিউ প্রস্তুতি।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> STAR মেথডে আন্তর্জাতিক মক ইন্টারভিউ সেশন</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> কাস্টমাইজড জব কাভার লেটার ও ফলো-আপ ড্রাফট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> রিমোট স্যালারি নেগোসিয়েশন কৌশল</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="Job Interview Coaching">
+              <span data-bn="কোচিং সেশন বুক করুন" data-en="Book Coaching">কোচিং সেশন বুক করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 7: Donor Concept Notes & Grants -->
+        <div class="service-card card-writing" data-cat="writing">
+          <div class="service-top">
+            <div class="service-icon-box">📊</div>
+            <span class="service-tag">Business &amp; Proposals</span>
+            <h3 data-bn="কনসেপ্ট নোট ও ডোনার গ্রান্ট প্রপোজাল" data-en="Concept Notes &amp; Donor Grants">কনসেপ্ট নোট ও ডোনার গ্রান্ট প্রপোজাল</h3>
+            <p data-bn="NGO, INGO, জাতিসংঘ, USAID, EU ও আন্তর্জাতিক ফাউন্ডেশনের ফান্ডিং নিশ্চিত করতে উচ্চমানের স্ট্রাকচার্ড কনসেপ্ট পেপার।"
+               data-en="Donor-winning grant writing, Theory of Change frameworks, and results-based project design for NGOs &amp; enterprises.">
+              NGO, INGO, জাতিসংঘ, USAID, EU ও আন্তর্জাতিক ফাউন্ডেশনের ফান্ডিং নিশ্চিত করতে উচ্চমানের স্ট্রাকচার্ড কনসেপ্ট পেপার।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> থিওরি অফ চেঞ্জ (Theory of Change) ও লগফ্রেম মডেল</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> সুস্পষ্ট বাজেট ও রিস্ক মিটিগেশন স্ট্র্যাটেজি</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ডোনার গাইডলাইনের ১০০% কমপ্লায়েন্স নিশ্চয়তা</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="Donor Concept Notes">
+              <span data-bn="প্রপোজাল কনসালট্যান্সি নিন" data-en="Consult Proposal Expert">প্রপোজাল কনসালট্যান্সি নিন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 8: Bankable Business Plans & Pitch Decks -->
+        <div class="service-card card-writing" data-cat="writing">
+          <div class="service-top">
+            <div class="service-icon-box">📈</div>
+            <span class="service-tag">Business &amp; Proposals</span>
+            <h3 data-bn="বিজনেস প্ল্যান, ইনভেস্টর পিচ ডেক ও প্রজেকশন" data-en="Bankable Business Plans &amp; Pitch Decks">বিজনেস প্ল্যান, ইনভেস্টর পিচ ডেক ও প্রজেকশন</h3>
+            <p data-bn="ব্যাংক লোন, ভেঞ্চার ক্যাপিটাল (VC) ও অ্যাঞ্জেল ইনভেস্টরদের জন্য ফুল-স্কেল ফিন্যান্সিয়াল মডেলিং সহ প্রফেশনাল বিজনেস ডক।"
+               data-en="Investor-grade business plans, 3-to-5 year financial forecasts, and sleek, conversion-focused pitch decks.">
+              ব্যাংক লোন, ভেঞ্চার ক্যাপিটাল (VC) ও অ্যাঞ্জেল ইনভেস্টরদের জন্য ফুল-স্কেল ফিন্যান্সিয়াল মডেলিং সহ প্রফেশনাল বিজনেস ডক।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ৩-৫ বছরের ক্যাশ ফ্লো ও ROI ফিন্যান্সিয়াল ফোরকাস্ট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> ১০-১৫ স্লাইডের আকর্ষণীয় পাওয়ারপয়েন্ট পিচ ডেক</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> মার্কেট সাইজ (TAM/SAM/SOM) ও কম্পিটিটর অ্যানালাইসিস</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="Business Plan Writing">
+              <span data-bn="বিজনেস প্ল্যান অর্ডার করুন" data-en="Order Business Plan">বিজনেস প্ল্যান অর্ডার করুন</span> →
+            </span>
+          </div>
+        </div>
+
+        <!-- Service 9: Corporate RFP/Tender Bids & Profiles -->
+        <div class="service-card card-writing" data-cat="writing">
+          <div class="service-top">
+            <div class="service-icon-box">🏢</div>
+            <span class="service-tag">Business &amp; Proposals</span>
+            <h3 data-bn="কর্পোরেট প্রোফাইল ও RFP / টেন্ডার বিডিং সেবা" data-en="Company Profile &amp; RFP Tender Bidding">কর্পোরেট প্রোফাইল ও RFP / টেন্ডার বিডিং সেবা</h3>
+            <p data-bn="বৃহৎ মাল্টিন্যাশনাল চুক্তি, সরকারি/বেসরকারি টেন্ডার ও আরএফপি (RFP) প্রক্রিয়ায় জয়ী হতে প্রিমিয়াম কর্পোরেট ডকুমেন্টেশন।"
+               data-en="Winning corporate portfolios, capability statements, and rigorous technical/financial RFP tender response packages.">
+              বৃহৎ মাল্টিন্যাশনাল চুক্তি, সরকারি/বেসরকারি টেন্ডার ও আরএফপি (RFP) প্রক্রিয়ায় জয়ী হতে প্রিমিয়াম কর্পোরেট ডকুমেন্টেশন।
+            </p>
+            <ul class="service-features">
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> এক্সিকিউটিভ কোম্পানি প্রোফাইল ও ক্যাপাবিলিটি স্টেটমেন্ট</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> টেকনিক্যাল স্পেসিফিকেশন ও মেথডলজি রাইটিং</li>
+              <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> গ্রাফিক্যাল চার্ট ও প্রফেশনাল প্রিন্ট-রেডি লেআউট</li>
+            </ul>
+          </div>
+          <div class="service-bottom">
+            <span class="service-action-link open-modal-btn" data-service="RFP Tender Bidding">
+              <span data-bn="কর্পোরেট ড্রাফটিং সাপোর্ট" data-en="Get Corporate Support">কর্পোরেট ড্রাফটিং সাপোর্ট</span> →
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive Spotlight: 3 Pillars Detailed Showcase -->
+  <section class="category-spotlight" id="study-abroad">
+    <div class="container">
+      
+      <!-- Spotlight 1: Study Abroad -->
+      <div class="spotlight-card">
+        <div class="spotlight-grid">
+          <div class="spotlight-text">
+            <div class="badge">Study Abroad &amp; Visa Hub</div>
+            <h3 data-bn="বিশ্বের শীর্ষ বিশ্ববিদ্যালয়ে উচ্চশিক্ষার <span class='gradient-text'>ঝামেলামুক্ত পাসপোর্ট</span>"
+                data-en="Your Direct Pathway to <span class='gradient-text'>World-Class Universities</span>">
+              বিশ্বের শীর্ষ বিশ্ববিদ্যালয়ে উচ্চশিক্ষার <span class="gradient-text">ঝামেলামুক্ত পাসপোর্ট</span>
+            </h3>
+            <p data-bn="আমরা সাধারণ কোনো এজেন্সি নই। প্রতিটি শিক্ষার্থীর একাডেমিক রেজাল্ট, আইইএলটিএস/জিআরই স্কোর ও আর্থিক অবস্থার ওপর ভিত্তি করে আমরা তৈরি করি ডেডিকেটেড অ্যাপ্লিকেশন রোডম্যাপ।"
+               data-en="We operate as institutional mentors, matching your exact profile, test scores, and research ambitions to maximum-scholarship universities worldwide.">
+              আমরা সাধারণ কোনো এজেন্সি নই। প্রতিটি শিক্ষার্থীর একাডেমিক রেজাল্ট, আইইএলটিএস/জিআরই স্কোর ও আর্থিক অবস্থার ওপর ভিত্তি করে আমরা তৈরি করি ডেডিকেটেড অ্যাপ্লিকেশন রোডম্যাপ।
+            </p>
+
+            <div class="country-pills">
+              <div class="feature-pill"><span class="icon">🇺🇸</span> USA (F-1 Visa Specialist)</div>
+              <div class="feature-pill"><span class="icon">🇨🇦</span> Canada (SDS &amp; Study Permit)</div>
+              <div class="feature-pill"><span class="icon">🇬🇧</span> UK (Russell Group Direct)</div>
+              <div class="feature-pill"><span class="icon">🇦🇺</span> Australia (GTE/GS Compliant)</div>
+              <div class="feature-pill"><span class="icon">🇩🇪</span> Germany (No Tuition Fee Path)</div>
+              <div class="feature-pill"><span class="icon">🇸🇪</span> Sweden &amp; Schengen Europe</div>
+            </div>
+
+            <button class="btn btn-primary open-modal-btn" data-service="Study Abroad Assessment" data-bn="ফ্রি এডমিশন অ্যাসেসমেন্ট নিন" data-en="Get Free Admission Assessment">
+              ফ্রি এডমিশন অ্যাসেসমেন্ট নিন
+            </button>
+          </div>
+          <div class="spotlight-visual">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
+              <h4 style="margin-bottom: 1rem; color: #38bdf8;">📌 আমাদের ভিসা ফাইল সাকসেস ম্যাট্রিক্স</h4>
+              <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.9rem;">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                  <span>ফিন্যান্সিয়াল ডকুমেন্ট ভেরিফিকেশন:</span> <strong style="color:#10b981;">১০০% কমপ্লায়েন্স</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                  <span>ইউএস এম্ব্যাসি মক ইন্টারভিউ সেশন:</span> <strong style="color:#38bdf8;">৩-৫ রাউন্ড বাস্তব প্রস্তুতি</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                  <span>স্টাডি গ্যাপ ও ক্যারিয়ার সুইচিং সাপোর্ট:</span> <strong style="color:#f59e0b;">সলিড এসওপি ডিফেন্স</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span>প্রি-ডিপার্চার ও অ্যাকোমোডেশন গাইড:</span> <strong style="color:#a855f7;">নিঃশর্ত সহায়তা</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spotlight 2: Global Career -->
+      <div class="spotlight-card" id="global-career">
+        <div class="spotlight-grid reverse">
+          <div class="spotlight-text">
+            <div class="badge">Global Career Solutions</div>
+            <h3 data-bn="আন্তর্জাতিক চাকরির বাজারে <span class='gradient-text'>আপনার রেজুমে হোক সবচেয়ে শক্তিশালী</span>"
+                data-en="Propel Your Career in <span class='gradient-text'>Fortune 500 &amp; Global Remote</span>">
+              আন্তর্জাতিক চাকরির বাজারে <span class="gradient-text">আপনার রেজুমে হোক সবচেয়ে শক্তিশালী</span>
+            </h3>
+            <p data-bn="বিশ্বের ৭৫% কোম্পানি এআই ও ATS (Applicant Tracking System) সফটওয়্যার দিয়ে প্রথম রাউন্ডেই সিভি বাতিল করে দেয়। আমরা আপনার সিভিকে সাজাই রিভার্স-ক্রোনোলজিক্যাল, কোয়ান্টিফাইড ফলাফল এবং লক্ষ্যভিত্তিক আন্তর্জাতিক মানে।"
+               data-en="75% of CVs get filtered out by enterprise ATS software before human eyes ever see them. We transform your resume into high-impact credentials that secure recruiter calls.">
+              বিশ্বের ৭৫% কোম্পানি এআই ও ATS (Applicant Tracking System) সফটওয়্যার দিয়ে প্রথম রাউন্ডেই সিভি বাতিল করে দেয়। আমরা আপনার সিভিকে সাজাই রিভার্স-ক্রোনোলজিক্যাল, কোয়ান্টিফাইড ফলাফল এবং লক্ষ্যভিত্তিক আন্তর্জাতিক মানে।
+            </p>
+
+            <div class="benefit-grid">
+              <div class="feature-pill"><span class="icon">⚡</span> 95%+ ATS স্কোর নিশ্চয়তা</div>
+              <div class="feature-pill"><span class="icon">💼</span> LinkedIn অল-স্টার স্ট্যাটাস</div>
+              <div class="feature-pill"><span class="icon">🌍</span> US/EU রিমোট জব অ্যাপ্লিকেশন</div>
+              <div class="feature-pill"><span class="icon">🎤</span> রিয়েল-টাইম ইন্টারভিউ ড্রিল</div>
+            </div>
+
+            <button class="btn btn-primary open-modal-btn" data-service="Resume Audit" data-bn="আপনার সিভি ফ্রিতে রিভিউ করুন" data-en="Get Free CV Review">
+              আপনার সিভি ফ্রিতে রিভিউ করুন
+            </button>
+          </div>
+          <div class="spotlight-visual">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
+              <h4 style="margin-bottom: 1rem; color: #22d3ee;">🔍 ATS পাসিং রেট তুলনা</h4>
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.3rem;">
+                  <span>সাধারণ গ্রাফিকাল / ক্যানভা সিভি:</span> <span style="color:#ef4444;">২৪% পাসিং হার</span>
+                </div>
+                <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:3px;">
+                  <div style="width:24%; height:100%; background:#ef4444; border-radius:3px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.3rem;">
+                  <span>ApexGlobal প্রফেশনাল ATS রেজুমে:</span> <span style="color:#10b981; font-weight:700;">৯৬.৮% শর্টলিস্টিং</span>
+                </div>
+                <div style="height:8px; background:rgba(255,255,255,0.1); border-radius:4px;">
+                  <div style="width:96.8%; height:100%; background:linear-gradient(90deg, #10b981, #06b6d4); border-radius:4px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spotlight 3: Business & Proposal Writing -->
+      <div class="spotlight-card" id="business-writing">
+        <div class="spotlight-grid">
+          <div class="spotlight-text">
+            <div class="badge">Business &amp; Proposals</div>
+            <h3 data-bn="আন্তর্জাতিক ডোনার ও ইনভেস্টরদের জন্য <span class='gradient-gold'>উচ্চমানের প্রজেক্ট প্রপোজাল</span>"
+                data-en="Donor-Grade Concept Notes &amp; <span class='gradient-gold'>Investment Proposals</span>">
+              আন্তর্জাতিক ডোনার ও ইনভেস্টরদের জন্য <span class="gradient-gold">উচ্চমানের প্রজেক্ট প্রপোজাল</span>
+            </h3>
+            <p data-bn="একটি দুর্বল কনসেপ্ট নোট কোটি টাকার ফান্ডিং হাতছাড়া করতে পারে। আমাদের বিশেষজ্ঞ রিসার্চ রাইটাররা তৈরি করেন তথ্যবহুল ও নিখুঁত থিওরি অফ চেঞ্জ, আর্থিক বাজেট এবং প্রভাবশালী প্রজেক্ট মেথডলজি।"
+               data-en="Securing multi-million dollar grants or venture capital requires unassailable analytical rigor, clear KPIs, risk matrices, and airtight financial models.">
+              একটি দুর্বল কনসেপ্ট নোট কোটি টাকার ফান্ডিং হাতছাড়া করতে পারে। আমাদের বিশেষজ্ঞ রিসার্চ রাইটাররা তৈরি করেন তথ্যবহুল ও নিখুঁত থিওরি অফ চেঞ্জ, আর্থিক বাজেট এবং প্রভাবশালী প্রজেক্ট মেথডলজি।
+            </p>
+
+            <div class="country-pills">
+              <div class="feature-pill"><span class="icon">📜</span> USAID &amp; EU গ্রান্ট ফ্রেমওয়ার্ক</div>
+              <div class="feature-pill"><span class="icon">🏦</span> ব্যাংক লোন ভ্যালিডেশন পেপার</div>
+              <div class="feature-pill"><span class="icon">💡</span> স্টার্টআপ পিচ ডেক ও ইকুইটি প্ল্যান</div>
+              <div class="feature-pill"><span class="icon">🌐</span> টেকনিক্যাল টেন্ডার বিড প্যাকেজ</div>
+            </div>
+
+            <button class="btn btn-gold open-modal-btn" data-service="Project Proposal Consultation" data-bn="প্রপোজাল কনসালটেশন শিডিউল করুন" data-en="Schedule Proposal Consultation">
+              প্রপোজাল কনসালটেশন শিডিউল করুন
+            </button>
+          </div>
+          <div class="spotlight-visual">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
+              <h4 style="margin-bottom: 1rem; color: #fbbf24;">📁 প্রপোজাল ডেলিভারি স্ট্যান্ডার্ড</h4>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap:0.8rem; font-size:0.9rem; color:var(--text-muted);">
+                <li>✓ <strong>এক্সিকিউটিভ সামারি:</strong> ডোনার বোর্ডের জন্য ২ পৃষ্ঠার প্রভাবশালী স্ন্যাপশট</li>
+                <li>✓ <strong>লজিক্যাল ফ্রেমওয়ার্ক:</strong> আউটপুট, আউটকাম ও পারফরম্যান্স ইন্ডিকেটর ম্যাপিং</li>
+                <li>✓ <strong>বাজেট একাউন্টেবিলিটি:</strong> লাইন-বাই-লাইন ডিরেক্ট ও ইনডিরেক্ট কস্ট বিশ্লেষণ</li>
+                <li>✓ <strong>এডিট ও রিভিশন গ্যারান্টি:</strong> ডোনার ফিডব্যাকের ভিত্তিতে কমপ্লিট রিভিশন সাপোর্ট</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Profile Assessment & Fee Calculator Wizard -->
+  <section class="calculator-section" id="calculator">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge" data-bn="ইন্টারেক্টিভ অ্যাসেসমেন্ট টুল" data-en="Live Profile Estimator">ইন্টারেক্টিভ অ্যাসেসমেন্ট টুল</div>
+        <h2 data-bn="আপনার যোগ্যতা ও প্রয়োজনীয় সেবা <span class='gradient-text'>এখনই তাৎক্ষণিক যাচাই করুন</span>"
+            data-en="Instant Profile Eligibility &amp; <span class='gradient-text'>Package Estimator</span>">
+          আপনার যোগ্যতা ও প্রয়োজনীয় সেবা <span class="gradient-text'>এখনই তাৎক্ষণিক যাচাই করুন</span>
+        </h2>
+        <p data-bn="আপনার বর্তমান তথ্য দিয়ে ১ মিনিটে জেনে নিন আপনার ভিসা প্রাপ্তির সম্ভাবনা বা রেজুমে/প্রপোজাল প্ল্যান।"
+           data-en="Choose your target solution to see estimated timelines, dossier readiness and personalized package options.">
+          আপনার বর্তমান তথ্য দিয়ে ১ মিনিটে জেনে নিন আপনার ভিসা প্রাপ্তির সম্ভাবনা বা রেজুমে/প্রপোজাল প্ল্যান।
+        </p>
+      </div>
+
+      <div class="calculator-wrapper">
+        <div class="calc-step-bar">
+          <div class="step-node active" id="step1">১</div>
+          <div class="step-node" id="step2">২</div>
+          <div class="step-node" id="step3">৩</div>
+        </div>
+
+        <div class="calc-content">
+          <div class="calc-left">
+            <label style="display:block; font-weight:700; margin-bottom: 0.8rem;" data-bn="সেবা নির্বাচন করুন:" data-en="Select Service Category:">সেবা নির্বাচন করুন:</label>
+            <div class="calc-service-type-grid">
+              <div class="calc-type-card selected" data-value="study">
+                <span>🎓</span>
+                <p data-bn="উচ্চশিক্ষা ও ভিসা" data-en="Study Abroad">উচ্চশিক্ষা ও ভিসা</p>
+              </div>
+              <div class="calc-type-card" data-value="career">
+                <span>💼</span>
+                <p data-bn="গ্লোবাল সিভি ও চাকরি" data-en="Career &amp; CV">গ্লোবাল সিভি ও চাকরি</p>
+              </div>
+              <div class="calc-type-card" data-value="writing">
+                <span>📑</span>
+                <p data-bn="প্রপোজাল ও প্রজেক্ট" data-en="Proposals">প্রপোজাল ও প্রজেক্ট</p>
+              </div>
+            </div>
+
+            <!-- Conditional Dynamic Form Fields -->
+            <div id="dynamicCalcFields">
+              <!-- Default: Study Abroad Fields -->
+              <div class="calc-form-group">
+                <label data-bn="উদ্দিষ্ট দেশ (Target Destination):" data-en="Target Country:">উদ্দিষ্ট দেশ (Target Destination):</label>
+                <select class="calc-select" id="targetCountrySelect">
+                  <option value="usa">USA (যুক্তরাষ্ট্র - F1 Visa)</option>
+                  <option value="canada">Canada (কানাডা - Study Permit)</option>
+                  <option value="uk">United Kingdom (যুক্তরাজ্য - Student Route)</option>
+                  <option value="australia">Australia (অস্ট্রেলিয়া - Subclass 500)</option>
+                  <option value="germany">Germany &amp; Europe (জার্মানি ও ইউরোপ)</option>
+                </select>
+              </div>
+
+              <div class="calc-form-group">
+                <label data-bn="সর্বশেষ ডিগ্রি ও জিপিএ/সিজিপিএ:" data-en="Highest Degree &amp; GPA:">সর্বশেষ ডিগ্রি ও জিপিএ/সিজিপিএ:</label>
+                <select class="calc-select" id="degreeScoreSelect">
+                  <option value="high">CGPA 3.50 - 4.00 (অত্যন্ত আকর্ষণীয় স্কলারশিপ প্রোফাইল)</option>
+                  <option value="medium">CGPA 3.00 - 3.49 (স্ট্যান্ডার্ড স্কলারশিপ প্রোফাইল)</option>
+                  <option value="low">CGPA 2.50 - 2.99 (কাস্টম বিশ্ববিদ্যালয় অপশন)</option>
+                </select>
+              </div>
+
+              <div class="calc-form-group">
+                <label data-bn="ইংরেজি দক্ষতা স্কোর (IELTS / Duolingo / PTE):" data-en="English Test Score:">ইংরেজি দক্ষতা স্কোর (IELTS / Duolingo / PTE):</label>
+                <select class="calc-select" id="ieltsScoreSelect">
+                  <option value="high">IELTS 7.0+ / Duolingo 125+ (টপ রেটেড)</option>
+                  <option value="medium">IELTS 6.5 / Duolingo 115 (গ্রহণযোগ্য)</option>
+                  <option value="low">IELTS 6.0 বা টেস্ট বাকি আছে</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="recalcBtn" style="width: 100%; margin-top: 1rem;" data-bn="ফলাফল আপডেট করুন" data-en="Update Assessment">
+              ফলাফল আপডেট করুন
+            </button>
+          </div>
+
+          <!-- Result Card -->
+          <div class="calc-summary-panel">
+            <div>
+              <div class="summary-title">
+                <span>🎯</span>
+                <strong data-bn="আপনার সম্ভাব্য স্কোর ও বিশ্লেষণ" data-en="Eligibility &amp; Roadmap Score">আপনার সম্ভাব্য স্কোর ও বিশ্লেষণ</strong>
+              </div>
+
+              <div class="eligibility-gauge">
+                <div class="gauge-score" id="gaugeScoreText">94%</div>
+                <div class="gauge-bar-bg">
+                  <div class="gauge-bar-fill" id="gaugeBarFill" style="width: 94%;"></div>
+                </div>
+                <span id="gaugeLabel" style="font-size: 0.85rem; color: #34d399;" data-bn="উচ্চ সাফল্যের সম্ভাবনা" data-en="High Success Potential">উচ্চ সাফল্যের সম্ভাবনা</span>
+              </div>
+
+              <div class="summary-line">
+                <span data-bn="প্রস্তাবিত প্যাকেজ:" data-en="Recommended Package:">প্রস্তাবিত প্যাকেজ:</span>
+                <strong id="recPackageName">প্রিমিয়াম ভিসা ও স্কলারশিপ ফাইল</strong>
+              </div>
+              <div class="summary-line">
+                <span data-bn="সম্ভাব্য সময়কাল:" data-en="Estimated Timeline:">সম্ভাব্য সময়কাল:</span>
+                <strong id="recTimeline">৩ - ৬ সপ্তাহ</strong>
+              </div>
+              <div class="summary-line">
+                <span data-bn="সাপোর্ট স্পেশালিস্ট:" data-en="Dedicated Specialist:">সাপোর্ট স্পেশালিস্ট:</span>
+                <strong id="recConsultant">সিনিয়র এডুকেশন কনসালট্যান্ট</strong>
+              </div>
+            </div>
+
+            <button class="btn btn-gold open-modal-btn" style="width: 100%; margin-top: 1.5rem;" data-service="Instant Assessment Booking" data-bn="এই প্যাকেজে ফ্রি কনসালটেশন নিন" data-en="Claim Consultation With Specialist">
+              এই প্যাকেজে ফ্রি কনসালটেশন নিন
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step Consulting Process -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge" data-bn="আমাদের কার্যপদ্ধতি" data-en="Our Proven Methodology">আমাদের কার্যপদ্ধতি</div>
+        <h2 data-bn="৪টি সহজ ধাপে সম্পন্ন হয় <span class='gradient-text'>আপনার সম্পূর্ণ কনসালট্যান্সি</span>"
+            data-en="A Transparent 4-Step Process <span class='gradient-text'>Designed for Success</span>">
+          ৪টি সহজ ধাপে সম্পন্ন হয় <span class="gradient-text'>আপনার সম্পূর্ণ কনসালট্যান্সি</span>
+        </h2>
+        <p data-bn="কোনো প্রকার লুক্কায়িত চার্জ ছাড়াই সম্পূর্ণ স্বচ্ছতা ও প্রফেশনাল জবাবদিহিতার মাধ্যমে আমরা কাজ পরিচালনা করি।"
+           data-en="Complete transparency, measurable milestones, and rigorous quality check from initial intake to final delivery.">
+          কোনো প্রকার লুক্কায়িত চার্জ ছাড়াই সম্পূর্ণ স্বচ্ছতা ও প্রফেশনাল জবাবদিহিতার মাধ্যমে আমরা কাজ পরিচালনা করি।
+        </p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-num">০১</div>
+          <h4 data-bn="প্রাথমিক মূল্যায়ন ও সাক্ষাৎকার" data-en="Intake &amp; Profile Audit">প্রাথমিক মূল্যায়ন ও সাক্ষাৎকার</h4>
+          <p data-bn="আপনার বর্তমান সিভি, সার্টিফিকেট অথবা প্রজেক্ট কনসেপ্ট পর্যালোচনা করে একটি প্রাথমিক ফ্রেমওয়ার্ক তৈরি।"
+             data-en="Comprehensive review of your credentials, past applications, target criteria, and strategic gaps.">
+            আপনার বর্তমান সিভি, সার্টিফিকেট অথবা প্রজেক্ট কনসেপ্ট পর্যালোচনা করে একটি প্রাথমিক ফ্রেমওয়ার্ক তৈরি।
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">০২</div>
+          <h4 data-bn="কাস্টমাইজড কৌশল প্রণয়ন" data-en="Strategic Formulation">কাস্টমাইজড কৌশল প্রণয়ন</h4>
+          <p data-bn="টার্গেটেড দেশ, জব পোর্টাল বা ডোনারের স্পেসিফিক রিকোয়ারমেন্ট অনুসারে অ্যাকশন প্ল্যান প্রস্তুত।"
+             data-en="Formulating tailored applications, target university shortlists, or donor-specific project logframes.">
+            টার্গেটেড দেশ, জব পোর্টাল বা ডোনারের স্পেসিফিক রিকোয়ারমেন্ট অনুসারে অ্যাকশন প্ল্যান প্রস্তুত।
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">০৩</div>
+          <h4 data-bn="নিখুঁত ড্রাফটিং ও ভ্যালিডেশন" data-en="Drafting &amp; Quality Audit">নিখুঁত ড্রাফটিং ও ভ্যালিডেশন</h4>
+          <p data-bn="এসওপি, এটিএস সিভি বা পূর্ণাঙ্গ প্রপোজাল রচনা এবং সিনিয়র এডিটর ও ফ্যাকাল্টি প্যানেলের মাধ্যমে প্রুফরিডিং।"
+             data-en="Flawless, non-plagiarized writing crafted with industry keywords and scrutinized by senior experts.">
+            এসওপি, এটিএস সিভি বা পূর্ণাঙ্গ প্রপোজাল রচনা এবং সিনিয়র এডিটর ও ফ্যাকাল্টি প্যানেলের মাধ্যমে প্রুফরিডিং।
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num">০৪</div>
+          <h4 data-bn="ফাইনাল সাবমিশন ও ফলো-আপ" data-en="Execution &amp; Post Support">ফাইনাল সাবমিশন ও ফলো-আপ</h4>
+          <p data-bn="অ্যাম্ব্যাসি ইন্টারভিউ প্রস্তুতি, চাকরির ইন্টারভিউ ড্রিল বা ডোনার কিউঅ্যান্ডএ (Q&amp;A) সেশনের পূর্ণ সহায়তা।"
+             data-en="Embassy interview simulation, recruiter follow-up strategies, and revision support until final approval.">
+            অ্যাম্ব্যাসি ইন্টারভিউ প্রস্তুতি, চাকরির ইন্টারভিউ ড্রিল বা ডোনার কিউঅ্যান্ডএ (Q&amp;A) সেশনের পূর্ণ সহায়তা।
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Testimonials & Social Proof -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge" data-bn="সফলতার গল্প" data-en="Verified Success Stories">সফলতার গল্প</div>
+        <h2 data-bn="আমাদের সম্মানিত ক্লায়েন্টরা <span class='gradient-text'>কী বলছেন</span>"
+            data-en="What Our Valued <span class='gradient-text'>Clients Have to Say</span>">
+          আমাদের সম্মানিত ক্লায়েন্টরা <span class="gradient-text'>কী বলছেন</span>
+        </h2>
+        <p data-bn="বিশ্ববিদ্যালয়ে চান্স পাওয়া শিক্ষার্থী থেকে শুরু করে বহুজাতিক প্রতিষ্ঠানে কর্মরত প্রফেশনালদের বাস্তব মতামত।"
+           data-en="Real voices from scholarship recipients, global remote tech leaders, and NGO project directors.">
+          বিশ্ববিদ্যালয়ে চান্স পাওয়া শিক্ষার্থী থেকে শুরু করে বহুজাতিক প্রতিষ্ঠানে কর্মরত প্রফেশনালদের বাস্তব মতামত।
+        </p>
+      </div>
+
+      <div class="testimonial-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text" data-bn="“একবার ইউএস ভিসা রিজেক্ট হওয়ার পর ApexGlobal-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”"
+               data-en="“After a heartbreaking first-time refusal, ApexGlobal rewritten my SOP and conducted rigorous mock interviews. I secured my F-1 visa and full funding at Texas A&amp;M!”">
+              “একবার ইউএস ভিসা রিজেক্ট হওয়ার পর ApexGlobal-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”
+            </p>
+          </div>
+          <div class="client-profile">
+            <div class="client-avatar">TR</div>
+            <div class="client-meta">
+              <h5>তানভীর রহমান</h5>
+              <span data-bn="মাস্টার্স শিক্ষার্থী, টেক্সাস (USA)" data-en="Graduate Student, Texas (USA)">মাস্টার্স শিক্ষার্থী, টেক্সাস (USA)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text" data-bn="“তাদের তৈরি করা হার্ভার্ড ফরম্যাট ATS সিভি এবং লিঙ্কডইন অপটিমাইজেশনের মাত্র ৩ সপ্তাহের মধ্যে আমি জার্মানির একটি শীর্ষ ফিনটেক কোম্পানিতে সিনিয়র সফটওয়্যার ইঞ্জিনিয়ার হিসেবে রিমোট জব অফার পেয়েছি।”"
+               data-en="“Within 3 weeks of their ATS resume makeover and LinkedIn revamp, I received two remote interview invites from German fintechs and landed an incredible contract!”">
+              “তাদের তৈরি করা হার্ভার্ড ফরম্যাট ATS সিভি এবং লিঙ্কডইন অপটিমাইজেশনের মাত্র ৩ সপ্তাহের মধ্যে আমি জার্মানির একটি শীর্ষ ফিনটেক কোম্পানিতে সিনিয়র সফটওয়্যার ইঞ্জিনিয়ার হিসেবে রিমোট জব অফার পেয়েছি।”
+            </p>
+          </div>
+          <div class="client-profile">
+            <div class="client-avatar" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">মা</div>
+            <div class="client-meta">
+              <h5>মাহমুদুল হাসান</h5>
+              <span data-bn="সিনিয়র সফটওয়্যার ইঞ্জিনিয়ার" data-en="Senior Software Engineer">সিনিয়র সফটওয়্যার ইঞ্জিনিয়ার</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text" data-bn="“আমাদের ক্লাইমেট রেজিলিয়েন্স প্রজেক্টের জন্য একটি আন্তর্জাতিক ডোনার কনসেপ্ট নোট দরকার ছিল। তাদের দলের পেশাদার রিসার্চ ও বাজেট কাঠামোর কারণে আমাদের প্রপোজালটি প্রথম রাউন্ডেই অনুমোদিত হয়।”"
+               data-en="“Their grant writing consultants structured our Theory of Change and multi-year budget flawlessly. Our climate resilience project was approved without reservations.”">
+              “আমাদের ক্লাইমেট রেজিলিয়েন্স প্রজেক্টের জন্য একটি আন্তর্জাতিক ডোনার কনসেপ্ট নোট দরকার ছিল। তাদের দলের পেশাদার রিসার্চ ও বাজেট কাঠামোর কারণে আমাদের প্রপোজালটি প্রথম রাউন্ডেই অনুমোদিত হয়।”
+            </p>
+          </div>
+          <div class="client-profile">
+            <div class="client-avatar" style="background: linear-gradient(135deg, #f59e0b, #ec4899);">সা</div>
+            <div class="client-meta">
+              <h5>সাদিয়া আফরিন</h5>
+              <span data-bn="প্রজেক্ট ডিরেক্টর, এনজিও" data-en="Project Director, Development Sector">প্রজেক্ট ডিরেক্টর, এনজিও</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge" data-bn="সাধারণ প্রশ্নোত্তর" data-en="Frequently Asked Questions">সাধারণ প্রশ্নোত্তর</div>
+        <h2 data-bn="সচরাচর জিজ্ঞাসিত <span class='gradient-text'>প্রশ্ন ও উত্তর</span>"
+            data-en="Answers to Common <span class='gradient-text'>Queries</span>">
+          সচরাচর জিজ্ঞাসিত <span class="gradient-text'>প্রশ্ন ও উত্তর</span>
+        </h2>
+        <p data-bn="আমাদের সার্ভিস ও কর্মপ্রক্রিয়া সম্পর্কে স্পষ্ট ধারণা পেতে নিচের উত্তরগুলো পড়ুন।"
+           data-en="Everything you need to know about our consultancy engagements, timelines, and guarantees.">
+          আমাদের সার্ভিস ও কর্মপ্রক্রিয়া সম্পর্কে স্পষ্ট ধারণা পেতে নিচের উত্তরগুলো পড়ুন।
+        </p>
+      </div>
+
+      <div class="faq-container">
+        <!-- FAQ 1 -->
+        <div class="faq-item open">
+          <div class="faq-header">
+            <span data-bn="১. আমার স্টাডি গ্যাপ বা পূর্বে ভিসা রিফিউজাল থাকলে কি আবেদন করা সম্ভব?"
+                  data-en="1. Can I apply if I have study gaps or a prior visa refusal?">
+              ১. আমার স্টাডি গ্যাপ বা পূর্বে ভিসা রিফিউজাল থাকলে কি আবেদন করা সম্ভব?
+            </span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-body" data-bn="হ্যাঁ, অবশ্যই সম্ভব। স্টাডি গ্যাপের ক্ষেত্রে আমরা আপনার প্রাসঙ্গিক চাকরির অভিজ্ঞতা, স্কিল কোর্স বা ব্যক্তিগত উদ্যোগকে পেশাদার এসওপিতে সুনির্দিষ্টভাবে তুলে ধরি। আর ভিসা রিজেকশনের ক্ষেত্রে বিগত রিজেকশন কারণ পুঙ্খানুপুঙ্খ অডিট করে নতুন স্ট্রং জাস্টিফিকেশন ফাইল তৈরি করা হয়।"
+               data-en="Yes, absolutely. We specialize in articulating valid professional rationales for study gaps and crafting compelling justifications to overcome prior visa refusals.">
+            হ্যাঁ, অবশ্যই সম্ভব। স্টাডি গ্যাপের ক্ষেত্রে আমরা আপনার প্রাসঙ্গিক চাকরির অভিজ্ঞতা, স্কিল কোর্স বা ব্যক্তিগত উদ্যোগকে পেশাদার এসওপিতে সুনির্দিষ্টভাবে তুলে ধরি। আর ভিসা রিজেকশনের ক্ষেত্রে বিগত রিজেকশন কারণ পুঙ্খানুপুঙ্খ অডিট করে নতুন স্ট্রং জাস্টিফিকেশন ফাইল তৈরি করা হয়।
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <div class="faq-header">
+            <span data-bn="২. একটি আন্তর্জাতিক ATS রেজুমে তৈরিতে কতদিন সময় লাগে?"
+                  data-en="2. How long does it take to develop an ATS-compliant CV?">
+              ২. একটি আন্তর্জাতিক ATS রেজুমে তৈরিতে কতদিন সময় লাগে?
+            </span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-body" data-bn="সাধারণত সম্পূর্ণ প্রক্রিয়াটি সম্পন্ন হতে ৩ থেকে ৫ কর্মদিবস সময় লাগে। এর মধ্যে রয়েছে প্রাথমিক ক্যারিয়ার অডিট, ইন্ডাস্ট্রি কীওয়ার্ড রিসার্চ, ড্রাফটিং এবং ক্লায়েন্টের সাথে ১টি ফিডব্যাক ও রিভিশন সাইকেল।"
+               data-en="Standard turnaround is 3 to 5 business days, including career trajectory analysis, keyword optimization, and client revisions. Urgent 48-hour delivery is also available.">
+            সাধারণত সম্পূর্ণ প্রক্রিয়াটি সম্পন্ন হতে ৩ থেকে ৫ কর্মদিবস সময় লাগে। এর মধ্যে রয়েছে প্রাথমিক ক্যারিয়ার অডিট, ইন্ডাস্ট্রি কীওয়ার্ড রিসার্চ, ড্রাফটিং এবং ক্লায়েন্টের সাথে ১টি ফিডব্যাক ও রিভিশন সাইকেল।
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <div class="faq-header">
+            <span data-bn="৩. প্রজেক্ট প্রপোজাল ও কনসেপ্ট নোটে ডোনারের নির্দিষ্ট ফরম্যাট ফলো করা হয় কি?"
+                  data-en="3. Do you follow specific donor templates and guidelines for proposals?">
+              ৩. প্রজেক্ট প্রপোজাল ও কনসেপ্ট নোটে ডোনারের নির্দিষ্ট ফরম্যাট ফলো করা হয় কি?
+            </span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-body" data-bn="হ্যাঁ, শতভাগ। সংশ্লিষ্ট ডোনার (যেমন: USAID, EU, Horizon, গ্লোবাল ফান্ড ইত্যাদি) এর প্রদত্ত RFP/Call for Proposal এর প্রতিটি শর্ত, ওয়ার্ড লিমিট, লজফ্রেম টেবিল এবং বাজেট গাইডলাইন অক্ষরে অক্ষরে অনুসরণ করা হয়।"
+               data-en="Yes, 100%. We meticulously adhere to each donor's specified RFP criteria, word counts, budget caps, and logframe requirements.">
+            হ্যাঁ, শতভাগ। সংশ্লিষ্ট ডোনার (যেমন: USAID, EU, Horizon, গ্লোবাল ফান্ড ইত্যাদি) এর প্রদত্ত RFP/Call for Proposal এর প্রতিটি শর্ত, ওয়ার্ড লিমিট, লজফ্রেম টেবিল এবং বাজেট গাইডলাইন অক্ষরে অক্ষরে অনুসরণ করা হয়।
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <div class="faq-header">
+            <span data-bn="৪. আমি কি সরাসরি কনসালট্যান্টের সাথে অনলাইন বা অফলাইন মিটিং করতে পারি?"
+                  data-en="4. Can I meet the consultants virtually or in-person?">
+              ৪. আমি কি সরাসরি কনসালট্যান্টের সাথে অনলাইন বা অফলাইন মিটিং করতে পারি?
+            </span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-body" data-bn="অবশ্যই। গুগল মিট বা জুম-এর মাধ্যমে দেশ-বিদেশের যেকোনো স্থান থেকে ওয়ান-অন-ওয়ান শিডিউল মিটিং করা যায়। এছাড়া আমাদের কর্পোরেট অফিসে সরাসরি এসেও পরামর্শ নিতে পারেন।"
+               data-en="Certainly. We provide scheduled 1-on-1 consultations via Zoom/Google Meet globally, as well as in-person advisory at our corporate office.">
+            অবশ্যই। গুগল মিট বা জুম-এর মাধ্যমে দেশ-বিদেশের যেকোনো স্থান থেকে ওয়ান-অন-ওয়ান শিডিউল মিটিং করা যায়। এছাড়া আমাদের কর্পোরেট অফিসে সরাসরি এসেও পরামর্শ নিতে পারেন।
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="cta-banner-section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 data-bn="আপনার ভবিষ্যৎ পরিকল্পনাকে দিন <span class='gradient-text'>বিশ্বমানের দিকনির্দেশনা</span>"
+            data-en="Empower Your Next Milestone With <span class='gradient-text'>World-Class Advisory</span>">
+          আপনার ভবিষ্যৎ পরিকল্পনাকে দিন <span class="gradient-text'>বিশ্বমানের দিকনির্দেশনা</span>
+        </h2>
+        <p data-bn="আজই আমাদের সিনিয়র কনসালট্যান্টদের সাথে কথা বলুন। একটি কার্যকর সিদ্ধান্ত বদলে দিতে পারে আপনার উচ্চশিক্ষা, বৈশ্বিক ক্যারিয়ার কিংবা প্রাতিষ্ঠানিক প্রজেক্টের ভবিষ্যৎ।"
+           data-en="Book your confidential session today. A single strategic decision can elevate your admissions, global career progression, or enterprise funding.">
+          আজই আমাদের সিনিয়র কনসালট্যান্টদের সাথে কথা বলুন। একটি কার্যকর সিদ্ধান্ত বদলে দিতে পারে আপনার উচ্চশিক্ষা, বৈশ্বিক ক্যারিয়ার কিংবা প্রাতিষ্ঠানিক প্রজেক্টের ভবিষ্যৎ।
+        </p>
+
+        <div class="cta-actions">
+          <button class="btn btn-primary open-modal-btn" data-bn="বিনামূল্যে প্রাথমিক সেশন বুক করুন" data-en="Book Free Strategy Session">
+            বিনামূল্যে প্রাথমিক সেশন বুক করুন
+          </button>
+          <a href="https://wa.me/8801700000000" target="_blank" rel="noopener" class="btn btn-secondary" style="border-color: #25d366; color: #25d366;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1 .587 1.706.877 2.806.877 3.181 0 5.767-2.586 5.768-5.766.001-3.18-2.585-5.76-5.768-5.76zm3.393 8.307c-.147.414-.737.765-1.02.795-.284.029-.64.041-1.85-.457-1.455-.6-2.39-2.072-2.463-2.169-.073-.098-.59-.785-.59-1.497 0-.712.373-1.063.506-1.209.133-.146.29-.182.387-.182s.193.003.277.008c.089.005.207-.034.324.246.12.288.411 1.004.448 1.077.037.073.061.158.012.255-.049.097-.073.158-.146.243-.073.085-.154.19-.22.255-.073.073-.15.152-.064.3.085.146.379.625.813 1.011.558.497 1.028.65 1.174.723.146.073.231.061.317-.037.085-.097.365-.425.462-.571.097-.146.195-.122.329-.073.134.049.851.401.997.474.146.073.243.11.279.171.037.061.037.353-.11.767z"></path></svg>
+            হোয়াটসঅ্যাপে সরাসরি চ্যাট
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1 -->
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 1.2rem;">
+            <div class="logo-icon">A</div>
+            <div class="logo-text">
+              <h2>ApexGlobal <span class="gradient-text">Advisory</span></h2>
+              <p>Corporate, Career &amp; Higher Education</p>
+            </div>
+          </div>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem;" 
+             data-bn="ApexGlobal হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।"
+             data-en="ApexGlobal is a multidisciplinary advisory firm committed to student mobility, international career optimization, and corporate proposal drafting.">
+            ApexGlobal হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।
+          </p>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="LinkedIn">in</a>
+            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="Facebook">fb</a>
+            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="Twitter">x</a>
+          </div>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="footer-col">
+          <h4 data-bn="কোর সার্ভিসসমূহ" data-en="Core Services">কোর সার্ভিসসমূহ</h4>
+          <ul class="footer-links">
+            <li><a href="#study-abroad" data-bn="উচ্চশিক্ষা ও বিশ্ববিদ্যালয় ভর্তি" data-en="University Admissions">উচ্চশিক্ষা ও বিশ্ববিদ্যালয় ভর্তি</a></li>
+            <li><a href="#study-abroad" data-bn="স্টুডেন্ট ভিসা ও মক ইন্টারভিউ" data-en="Visa File &amp; Mock Sessions">স্টুডেন্ট ভিসা ও মক ইন্টারভিউ</a></li>
+            <li><a href="#global-career" data-bn="হার্ভার্ড স্ট্যান্ডার্ড ATS রেজুমে" data-en="Harvard ATS Resume">হার্ভার্ড স্ট্যান্ডার্ড ATS রেজুমে</a></li>
+            <li><a href="#global-career" data-bn="লিঙ্কডইন ব্র্যান্ডিং ও জব ম্যাচ" data-en="LinkedIn Profile Branding">লিঙ্কডইন ব্র্যান্ডিং ও জব ম্যাচ</a></li>
+            <li><a href="#business-writing" data-bn="ডোনার গ্রান্ট ও প্রজেক্ট প্রপোজাল" data-en="Donor Grants &amp; Concept Notes">ডোনার গ্রান্ট ও প্রজেক্ট প্রপোজাল</a></li>
+            <li><a href="#business-writing" data-bn="ব্যাংক লোন ও ইনভেস্টর বিজনেস প্ল্যান" data-en="Business Plans &amp; Pitch Decks">ব্যাংক লোন ও ইনভেস্টর বিজনেস প্ল্যান</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="footer-col">
+          <h4 data-bn="গুরুত্বপূর্ণ লিংক" data-en="Quick Links">গুরুত্বপূর্ণ লিংক</h4>
+          <ul class="footer-links">
+            <li><a href="#hero" data-bn="হোমপেইজ" data-en="Home">হোমপেইজ</a></li>
+            <li><a href="#calculator" data-bn="প্রোফাইল অ্যাসেসমেন্ট টুল" data-en="Eligibility Calculator">প্রোফাইল অ্যাসেসমেন্ট টুল</a></li>
+            <li><a href="#process" data-bn="আমাদের কার্যপদ্ধতি" data-en="Our Process">আমাদের কার্যপদ্ধতি</a></li>
+            <li><a href="#" class="open-modal-btn" data-bn="পরামর্শকের সাথে কথা বলুন" data-en="Contact an Advisor">পরামর্শকের সাথে কথা বলুন</a></li>
+            <li><a href="#" data-bn="গোপনীয়তা নীতিমালা (Privacy)" data-en="Privacy Policy">গোপনীয়তা নীতিমালা</a></li>
+            <li><a href="#" data-bn="সেবা নীতিমালা (Terms)" data-en="Terms of Service">সেবা নীতিমালা</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4 -->
+        <div class="footer-col">
+          <h4 data-bn="যোগাযোগ ও কার্যালয়" data-en="Get in Touch">যোগাযোগ ও কার্যালয়</h4>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span data-bn="লেভেল ৭, গুলশান সেন্টার পয়েন্ট, গুলশান-২, ঢাকা-১২১২, বাংলাদেশ" data-en="Level 7, Gulshan Center Point, Gulshan-2, Dhaka-1212">লেভেল ৭, গুলশান সেন্টার পয়েন্ট, গুলশান-২, ঢাকা-১২১২</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>advisory@apexglobalconsulting.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>+880 1700-000000 / +880 1800-000000</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 ApexGlobal Advisory Ltd. সর্বস্বত্ব সংরক্ষিত (All Rights Reserved).</div>
+        <div style="color: var(--text-dim);">Designed with modern web standards for enterprise consulting excellence.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking & Inquiry Modal Dialog -->
+  <div class="modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeModalBtn" aria-label="Close dialog">×</button>
+      <div class="badge" data-bn="এক্সপ্রেস কনসালটেশন" data-en="Direct Consultation Request">এক্সপ্রেস কনসালটেশন</div>
+      <h3 id="modalTitle" data-bn="আপনার ফ্রি কনসালটেশন সেশন বুক করুন" data-en="Book Your Free Consultation Session">আপনার ফ্রি কনসালটেশন সেশন বুক করুন</h3>
+      <p data-bn="নিচের ফর্মটি পূরণ করুন; আমাদের সিনিয়র কনসালট্যান্ট ২৪ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করবেন।"
+         data-en="Fill out this form and our senior advisor will contact you within 24 hours.">
+        নিচের ফর্মটি পূরণ করুন; আমাদের সিনিয়র কনসালট্যান্ট ২৪ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করবেন।
+      </p>
+
+      <form id="consultationForm">
+        <div class="calc-form-group">
+          <label data-bn="আপনার পূর্ণ নাম (Full Name):" data-en="Your Full Name:">আপনার পূর্ণ নাম (Full Name):</label>
+          <input type="text" class="calc-input" id="userName" placeholder="e.g. মোঃ তানভীর আহমেদ" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="calc-form-group">
+            <label data-bn="মোবাইল / হোয়াটসঅ্যাপ:" data-en="WhatsApp / Phone:">মোবাইল / হোয়াটসঅ্যাপ:</label>
+            <input type="tel" class="calc-input" id="userPhone" placeholder="+880 17XXXXXXXX" required>
+          </div>
+          <div class="calc-form-group">
+            <label data-bn="ইমেইল এড্রেস:" data-en="Email Address:">ইমেইল এড্রেস:</label>
+            <input type="email" class="calc-input" id="userEmail" placeholder="yourname@gmail.com" required>
+          </div>
+        </div>
+
+        <div class="calc-form-group">
+          <label data-bn="আগ্রহী সেবার বিভাগ (Service of Interest):" data-en="Primary Service:">আগ্রহী সেবার বিভাগ (Service of Interest):</label>
+          <select class="calc-select" id="userServiceInterest">
+            <option value="Study Abroad & Visa">উচ্চশিক্ষা ও ভিসা প্রসেসিং (Study Abroad &amp; Visa)</option>
+            <option value="Global ATS Resume">গ্লোবাল ক্যারিয়ার ও ATS রেজুমে (Resume &amp; LinkedIn)</option>
+            <option value="Project Proposal">প্রজেক্ট প্রপোজাল ও কনসেপ্ট নোট (Concept Note &amp; Grants)</option>
+            <option value="Business Plan">বিজনেস প্ল্যান ও ইনভেস্টর পিচ ডেক (Business Plan &amp; Deck)</option>
+            <option value="Other Advisory">অন্যান্য করপোরেট কনসালট্যান্সি (Other)</option>
+          </select>
+        </div>
+
+        <div class="calc-form-group">
+          <label data-bn="আপনার বর্তমান যোগ্যতা বা প্রজেক্ট সম্পর্কে সংক্ষিপ্ত বিবরণ:" data-en="Briefly describe your profile or query:">আপনার বর্তমান যোগ্যতা বা প্রজেক্ট সম্পর্কে সংক্ষিপ্ত বিবরণ:</label>
+          <textarea class="calc-input" id="userMessage" rows="3" placeholder="বর্তমান শিক্ষাগত যোগ্যতা, কাঙ্ক্ষিত দেশ, বা প্রজেক্ট সম্পর্কিত তথ্য লিখুন..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" data-bn="সেশন কনফার্ম করুন" data-en="Confirm &amp; Submit Request">
+          সেশন কনফার্ম করুন
+        </button>
+      </form>
     </div>
   </div>
-</footer>
 
-<script>
-  const toggle = document.getElementById('navToggle');
-  const nav = document.getElementById('mainNav');
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-  });
-  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
-</script>
+  <!-- Floating Quick WhatsApp Button -->
+  <a href="https://wa.me/8801700000000" class="floating-contact-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="WhatsApp Expert Live Chat">
+    <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1 .587 1.706.877 2.806.877 3.181 0 5.767-2.586 5.768-5.766.001-3.18-2.585-5.76-5.768-5.76zm3.393 8.307c-.147.414-.737.765-1.02.795-.284.029-.64.041-1.85-.457-1.455-.6-2.39-2.072-2.463-2.169-.073-.098-.59-.785-.59-1.497 0-.712.373-1.063.506-1.209.133-.146.29-.182.387-.182s.193.003.277.008c.089.005.207-.034.324.246.12.288.411 1.004.448 1.077.037.073.061.158.012.255-.049.097-.073.158-.146.243-.073.085-.154.19-.22.255-.073.073-.15.152-.064.3.085.146.379.625.813 1.011.558.497 1.028.65 1.174.723.146.073.231.061.317-.037.085-.097.365-.425.462-.571.097-.146.195-.122.329-.073.134.049.851.401.997.474.146.073.243.11.279.171.037.061.037.353-.11.767z"></path></svg>
+  </a>
 
+  <!-- Toast Notification -->
+  <div class="toast-msg" id="toastMsg">
+    <span>✓</span>
+    <span id="toastText">আপনার রিকোয়েস্ট সফলভাবে গৃহীত হয়েছে! শীঘ্রই কনসালট্যান্ট যোগাযোগ করবেন।</span>
+  </div>
+
+  <!-- ==========================================================================
+       JavaScript Logic: Localization, Filter, Calculator, Modal & Interactions
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Language Toggle (Bilingual: বাংলা <-> English)
+      let currentLang = 'bn';
+      const langToggleBtn = document.getElementById('langToggleBtn');
+      const langLabel = document.getElementById('langLabel');
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        langLabel.textContent = (lang === 'bn') ? 'English' : 'বাংলা';
+        document.documentElement.lang = lang;
+
+        const translatableElements = document.querySelectorAll('[data-bn]');
+        translatableElements.forEach(el => {
+          const text = (lang === 'bn') ? el.getAttribute('data-bn') : el.getAttribute('data-en');
+          if (text) {
+            el.innerHTML = text;
+          }
+        });
+
+        // Trigger calculator update for translated names
+        updateCalculator();
+      }
+
+      langToggleBtn.addEventListener('click', () => {
+        setLanguage(currentLang === 'bn' ? 'en' : 'bn');
+        showToast(currentLang === 'bn' ? 'ভাষা পরিবর্তন করা হয়েছে: বাংলা' : 'Language switched to English');
+      });
+
+      // 2. Service Category Filter Tabs
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      const serviceCards = document.querySelectorAll('.service-card');
+
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+          serviceCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-cat') === filter) {
+              card.style.display = 'flex';
+              setTimeout(() => { card.style.opacity = '1'; }, 20);
+            } else {
+              card.style.display = 'none';
+              card.style.opacity = '0';
+            }
+          });
+        });
+      });
+
+      // 3. Interactive Profile Assessment Wizard & Calculator
+      const calcTypeCards = document.querySelectorAll('.calc-type-card');
+      const dynamicCalcFields = document.getElementById('dynamicCalcFields');
+      const gaugeScoreText = document.getElementById('gaugeScoreText');
+      const gaugeBarFill = document.getElementById('gaugeBarFill');
+      const gaugeLabel = document.getElementById('gaugeLabel');
+      const recPackageName = document.getElementById('recPackageName');
+      const recTimeline = document.getElementById('recTimeline');
+      const recConsultant = document.getElementById('recConsultant');
+      const recalcBtn = document.getElementById('recalcBtn');
+
+      let selectedType = 'study';
+
+      calcTypeCards.forEach(card => {
+        card.addEventListener('click', () => {
+          calcTypeCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          selectedType = card.getAttribute('data-value');
+          renderCalcFields(selectedType);
+          updateCalculator();
+        });
+      });
+
+      function renderCalcFields(type) {
+        if (type === 'study') {
+          dynamicCalcFields.innerHTML = `
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'উদ্দিষ্ট দেশ (Target Destination):' : 'Target Destination:'}</label>
+              <select class="calc-select" id="targetCountrySelect">
+                <option value="usa">USA (যুক্তরাষ্ট্র - F1 Visa)</option>
+                <option value="canada">Canada (কানাডা - Study Permit)</option>
+                <option value="uk">United Kingdom (যুক্তরাজ্য - Student Route)</option>
+                <option value="australia">Australia (অস্ট্রেলিয়া - Subclass 500)</option>
+                <option value="germany">Germany & Europe (জার্মানি ও ইউরোপ)</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'সর্বশেষ সিজিপিএ / গ্রেড:' : 'CGPA / Academic Score:'}</label>
+              <select class="calc-select" id="degreeScoreSelect">
+                <option value="high">CGPA 3.50 - 4.00 (স্কলারশিপ টপ প্রেফারেন্স)</option>
+                <option value="medium">CGPA 3.00 - 3.49 (স্ট্যান্ডার্ড এডমিশন)</option>
+                <option value="low">CGPA 2.50 - 2.99 (কাস্টম অপশন)</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'ইংরেজি টেস্ট স্কোর:' : 'English Test Status:'}</label>
+              <select class="calc-select" id="ieltsScoreSelect">
+                <option value="high">IELTS 7.0+ / Duolingo 125+</option>
+                <option value="medium">IELTS 6.5 / Duolingo 115</option>
+                <option value="low">IELTS 6.0 বা টেস্ট বাকি</option>
+              </select>
+            </div>
+          `;
+        } else if (type === 'career') {
+          dynamicCalcFields.innerHTML = `
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'আপনার ক্যারিয়ার ক্ষেত্র (Industry):' : 'Target Career Industry:'}</label>
+              <select class="calc-select" id="careerFieldSelect">
+                <option value="tech">Software / IT & Data Science</option>
+                <option value="finance">Banking, Accounting & Finance</option>
+                <option value="engineering">Engineering & Operations</option>
+                <option value="executive">Corporate Leadership & Management</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'অভিজ্ঞতার বছর (Years of Experience):' : 'Years of Experience:'}</label>
+              <select class="calc-select" id="careerExpSelect">
+                <option value="high">৫+ বছর (Senior / Mid-Level Specialist)</option>
+                <option value="medium">২ - ৫ বছর (Junior-to-Mid Transition)</option>
+                <option value="low">০ - ২ বছর (Entry-Level / Graduate)</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'উদ্দিষ্ট চাকরির ধরন:' : 'Target Job Type:'}</label>
+              <select class="calc-select" id="jobTargetSelect">
+                <option value="remote">Global Remote (ইউএস/ইউকে থেকে রিমোট কাজ)</option>
+                <option value="relocation">Direct Visa Sponsorship & Relocation</option>
+                <option value="local">MNC / Local Executive Transition</option>
+              </select>
+            </div>
+          `;
+        } else {
+          dynamicCalcFields.innerHTML = `
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'প্রপোজালের ধরন (Document Type):' : 'Project / Document Type:'}</label>
+              <select class="calc-select" id="proposalTypeSelect">
+                <option value="donor">International Donor Concept Note / Grant</option>
+                <option value="business">Bankable Business Plan & Pitch Deck</option>
+                <option value="rfp">Corporate Tender RFP / Technical Bid</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'প্রজেক্ট স্কেল / বাজেট পরিসর:' : 'Project Scale / Budget:'}</label>
+              <select class="calc-select" id="budgetScaleSelect">
+                <option value="large">$100,000+ বা ৫০ লাখ টাকার অধিক</option>
+                <option value="medium">$20,000 - $100,000 বা ১০-৫০ লাখ টাকা</option>
+                <option value="startup">স্টার্টআপ সিড ফান্ডিং বা প্রারম্ভিক প্ল্যান</option>
+              </select>
+            </div>
+            <div class="calc-form-group">
+              <label>${currentLang === 'bn' ? 'প্রয়োজনীয় সময়সীমা (Urgency):' : 'Delivery Timeline:'}</label>
+              <select class="calc-select" id="urgencySelect">
+                <option value="standard">স্ট্যান্ডার্ড (২ - ৩ সপ্তাহ)</option>
+                <option value="express">জরুরি এক্সপ্রেস (৭ - ১০ দিন)</option>
+              </select>
+            </div>
+          `;
+        }
+      }
+
+      function updateCalculator() {
+        let score = 92;
+        let packageName = '';
+        let timeline = '';
+        let specialist = '';
+
+        if (selectedType === 'study') {
+          const deg = document.getElementById('degreeScoreSelect')?.value || 'high';
+          const ielts = document.getElementById('ieltsScoreSelect')?.value || 'high';
+          
+          if (deg === 'high' && ielts === 'high') score = 96;
+          else if (deg === 'low' || ielts === 'low') score = 84;
+          else score = 90;
+
+          packageName = (currentLang === 'bn') ? 'গ্লোবাল আইভি/স্কলারশিপ ভিসা প্যাকেজ' : 'Premier University Scholarship Package';
+          timeline = (currentLang === 'bn') ? '৪ - ৮ সপ্তাহ' : '4 - 8 Weeks';
+          specialist = (currentLang === 'bn') ? 'সিনিয়র এডুকেশন ও ভিসা কনসালট্যান্ট' : 'Senior Visa & Academic Advisor';
+        } else if (selectedType === 'career') {
+          score = 95;
+          packageName = (currentLang === 'bn') ? 'আন্তর্জাতিক ATS রেজুমে ও লিঙ্কডইন রিভ্যাম্প' : 'Executive ATS Resume & LinkedIn Overhaul';
+          timeline = (currentLang === 'bn') ? '৩ - ৫ কর্মদিবস' : '3 - 5 Business Days';
+          specialist = (currentLang === 'bn') ? 'আন্তর্জাতিক সার্টিফাইড ক্যারিয়ার কোচ' : 'Certified Career Coach';
+        } else {
+          score = 98;
+          packageName = (currentLang === 'bn') ? 'ইনভেস্টর-গ্রেড ডোনার প্রপোজাল / বিজনেস ডেক' : 'Investor-Grade Proposal & Logframe Dossier';
+          timeline = (currentLang === 'bn') ? '১ - ২ সপ্তাহ' : '1 - 2 Weeks';
+          specialist = (currentLang === 'bn') ? 'প্রিন্সিপাল স্ট্র্যাটেজিক রাইটিং স্পেশালিস্ট' : 'Principal Proposal Strategist';
+        }
+
+        gaugeScoreText.textContent = score + '%';
+        gaugeBarFill.style.width = score + '%';
+        recPackageName.textContent = packageName;
+        recTimeline.textContent = timeline;
+        recConsultant.textContent = specialist;
+
+        if (score >= 90) {
+          gaugeLabel.textContent = (currentLang === 'bn') ? 'উচ্চ সাফল্যের সম্ভাবনা (High Readiness)' : 'Optimal Readiness Score';
+          gaugeLabel.style.color = '#34d399';
+        } else {
+          gaugeLabel.textContent = (currentLang === 'bn') ? 'কাস্টম স্ট্র্যাটেজি প্রয়োজন (Tailored Advisory)' : 'Requires Tailored Strategy';
+          gaugeLabel.style.color = '#f59e0b';
+        }
+      }
+
+      if (recalcBtn) {
+        recalcBtn.addEventListener('click', () => {
+          updateCalculator();
+          showToast(currentLang === 'bn' ? 'অ্যাসেসমেন্ট স্কোর সফলভাবে আপডেট হয়েছে!' : 'Assessment score successfully updated!');
+        });
+      }
+
+      // 4. FAQ Accordion Toggle
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const header = item.querySelector('.faq-header');
+        header.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          faqItems.forEach(i => i.classList.remove('open'));
+          if (!isOpen) {
+            item.classList.add('open');
+          }
+        });
+      });
+
+      // 5. Booking Modal Dialog Controls
+      const modal = document.getElementById('bookingModal');
+      const openModalBtns = document.querySelectorAll('.open-modal-btn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const consultationForm = document.getElementById('consultationForm');
+      const userServiceInterest = document.getElementById('userServiceInterest');
+
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetService = btn.getAttribute('data-service');
+          if (targetService && userServiceInterest) {
+            // Match select value if possible
+            for (let i = 0; i < userServiceInterest.options.length; i++) {
+              if (userServiceInterest.options[i].text.toLowerCase().includes(targetService.toLowerCase())) {
+                userServiceInterest.selectedIndex = i;
+                break;
+              }
+            }
+          }
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // 6. Form Submission Simulation & Toast Feedback
+      consultationForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userName = document.getElementById('userName').value;
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        consultationForm.reset();
+
+        const successText = (currentLang === 'bn')
+          ? `ধন্যবাদ ${userName}! আপনার কনসালটেশন রিকোয়েস্ট গৃহীত হয়েছে।`
+          : `Thank you, ${userName}! Your consultation request is received.`;
+
+        showToast(successText);
+      });
+
+      // 7. Toast Notification Helper
+      const toast = document.getElementById('toastMsg');
+      const toastText = document.getElementById('toastText');
+      let toastTimer = null;
+
+      function showToast(message) {
+        if (toastTimer) clearTimeout(toastTimer);
+        toastText.textContent = message;
+        toast.classList.add('show');
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      // 8. Mobile Navigation Toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.querySelector('.nav-links');
+      if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+          if (navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+          } else {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '78px';
+            navLinks.style.left = '0';
+            navLinks.style.width = '100%';
+            navLinks.style.background = 'var(--bg-card)';
+            navLinks.style.padding = '1.5rem';
+            navLinks.style.boxShadow = '0 15px 30px rgba(0,0,0,0.5)';
+          }
+        });
+      }
+
+      // Initial Calculator load
+      updateCalculator();
+    });
+  </script>
 </body>
 </html>
