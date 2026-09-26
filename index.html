@@ -320,20 +320,31 @@
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--glass-border);
       transition: var(--transition);
-      box-shadow: var(--glass-shadow);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      width: 100%;
+    }
+
+    [data-theme="dark"] .navbar {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
 
     .nav-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 78px;
+      height: 72px;
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+      position: relative;
     }
 
     .brand-logo {
@@ -341,117 +352,191 @@
       align-items: center;
       gap: 0.75rem;
       text-decoration: none;
+      flex-shrink: 0;
+      user-select: none;
     }
 
     .logo-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #2563eb, #0891b2);
+      background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: 1.35rem;
       font-weight: 800;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .logo-text h2 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.4px;
+      line-height: 1.15;
       display: flex;
       align-items: center;
       gap: 0.35rem;
       color: var(--text-main);
+      white-space: nowrap;
+      margin: 0;
     }
 
     .logo-text p {
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+      white-space: nowrap;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.8rem;
+      gap: 0.35rem;
       list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline-flex;
     }
 
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       transition: var(--transition);
-      position: relative;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
     }
 
-    .nav-links a:hover, .nav-links a.active {
+    .nav-links a:hover {
       color: var(--primary);
+      background: rgba(37, 99, 235, 0.08);
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
+    .nav-links a.active {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.12);
+      font-weight: 700;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.6rem;
+      flex-shrink: 0;
     }
 
     .lang-toggle, .theme-toggle {
       background: var(--bg-card);
       border: 1px solid var(--bg-card-border);
       color: var(--text-main);
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-sm);
+      padding: 0 0.85rem;
+      height: 38px;
+      border-radius: var(--radius-full);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.45rem;
       transition: var(--transition);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: inherit;
     }
 
     .lang-toggle:hover, .theme-toggle:hover {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
+      background: rgba(37, 99, 235, 0.06);
+      border-color: rgba(37, 99, 235, 0.35);
+      color: var(--primary);
+      transform: translateY(-1px);
     }
 
     [data-theme="dark"] .lang-toggle, [data-theme="dark"] .theme-toggle {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--glass-border);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
     }
 
     [data-theme="dark"] .lang-toggle:hover, [data-theme="dark"] .theme-toggle:hover {
       background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+
+    .nav-actions .btn-sm {
+      height: 38px;
+      padding: 0 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+    }
+
+    .nav-actions .btn-sm:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.38);
     }
 
     .mobile-menu-btn {
       display: none;
-      background: transparent;
-      border: none;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       color: var(--text-main);
-      font-size: 1.6rem;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.3);
+      color: var(--primary);
+    }
+
+    [data-theme="dark"] .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
     }
 
     /* Hero Section */
@@ -1902,13 +1987,108 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .nav-menu {
+        position: static;
+        flex: 0;
+      }
       .nav-links {
         display: none;
+        flex-direction: column;
+        align-items: stretch;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: var(--bg-card);
+        border-bottom: 2px solid var(--primary);
+        padding: 1.25rem 1.5rem;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+        gap: 0.35rem;
+        z-index: 1000;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      [data-theme="dark"] .nav-links {
+        background: rgba(15, 23, 42, 0.98);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      }
+      .nav-links.open {
+        display: flex !important;
+        animation: navSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes navSlideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .nav-links li {
+        width: 100%;
+      }
+      .nav-links a {
+        width: 100%;
+        padding: 0.8rem 1.1rem;
+        font-size: 0.95rem;
+        border-radius: var(--radius-sm);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-container {
+        padding: 0 1rem;
+        height: 64px;
+        gap: 0.5rem;
+      }
+      .logo-text p {
+        display: none;
+      }
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.15rem;
+        border-radius: 10px;
+      }
+      .logo-text h2 {
+        font-size: 1.1rem;
+      }
+      .nav-actions {
+        gap: 0.4rem;
+      }
+      .theme-toggle #themeLabel {
+        display: none;
+      }
+      .theme-toggle {
+        padding: 0 0.55rem;
+      }
+      .lang-toggle {
+        padding: 0 0.55rem;
+      }
+      .nav-actions .btn-sm {
+        padding: 0 0.85rem;
+        font-size: 0.8rem;
+        height: 36px;
+      }
+      .lang-toggle, .theme-toggle, .mobile-menu-btn {
+        height: 36px;
       }
       .mobile-menu-btn {
-        display: block;
+        width: 36px;
       }
+      .nav-links {
+        top: 64px;
+      }
+    }
+
+    @media (max-width: 768px) {
       .services-grid, .testimonial-grid, .process-grid {
         grid-template-columns: 1fr;
       }
@@ -1946,7 +2126,7 @@
 
   <!-- Header / Navigation Bar -->
   <header class="navbar" id="navbar">
-    <div class="container nav-container">
+    <div class="nav-container">
       <a href="#hero" class="brand-logo" aria-label="OneZone Advisory Homepage">
         <div class="logo-icon">O</div>
         <div class="logo-text">
@@ -1955,27 +2135,27 @@
         </div>
       </a>
 
-      <nav>
+      <nav class="nav-menu">
         <ul class="nav-links">
-          <li><a href="#services" class="nav-link" data-bn="সার্ভিসসমূহ" data-en="Services">সার্ভিসসমূহ</a></li>
-          <li><a href="#study-abroad" class="nav-link" data-bn="উচ্চশিক্ষা ও ভিসা" data-en="Study Abroad">উচ্চশিক্ষা ও ভিসা</a></li>
-          <li><a href="#global-career" class="nav-link" data-bn="গ্লোবাল ক্যারিয়ার ও সিভি" data-en="Career &amp; CV">গ্লোবাল ক্যারিয়ার ও সিভি</a></li>
-          <li><a href="#business-writing" class="nav-link" data-bn="প্রজেক্ট ও বিজনেস রাইটিং" data-en="Business Writing">প্রজেক্ট ও বিজনেস রাইটিং</a></li>
-          <li><a href="#calculator" class="nav-link" data-bn="ক্যালকুলেটর" data-en="Assessment">মূল্যায়ন ক্যালকুলেটর</a></li>
+          <li><a href="#services" class="nav-link" data-bn="সার্ভিস" data-en="Services">সার্ভিস</a></li>
+          <li><a href="#study-abroad" class="nav-link" data-bn="উচ্চশিক্ষা" data-en="Study Abroad">উচ্চশিক্ষা</a></li>
+          <li><a href="#global-career" class="nav-link" data-bn="ক্যারিয়ার ও সিভি" data-en="Career &amp; CV">ক্যারিয়ার ও সিভি</a></li>
+          <li><a href="#business-writing" class="nav-link" data-bn="বিজনেস রাইটিং" data-en="Business Writing">বিজনেস রাইটিং</a></li>
+          <li><a href="#calculator" class="nav-link" data-bn="অ্যাসেসমেন্ট" data-en="Assessment">অ্যাসেসমেন্ট</a></li>
           <li><a href="#process" class="nav-link" data-bn="কার্যপ্রণালী" data-en="Process">কার্যপ্রণালী</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
         <!-- Day / Night Mode Switcher Button -->
-        <button id="themeToggleBtn" class="theme-toggle" title="Switch Theme (Day / Night)">
+        <button id="themeToggleBtn" class="theme-toggle" title="Switch Theme (Day / Night)" aria-label="Switch Theme">
           <span id="themeIcon">☀️</span>
           <span id="themeLabel">ডে মোড</span>
         </button>
 
         <!-- Language Switcher Button -->
-        <button id="langToggleBtn" class="lang-toggle" title="Switch Language (বাংলা / English)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <button id="langToggleBtn" class="lang-toggle" title="Switch Language (বাংলা / English)" aria-label="Switch Language">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
           <span id="langLabel">English</span>
         </button>
 
@@ -1984,7 +2164,13 @@
           অ্যাপয়েন্টমেন্ট নিন
         </button>
 
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">☰</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
@@ -3344,19 +3530,22 @@
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const navLinks = document.querySelector('.nav-links');
       if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', () => {
-          if (navLinks.style.display === 'flex') {
-            navLinks.style.display = 'none';
-          } else {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '78px';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.background = 'var(--bg-card)';
-            navLinks.style.padding = '1.5rem';
-            navLinks.style.boxShadow = '0 15px 30px rgba(15, 23, 42, 0.12)';
+        mobileMenuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          navLinks.classList.toggle('open');
+        });
+
+        // Close menu when clicking on any nav link
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+          });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            navLinks.classList.remove('open');
           }
         });
       }
