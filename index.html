@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="bn" data-theme="dark">
+<html lang="bn" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ApexGlobal Advisory & Consultancy | স্টাডি অ্যাব্রোড, গ্লোবাল ক্যারিয়ার ও বিজনেস সলিউশন</title>
+  <title>OneZone Advisory & Consultancy | স্টাডি অ্যাব্রোড, গ্লোবাল ক্যারিয়ার ও বিজনেস সলিউশন</title>
   <meta name="description" content="উচ্চশিক্ষা ও ভিসা প্রসেসিং, আন্তর্জাতিক চাকরির সিভি ও প্রফেশনাল কনসেপ্ট নোট/প্রজেক্ট প্রপোজাল কনসালট্যান্সি। আপনার বৈশ্বিক সাফল্যের বিশ্বস্ত সহযোগী।">
-  <meta name="keywords" content="Study Abroad Bangladesh, Visa Consultancy, Global Resume Writing, ATS CV, Project Proposal Writing, Concept Note, Business Plan Consultancy">
-  <meta name="author" content="ApexGlobal Advisory">
+  <meta name="keywords" content="OneZone, Study Abroad Bangladesh, Visa Consultancy, Global Resume Writing, ATS CV, Project Proposal Writing, Concept Note, Business Plan Consultancy">
+  <meta name="author" content="OneZone Advisory">
 
   <!-- Google Fonts: Plus Jakarta Sans & Hind Siliguri for flawless bilingual typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,11 +15,46 @@
 
   <style>
     /* ==========================================================================
-       CSS Variables & Design System
+       CSS Variables & Design System (Day Mode by Default)
        ========================================================================== */
-    :root {
+    :root, [data-theme="light"] {
       --primary: #2563eb;
       --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.22);
+      --secondary: #0891b2;
+      --secondary-glow: rgba(8, 145, 178, 0.18);
+      --accent: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.2);
+      --emerald: #059669;
+
+      /* Daylight Crisp Canvas */
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #ffffff;
+      --bg-card-border: #e2e8f0;
+      --bg-card-border-hover: rgba(37, 99, 235, 0.45);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+
+      --glass-bg: rgba(255, 255, 255, 0.92);
+      --glass-border: #e2e8f0;
+      --glass-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+      --font-bn: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
       --primary-glow: rgba(37, 99, 235, 0.35);
       --secondary: #06b6d4;
       --secondary-glow: rgba(6, 182, 212, 0.25);
@@ -40,31 +75,6 @@
       --glass-bg: rgba(11, 19, 38, 0.82);
       --glass-border: rgba(255, 255, 255, 0.1);
       --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 22px;
-      --radius-full: 9999px;
-
-      --font-en: 'Plus Jakarta Sans', sans-serif;
-      --font-bn: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
-      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-theme="light"] {
-      --bg-dark: #f8fafc;
-      --bg-card: rgba(255, 255, 255, 0.85);
-      --bg-card-hover: rgba(255, 255, 255, 0.98);
-      --bg-card-border: rgba(226, 232, 240, 0.8);
-      --bg-card-border-hover: rgba(37, 99, 235, 0.4);
-
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-dim: #94a3b8;
-
-      --glass-bg: rgba(255, 255, 255, 0.85);
-      --glass-border: rgba(226, 232, 240, 0.8);
-      --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
     }
 
     /* Reset & Base */
@@ -105,8 +115,12 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(120px);
-      opacity: 0.15;
+      opacity: 0.10;
       animation: floatGlow 18s infinite alternate ease-in-out;
+    }
+
+    [data-theme="dark"] .glow-sphere {
+      opacity: 0.18;
     }
 
     .glow-1 {
@@ -159,17 +173,29 @@
     }
 
     .gradient-text {
-      background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #c084fc 100%);
+      background: linear-gradient(135deg, #1d4ed8 0%, #0284c7 60%, #7c3aed 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
     }
 
+    [data-theme="dark"] .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .gradient-gold {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #f97316 100%);
+      background: linear-gradient(135deg, #d97706 0%, #b45309 60%, #ea580c 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
+    }
+
+    [data-theme="dark"] .gradient-gold {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     /* Badges */
@@ -181,20 +207,31 @@
       border-radius: var(--radius-full);
       font-size: 0.85rem;
       font-weight: 600;
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: #38bdf8;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.22);
+      color: #1d4ed8;
       backdrop-filter: blur(8px);
       margin-bottom: 1.25rem;
+    }
+
+    [data-theme="dark"] .badge {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
     }
 
     .badge-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
+      background: #2563eb;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    [data-theme="dark"] .badge-dot {
       background: #38bdf8;
       box-shadow: 0 0 10px #38bdf8;
-      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
@@ -224,7 +261,7 @@
     .btn-primary {
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #ffffff;
-      box-shadow: 0 4px 20px var(--primary-glow);
+      box-shadow: 0 4px 18px var(--primary-glow);
     }
 
     .btn-primary:hover {
@@ -234,28 +271,43 @@
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--glass-border);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       color: var(--text-main);
       backdrop-filter: blur(10px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
     }
 
     .btn-secondary:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--glass-border);
+    }
+
+    [data-theme="dark"] .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
     }
 
     .btn-gold {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+      background: linear-gradient(135deg, #d97706, #b45309);
       color: #ffffff;
-      box-shadow: 0 4px 20px var(--accent-glow);
+      box-shadow: 0 4px 18px var(--accent-glow);
     }
 
     .btn-gold:hover {
-      background: linear-gradient(135deg, #d97706, #b45309);
+      background: linear-gradient(135deg, #b45309, #92400e);
       transform: translateY(-2px);
       box-shadow: 0 8px 25px var(--accent-glow);
+    }
+
+    [data-theme="dark"] .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
     }
 
     .btn-sm {
@@ -274,6 +326,7 @@
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--glass-border);
       transition: var(--transition);
+      box-shadow: var(--glass-shadow);
     }
 
     .nav-container {
@@ -294,14 +347,14 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      background: linear-gradient(135deg, #2563eb, #0891b2);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: 1.35rem;
       font-weight: 800;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
     }
 
     .logo-text h2 {
@@ -311,6 +364,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
+      color: var(--text-main);
     }
 
     .logo-text p {
@@ -336,7 +390,7 @@
     }
 
     .nav-links a:hover, .nav-links a.active {
-      color: var(--text-main);
+      color: var(--primary);
     }
 
     .nav-links a::after {
@@ -357,12 +411,12 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.85rem;
     }
 
     .lang-toggle, .theme-toggle {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       color: var(--text-main);
       padding: 0.45rem 0.85rem;
       border-radius: var(--radius-sm);
@@ -373,9 +427,20 @@
       align-items: center;
       gap: 0.4rem;
       transition: var(--transition);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
     }
 
     .lang-toggle:hover, .theme-toggle:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    [data-theme="dark"] .lang-toggle, [data-theme="dark"] .theme-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--glass-border);
+    }
+
+    [data-theme="dark"] .lang-toggle:hover, [data-theme="dark"] .theme-toggle:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.25);
     }
@@ -526,16 +591,25 @@
       gap: 1rem;
       padding: 1rem;
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.03);
+      background: #f8fafc;
       border: 1px solid var(--bg-card-border);
       transition: var(--transition);
       cursor: pointer;
     }
 
     .service-pill-item:hover, .service-pill-item.active {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.4);
+      transform: translateX(6px);
+    }
+
+    [data-theme="dark"] .service-pill-item {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    [data-theme="dark"] .service-pill-item:hover, [data-theme="dark"] .service-pill-item.active {
       background: rgba(37, 99, 235, 0.12);
       border-color: rgba(56, 189, 248, 0.4);
-      transform: translateX(6px);
     }
 
     .pill-icon {
@@ -549,9 +623,13 @@
       flex-shrink: 0;
     }
 
-    .pill-icon.blue { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
-    .pill-icon.teal { background: rgba(6, 182, 212, 0.2); color: #22d3ee; }
-    .pill-icon.gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .pill-icon.blue { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+    .pill-icon.teal { background: rgba(8, 145, 178, 0.12); color: #0891b2; }
+    .pill-icon.gold { background: rgba(217, 119, 6, 0.12); color: #d97706; }
+
+    [data-theme="dark"] .pill-icon.blue { background: rgba(37, 99, 235, 0.2); color: #60a5fa; }
+    [data-theme="dark"] .pill-icon.teal { background: rgba(6, 182, 212, 0.2); color: #22d3ee; }
+    [data-theme="dark"] .pill-icon.gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
     .pill-info h4 {
       font-size: 0.95rem;
@@ -574,9 +652,13 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
       z-index: 3;
       animation: floatBadge 6s infinite ease-in-out alternate;
+    }
+
+    [data-theme="dark"] .floating-badge {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     }
 
     .floating-badge.badge-top {
@@ -605,8 +687,11 @@
       font-size: 1.1rem;
     }
 
-    .badge-top .badge-icon-box { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-    .badge-bottom .badge-icon-box { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-top .badge-icon-box { background: rgba(5, 150, 105, 0.15); color: #059669; }
+    .badge-bottom .badge-icon-box { background: rgba(217, 119, 6, 0.15); color: #d97706; }
+
+    [data-theme="dark"] .badge-top .badge-icon-box { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    [data-theme="dark"] .badge-bottom .badge-icon-box { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
     .badge-details h5 {
       font-size: 0.88rem;
@@ -633,7 +718,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
       backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--glass-shadow);
     }
 
     .stat-item {
@@ -696,8 +781,8 @@
     }
 
     .category-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--glass-border);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       color: var(--text-muted);
       padding: 0.9rem 1.6rem;
       border-radius: var(--radius-full);
@@ -709,18 +794,35 @@
       display: flex;
       align-items: center;
       gap: 0.6rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
 
     .category-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: #f1f5f9;
       color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: #cbd5e1;
     }
 
     .category-btn.active {
+      background: linear-gradient(135deg, #2563eb, #0284c7);
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.3);
+    }
+
+    [data-theme="dark"] .category-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--glass-border);
+    }
+
+    [data-theme="dark"] .category-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="dark"] .category-btn.active {
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(6, 182, 212, 0.25));
       border-color: #38bdf8;
-      color: #ffffff;
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
     }
 
@@ -743,6 +845,7 @@
       justify-content: space-between;
       overflow: hidden;
       backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
     }
 
     .service-card::before {
@@ -760,6 +863,10 @@
     .service-card:hover {
       transform: translateY(-8px);
       border-color: var(--bg-card-border-hover);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.09);
+    }
+
+    [data-theme="dark"] .service-card:hover {
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
     }
 
@@ -783,13 +890,17 @@
     }
 
     .card-study { --card-accent: #2563eb; }
-    .card-study .service-icon-box { background: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+    .card-study .service-icon-box { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
 
-    .card-career { --card-accent: #06b6d4; }
-    .card-career .service-icon-box { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    .card-career { --card-accent: #0891b2; }
+    .card-career .service-icon-box { background: rgba(8, 145, 178, 0.12); color: #0891b2; }
 
-    .card-writing { --card-accent: #f59e0b; }
-    .card-writing .service-icon-box { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .card-writing { --card-accent: #d97706; }
+    .card-writing .service-icon-box { background: rgba(217, 119, 6, 0.12); color: #d97706; }
+
+    [data-theme="dark"] .card-study .service-icon-box { background: rgba(37, 99, 235, 0.15); color: #60a5fa; }
+    [data-theme="dark"] .card-career .service-icon-box { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    [data-theme="dark"] .card-writing .service-icon-box { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
 
     .service-tag {
       font-size: 0.75rem;
@@ -834,7 +945,7 @@
       height: 18px;
       flex-shrink: 0;
       margin-top: 2px;
-      color: #10b981;
+      color: #059669;
     }
 
     .service-bottom {
@@ -849,7 +960,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      color: #38bdf8;
+      color: var(--primary);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
@@ -859,6 +970,14 @@
 
     .service-action-link:hover {
       gap: 0.7rem;
+      color: var(--primary-hover);
+    }
+
+    [data-theme="dark"] .service-action-link {
+      color: #38bdf8;
+    }
+
+    [data-theme="dark"] .service-action-link:hover {
       color: #ffffff;
     }
 
@@ -875,6 +994,10 @@
       padding: 3rem;
       margin-bottom: 3.5rem;
       backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    [data-theme="dark"] .spotlight-card {
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
     }
 
@@ -912,8 +1035,8 @@
     }
 
     .feature-pill {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--glass-border);
+      background: #f8fafc;
+      border: 1px solid var(--bg-card-border);
       padding: 0.75rem 1rem;
       border-radius: var(--radius-md);
       font-size: 0.88rem;
@@ -921,10 +1044,51 @@
       align-items: center;
       gap: 0.6rem;
       font-weight: 500;
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    [data-theme="dark"] .feature-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--glass-border);
+      color: var(--text-main);
     }
 
     .feature-pill span.icon {
       font-size: 1.15rem;
+    }
+
+    /* Spotlight Matrix Component */
+    .spotlight-matrix-box {
+      background: #f8fafc;
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] .spotlight-matrix-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--glass-border);
+    }
+
+    .matrix-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--bg-card-border);
+      padding-bottom: 0.6rem;
+      color: var(--text-main);
+    }
+
+    .progress-track {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .progress-track {
+      background: rgba(255, 255, 255, 0.1);
     }
 
     /* Interactive Calculator & Assessment Wizard */
@@ -934,13 +1098,19 @@
     }
 
     .calculator-wrapper {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(11, 19, 38, 0.95));
-      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-lg);
       padding: 3.5rem 3rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
       position: relative;
       overflow: hidden;
+    }
+
+    [data-theme="dark"] .calculator-wrapper {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(11, 19, 38, 0.95));
+      border-color: rgba(56, 189, 248, 0.2);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
     }
 
     .calculator-wrapper::after {
@@ -950,7 +1120,7 @@
       right: -150px;
       width: 350px;
       height: 350px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -976,8 +1146,8 @@
     .step-node {
       position: relative;
       z-index: 2;
-      background: var(--bg-dark);
-      border: 2px solid var(--glass-border);
+      background: var(--bg-card);
+      border: 2px solid var(--bg-card-border);
       width: 44px;
       height: 44px;
       border-radius: 50%;
@@ -988,18 +1158,24 @@
       font-size: 0.9rem;
       color: var(--text-muted);
       transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] .step-node {
+      background: var(--bg-dark);
+      border-color: var(--glass-border);
     }
 
     .step-node.active {
-      border-color: #38bdf8;
+      border-color: var(--primary);
       background: var(--primary);
       color: #fff;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
     }
 
     .step-node.completed {
-      border-color: #10b981;
-      background: #10b981;
+      border-color: #059669;
+      background: #059669;
       color: #fff;
     }
 
@@ -1024,8 +1200,8 @@
     .calc-select, .calc-input {
       width: 100%;
       padding: 0.9rem 1.2rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--glass-border);
+      background: var(--bg-card);
+      border: 1px solid #cbd5e1;
       border-radius: var(--radius-md);
       color: var(--text-main);
       font-size: 0.95rem;
@@ -1035,12 +1211,28 @@
     }
 
     .calc-select:focus, .calc-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      background: var(--bg-card);
+    }
+
+    .calc-select option {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    [data-theme="dark"] .calc-select, [data-theme="dark"] .calc-input {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--glass-border);
+    }
+
+    [data-theme="dark"] .calc-select:focus, [data-theme="dark"] .calc-input:focus {
       border-color: #38bdf8;
       box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
       background: rgba(255, 255, 255, 0.08);
     }
 
-    .calc-select option {
+    [data-theme="dark"] .calc-select option {
       background: #0f172a;
       color: #fff;
     }
@@ -1054,19 +1246,36 @@
 
     .calc-type-card {
       padding: 1rem;
-      border: 1px solid var(--glass-border);
+      border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-md);
       text-align: center;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--bg-card);
       transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
     .calc-type-card:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: #f8fafc;
+      border-color: #93c5fd;
     }
 
     .calc-type-card.selected {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.08);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.12);
+    }
+
+    [data-theme="dark"] .calc-type-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: var(--glass-border);
+    }
+
+    [data-theme="dark"] .calc-type-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    [data-theme="dark"] .calc-type-card.selected {
       border-color: #38bdf8;
       background: rgba(37, 99, 235, 0.18);
       box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
@@ -1085,13 +1294,18 @@
 
     /* Result Panel */
     .calc-summary-panel {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--glass-border);
+      background: #f8fafc;
+      border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-md);
       padding: 2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+    }
+
+    [data-theme="dark"] .calc-summary-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--glass-border);
     }
 
     .summary-title {
@@ -1117,32 +1331,51 @@
     .eligibility-gauge {
       margin: 1.5rem 0;
       padding: 1.2rem;
-      background: rgba(0, 0, 0, 0.25);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-md);
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] .eligibility-gauge {
+      background: rgba(0, 0, 0, 0.25);
+      border-color: transparent;
     }
 
     .gauge-score {
       font-size: 2.2rem;
       font-weight: 800;
-      color: #34d399;
+      color: #059669;
       margin-bottom: 0.2rem;
+    }
+
+    [data-theme="dark"] .gauge-score {
+      color: #34d399;
     }
 
     .gauge-bar-bg {
       height: 8px;
-      background: rgba(255, 255, 255, 0.1);
+      background: #e2e8f0;
       border-radius: 4px;
       overflow: hidden;
       margin: 0.5rem 0;
     }
 
+    [data-theme="dark"] .gauge-bar-bg {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
     .gauge-bar-fill {
       height: 100%;
       width: 92%;
-      background: linear-gradient(90deg, #10b981, #06b6d4);
+      background: linear-gradient(90deg, #059669, #0891b2);
       border-radius: 4px;
       transition: width 0.8s ease;
+    }
+
+    [data-theme="dark"] .gauge-bar-fill {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
     }
 
     /* Process Flow Section */
@@ -1166,20 +1399,22 @@
       position: relative;
       transition: var(--transition);
       backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
     }
 
     .process-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(56, 189, 248, 0.4);
+      border-color: rgba(37, 99, 235, 0.4);
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
     }
 
     .process-num {
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: rgba(37, 99, 235, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: #38bdf8;
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1187,6 +1422,12 @@
       font-size: 1.2rem;
       margin-bottom: 1.4rem;
       font-family: var(--font-en);
+    }
+
+    [data-theme="dark"] .process-num {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
     }
 
     .process-card h4 {
@@ -1221,19 +1462,28 @@
       justify-content: space-between;
       backdrop-filter: blur(10px);
       transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
     }
 
     .testimonial-card:hover {
       transform: translateY(-6px);
       border-color: var(--bg-card-border-hover);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    [data-theme="dark"] .testimonial-card:hover {
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
     .stars {
-      color: #f59e0b;
+      color: #d97706;
       margin-bottom: 1.2rem;
       font-size: 1rem;
       letter-spacing: 2px;
+    }
+
+    [data-theme="dark"] .stars {
+      color: #f59e0b;
     }
 
     .testimonial-text {
@@ -1254,7 +1504,7 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      background: linear-gradient(135deg, #2563eb, #0891b2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1269,6 +1519,10 @@
 
     .client-meta span {
       font-size: 0.8rem;
+      color: var(--primary);
+    }
+
+    [data-theme="dark"] .client-meta span {
       color: #38bdf8;
     }
 
@@ -1291,9 +1545,14 @@
       border-radius: var(--radius-md);
       overflow: hidden;
       transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
     .faq-item:hover {
+      border-color: #cbd5e1;
+    }
+
+    [data-theme="dark"] .faq-item:hover {
       border-color: rgba(255, 255, 255, 0.15);
     }
 
@@ -1311,6 +1570,10 @@
     .faq-toggle-icon {
       font-size: 1.25rem;
       transition: transform 0.3s ease;
+      color: var(--primary);
+    }
+
+    [data-theme="dark"] .faq-toggle-icon {
       color: #38bdf8;
     }
 
@@ -1333,31 +1596,32 @@
       transform: rotate(45deg);
     }
 
-    /* Consultation Booking & Contact CTA */
+    /* Consultation Booking & Contact CTA Banner */
     .cta-banner-section {
       padding: 5rem 0;
     }
 
     .cta-banner {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(6, 182, 212, 0.25)), var(--bg-card);
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0284c7 100%);
+      border: none;
       border-radius: var(--radius-lg);
       padding: 4rem 3rem;
       text-align: center;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 50px rgba(37, 99, 235, 0.25);
+      color: #ffffff;
     }
 
     .cta-banner h2 {
       font-size: clamp(2rem, 3.5vw, 2.8rem);
       margin-bottom: 1.2rem;
+      color: #ffffff;
     }
 
     .cta-banner p {
       font-size: 1.15rem;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.92);
       max-width: 680px;
       margin: 0 auto 2.5rem;
     }
@@ -1369,12 +1633,30 @@
       flex-wrap: wrap;
     }
 
+    .cta-banner .btn-secondary {
+      background: #ffffff;
+      color: #1e40af;
+      border-color: #ffffff;
+      font-weight: 700;
+    }
+
+    .cta-banner .btn-secondary:hover {
+      background: #f8fafc;
+      color: #1d4ed8;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
     /* Footer */
     .footer {
-      background: #040811;
-      border-top: 1px solid var(--glass-border);
+      background: #f1f5f9;
+      border-top: 1px solid var(--bg-card-border);
       padding: 5rem 0 2rem;
       color: var(--text-muted);
+    }
+
+    [data-theme="dark"] .footer {
+      background: #040811;
+      border-color: var(--glass-border);
     }
 
     .footer-grid {
@@ -1385,10 +1667,14 @@
     }
 
     .footer-col h4 {
-      color: #fff;
+      color: var(--text-main);
       font-size: 1.1rem;
       margin-bottom: 1.5rem;
       position: relative;
+    }
+
+    [data-theme="dark"] .footer-col h4 {
+      color: #fff;
     }
 
     .footer-col h4::after {
@@ -1416,8 +1702,12 @@
     }
 
     .footer-links a:hover {
-      color: #38bdf8;
+      color: var(--primary);
       padding-left: 5px;
+    }
+
+    [data-theme="dark"] .footer-links a:hover {
+      color: #38bdf8;
     }
 
     .footer-contact-item {
@@ -1432,8 +1722,12 @@
       width: 20px;
       height: 20px;
       flex-shrink: 0;
-      color: #38bdf8;
+      color: var(--primary);
       margin-top: 2px;
+    }
+
+    [data-theme="dark"] .footer-contact-item svg {
+      color: #38bdf8;
     }
 
     .footer-bottom {
@@ -1441,8 +1735,12 @@
       justify-content: space-between;
       align-items: center;
       padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid var(--bg-card-border);
       font-size: 0.85rem;
+    }
+
+    [data-theme="dark"] .footer-bottom {
+      border-color: rgba(255, 255, 255, 0.06);
     }
 
     /* Modal dialog */
@@ -1452,7 +1750,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(15, 23, 42, 0.55);
       backdrop-filter: blur(8px);
       z-index: 999;
       display: flex;
@@ -1470,18 +1768,24 @@
     }
 
     .modal-card {
-      background: #0d1527;
-      border: 1px solid var(--glass-border);
+      background: #ffffff;
+      border: 1px solid var(--bg-card-border);
       border-radius: var(--radius-lg);
       width: 100%;
       max-width: 620px;
       padding: 2.5rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
       transform: scale(0.92);
       transition: var(--transition);
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
+    }
+
+    [data-theme="dark"] .modal-card {
+      background: #0d1527;
+      border-color: var(--glass-border);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
     }
 
     .modal-overlay.active .modal-card {
@@ -1501,7 +1805,7 @@
     }
 
     .modal-close-btn:hover {
-      color: #fff;
+      color: var(--text-main);
     }
 
     .modal-card h3 {
@@ -1643,10 +1947,10 @@
   <!-- Header / Navigation Bar -->
   <header class="navbar" id="navbar">
     <div class="container nav-container">
-      <a href="#hero" class="brand-logo" aria-label="ApexGlobal Advisory Homepage">
-        <div class="logo-icon">A</div>
+      <a href="#hero" class="brand-logo" aria-label="OneZone Advisory Homepage">
+        <div class="logo-icon">O</div>
         <div class="logo-text">
-          <h2>ApexGlobal <span class="gradient-text">Advisory</span></h2>
+          <h2>OneZone <span class="gradient-text">Advisory</span></h2>
           <p>Global Education &amp; Business Strategy</p>
         </div>
       </a>
@@ -1663,6 +1967,12 @@
       </nav>
 
       <div class="nav-actions">
+        <!-- Day / Night Mode Switcher Button -->
+        <button id="themeToggleBtn" class="theme-toggle" title="Switch Theme (Day / Night)">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel">ডে মোড</span>
+        </button>
+
         <!-- Language Switcher Button -->
         <button id="langToggleBtn" class="lang-toggle" title="Switch Language (বাংলা / English)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -2085,20 +2395,20 @@
             </button>
           </div>
           <div class="spotlight-visual">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
-              <h4 style="margin-bottom: 1rem; color: #38bdf8;">📌 আমাদের ভিসা ফাইল সাকসেস ম্যাট্রিক্স</h4>
+            <div class="spotlight-matrix-box">
+              <h4 style="margin-bottom: 1.2rem; color: var(--primary);">📌 আমাদের ভিসা ফাইল সাকসেস ম্যাট্রিক্স</h4>
               <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.9rem;">
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                  <span>ফিন্যান্সিয়াল ডকুমেন্ট ভেরিফিকেশন:</span> <strong style="color:#10b981;">১০০% কমপ্লায়েন্স</strong>
+                <div class="matrix-item">
+                  <span>ফিন্যান্সিয়াল ডকুমেন্ট ভেরিফিকেশন:</span> <strong style="color:#059669;">১০০% কমপ্লায়েন্স</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                  <span>ইউএস এম্ব্যাসি মক ইন্টারভিউ সেশন:</span> <strong style="color:#38bdf8;">৩-৫ রাউন্ড বাস্তব প্রস্তুতি</strong>
+                <div class="matrix-item">
+                  <span>ইউএস এম্ব্যাসি মক ইন্টারভিউ সেশন:</span> <strong style="color:var(--primary);">৩-৫ রাউন্ড বাস্তব প্রস্তুতি</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                  <span>স্টাডি গ্যাপ ও ক্যারিয়ার সুইচিং সাপোর্ট:</span> <strong style="color:#f59e0b;">সলিড এসওপি ডিফেন্স</strong>
+                <div class="matrix-item">
+                  <span>স্টাডি গ্যাপ ও ক্যারিয়ার সুইচিং সাপোর্ট:</span> <strong style="color:#d97706;">সলিড এসওপি ডিফেন্স</strong>
                 </div>
-                <div style="display:flex; justify-content:space-between;">
-                  <span>প্রি-ডিপার্চার ও অ্যাকোমোডেশন গাইড:</span> <strong style="color:#a855f7;">নিঃশর্ত সহায়তা</strong>
+                <div style="display:flex; justify-content:space-between; color: var(--text-main);">
+                  <span>প্রি-ডিপার্চার ও অ্যাকোমোডেশন গাইড:</span> <strong style="color:#7c3aed;">নিঃশর্ত সহায়তা</strong>
                 </div>
               </div>
             </div>
@@ -2132,22 +2442,22 @@
             </button>
           </div>
           <div class="spotlight-visual">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
-              <h4 style="margin-bottom: 1rem; color: #22d3ee;">🔍 ATS পাসিং রেট তুলনা</h4>
+            <div class="spotlight-matrix-box">
+              <h4 style="margin-bottom: 1.2rem; color: #0891b2;">🔍 ATS পাসিং রেট তুলনা</h4>
               <div style="margin-bottom: 1.5rem;">
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.3rem;">
-                  <span>সাধারণ গ্রাফিকাল / ক্যানভা সিভি:</span> <span style="color:#ef4444;">২৪% পাসিং হার</span>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.4rem;">
+                  <span>সাধারণ গ্রাফিকাল / ক্যানভা সিভি:</span> <span style="color:#ef4444; font-weight:600;">২৪% পাসিং হার</span>
                 </div>
-                <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:3px;">
+                <div class="progress-track" style="height:7px;">
                   <div style="width:24%; height:100%; background:#ef4444; border-radius:3px;"></div>
                 </div>
               </div>
               <div>
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.3rem;">
-                  <span>ApexGlobal প্রফেশনাল ATS রেজুমে:</span> <span style="color:#10b981; font-weight:700;">৯৬.৮% শর্টলিস্টিং</span>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom: 0.4rem;">
+                  <span>OneZone প্রফেশনাল ATS রেজুমে:</span> <span style="color:#059669; font-weight:700;">৯৬.৮% শর্টলিস্টিং</span>
                 </div>
-                <div style="height:8px; background:rgba(255,255,255,0.1); border-radius:4px;">
-                  <div style="width:96.8%; height:100%; background:linear-gradient(90deg, #10b981, #06b6d4); border-radius:4px;"></div>
+                <div class="progress-track">
+                  <div style="width:96.8%; height:100%; background:linear-gradient(90deg, #059669, #0891b2); border-radius:4px;"></div>
                 </div>
               </div>
             </div>
@@ -2181,9 +2491,9 @@
             </button>
           </div>
           <div class="spotlight-visual">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 2rem;">
-              <h4 style="margin-bottom: 1rem; color: #fbbf24;">📁 প্রপোজাল ডেলিভারি স্ট্যান্ডার্ড</h4>
-              <ul style="list-style:none; display:flex; flex-direction:column; gap:0.8rem; font-size:0.9rem; color:var(--text-muted);">
+            <div class="spotlight-matrix-box">
+              <h4 style="margin-bottom: 1.2rem; color: #d97706;">📁 প্রপোজাল ডেলিভারি স্ট্যান্ডার্ড</h4>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap:0.9rem; font-size:0.9rem; color:var(--text-main);">
                 <li>✓ <strong>এক্সিকিউটিভ সামারি:</strong> ডোনার বোর্ডের জন্য ২ পৃষ্ঠার প্রভাবশালী স্ন্যাপশট</li>
                 <li>✓ <strong>লজিক্যাল ফ্রেমওয়ার্ক:</strong> আউটপুট, আউটকাম ও পারফরম্যান্স ইন্ডিকেটর ম্যাপিং</li>
                 <li>✓ <strong>বাজেট একাউন্টেবিলিটি:</strong> লাইন-বাই-লাইন ডিরেক্ট ও ইনডিরেক্ট কস্ট বিশ্লেষণ</li>
@@ -2389,9 +2699,9 @@
         <div class="testimonial-card">
           <div>
             <div class="stars">★★★★★</div>
-            <p class="testimonial-text" data-bn="“একবার ইউএস ভিসা রিজেক্ট হওয়ার পর ApexGlobal-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”"
-               data-en="“After a heartbreaking first-time refusal, ApexGlobal rewritten my SOP and conducted rigorous mock interviews. I secured my F-1 visa and full funding at Texas A&amp;M!”">
-              “একবার ইউএস ভিসা রিজেক্ট হওয়ার পর ApexGlobal-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”
+            <p class="testimonial-text" data-bn="“একবার ইউএস ভিসা রিজেক্ট হওয়ার পর OneZone-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”"
+               data-en="“After a heartbreaking first-time refusal, OneZone rewritten my SOP and conducted rigorous mock interviews. I secured my F-1 visa and full funding at Texas A&amp;M!”">
+              “একবার ইউএস ভিসা রিজেক্ট হওয়ার পর OneZone-এর কাছে আসি। তাদের নিখুঁত এসওপি রিরাইট এবং ৫টি বাস্তবসম্মত মক টেস্ট আমাকে টেক্সাস এঅ্যান্ডএম ইউনিভার্সিটিতে ফুল ফান্ডেড অ্যাডমিশন ও এফ-১ ভিসা এনে দিয়েছে!”
             </p>
           </div>
           <div class="client-profile">
@@ -2554,21 +2864,21 @@
         <!-- Col 1 -->
         <div class="footer-col">
           <div class="brand-logo" style="margin-bottom: 1.2rem;">
-            <div class="logo-icon">A</div>
+            <div class="logo-icon">O</div>
             <div class="logo-text">
-              <h2>ApexGlobal <span class="gradient-text">Advisory</span></h2>
+              <h2>OneZone <span class="gradient-text">Advisory</span></h2>
               <p>Corporate, Career &amp; Higher Education</p>
             </div>
           </div>
           <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem;" 
-             data-bn="ApexGlobal হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।"
-             data-en="ApexGlobal is a multidisciplinary advisory firm committed to student mobility, international career optimization, and corporate proposal drafting.">
-            ApexGlobal হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।
+             data-bn="OneZone হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।"
+             data-en="OneZone is a multidisciplinary advisory firm committed to student mobility, international career optimization, and corporate proposal drafting.">
+            OneZone হলো একটি বহুবিষয়ক কনসালট্যান্সি ফার্ম যা শিক্ষার্থীদের উচ্চশিক্ষা ও গ্লোবাল ক্যারিয়ার গড়তে এবং সংস্থাসমূহকে আন্তর্জাতিক ফান্ডিং পেতে সর্বোত্তম পেশাদার সহায়তা দিয়ে আসছে।
           </p>
           <div style="display: flex; gap: 0.8rem;">
-            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="LinkedIn">in</a>
-            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="Facebook">fb</a>
-            <a href="#" style="color:#38bdf8; text-decoration:none; font-size:1.1rem;" title="Twitter">x</a>
+            <a href="#" style="color:var(--primary); text-decoration:none; font-size:1.1rem; font-weight:700;" title="LinkedIn">in</a>
+            <a href="#" style="color:var(--primary); text-decoration:none; font-size:1.1rem; font-weight:700;" title="Facebook">fb</a>
+            <a href="#" style="color:var(--primary); text-decoration:none; font-size:1.1rem; font-weight:700;" title="Twitter">x</a>
           </div>
         </div>
 
@@ -2607,7 +2917,7 @@
           </div>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <span>advisory@apexglobalconsulting.com</span>
+            <span>advisory@onezoneconsulting.com</span>
           </div>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -2617,7 +2927,7 @@
       </div>
 
       <div class="footer-bottom">
-        <div>© 2026 ApexGlobal Advisory Ltd. সর্বস্বত্ব সংরক্ষিত (All Rights Reserved).</div>
+        <div>© 2026 OneZone Advisory Ltd. সর্বস্বত্ব সংরক্ষিত (All Rights Reserved).</div>
         <div style="color: var(--text-dim);">Designed with modern web standards for enterprise consulting excellence.</div>
       </div>
     </div>
@@ -2708,6 +3018,16 @@
           }
         });
 
+        // Update Theme button label based on language
+        if (themeLabel) {
+          const curTheme = document.documentElement.getAttribute('data-theme') || 'light';
+          if (curTheme === 'dark') {
+            themeLabel.textContent = (lang === 'bn') ? 'নাইট মোড' : 'Night';
+          } else {
+            themeLabel.textContent = (lang === 'bn') ? 'ডে মোড' : 'Day';
+          }
+        }
+
         // Trigger calculator update for translated names
         updateCalculator();
       }
@@ -2716,6 +3036,47 @@
         setLanguage(currentLang === 'bn' ? 'en' : 'bn');
         showToast(currentLang === 'bn' ? 'ভাষা পরিবর্তন করা হয়েছে: বাংলা' : 'Language switched to English');
       });
+
+      // 1.1 Theme Toggle (Day / Night Mode - Default: Day Mode)
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeLabel = document.getElementById('themeLabel');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        try {
+          localStorage.setItem('onezone_theme', theme);
+        } catch (e) {}
+
+        if (theme === 'dark') {
+          if (themeIcon) themeIcon.textContent = '🌙';
+          if (themeLabel) themeLabel.textContent = (currentLang === 'bn') ? 'নাইট মোড' : 'Night';
+        } else {
+          if (themeIcon) themeIcon.textContent = '☀️';
+          if (themeLabel) themeLabel.textContent = (currentLang === 'bn') ? 'ডে মোড' : 'Day';
+        }
+      }
+
+      // Initialize theme (default to 'light' / Day Mode)
+      let initialTheme = 'light';
+      try {
+        const saved = localStorage.getItem('onezone_theme');
+        if (saved === 'dark' || saved === 'light') {
+          initialTheme = saved;
+        }
+      } catch (e) {}
+      setTheme(initialTheme);
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const active = document.documentElement.getAttribute('data-theme') || 'light';
+          const next = (active === 'light') ? 'dark' : 'light';
+          setTheme(next);
+          showToast(next === 'light'
+            ? (currentLang === 'bn' ? '☀️ ডে মোড সক্রিয় করা হয়েছে' : '☀️ Day mode activated')
+            : (currentLang === 'bn' ? '🌙 ডার্ক মোড সক্রিয় করা হয়েছে' : '🌙 Night mode activated'));
+        });
+      }
 
       // 2. Service Category Filter Tabs
       const categoryBtns = document.querySelectorAll('.category-btn');
@@ -2995,7 +3356,7 @@
             navLinks.style.width = '100%';
             navLinks.style.background = 'var(--bg-card)';
             navLinks.style.padding = '1.5rem';
-            navLinks.style.boxShadow = '0 15px 30px rgba(0,0,0,0.5)';
+            navLinks.style.boxShadow = '0 15px 30px rgba(15, 23, 42, 0.12)';
           }
         });
       }
